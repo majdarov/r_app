@@ -1,0 +1,13 @@
+header img {
+    vertical-align: middle;
+    margin: 0.5rem 1rem;
+    width: 2rem;
+}
+header h2 {
+    display: inline;
+}
+
+header {
+    grid-area: h;
+    background-color: darkorange;
+}
