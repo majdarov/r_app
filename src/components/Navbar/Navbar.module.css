@@ -7,8 +7,10 @@ nav {
 .item {
     margin-bottom: 3px;
     /* border: 1px solid orange; */
-    text-align: center;
-    background-color: palegoldenrod;
+    /* text-align: center; */
+    padding: 3px;
+    background-color: #C9D305;
+    box-shadow: 2px 2px 1px darkslategrey;
 }
 
 .item a {
