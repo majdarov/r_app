@@ -17,5 +17,5 @@
 
 .app-content {
   grid-area: c;
-  background-color: lavender;
+  /* background-color: lavender; */
 }

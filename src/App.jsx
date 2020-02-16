@@ -8,17 +8,22 @@ import { Route, BrowserRouter } from "react-router-dom";
 import Muzik from "./components/Muzik/Muzik";
 import Users from "./components/Users/Users";
 import Game from "./components/Game/Game";
+import state from "./redux/state";
 
-const App = (props) => {
+const App = props => {
+  let Music = () => {
+    return <Muzik link={document.documentURI} />;
+  };
+
   return (
     <BrowserRouter>
       <div className="app">
-        <Header link={props.link}/>
+        <Header link={props.link} />
         <Navbar />
         <div className="app-content">
-          <Route path="/dialogs" component={Dialogs} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/muzik" component={Muzik} />
+          <Route path="/dialogs" render={() => <Dialogs {...state.dialogsPage} />} />
+          <Route path="/profile" render={() => <Profile {...state.profilePage} />} />
+          <Route path="/muzik" component={Music} />
           <Route path="/users" component={Users} />
           <Route path="/game" component={Game} />
         </div>

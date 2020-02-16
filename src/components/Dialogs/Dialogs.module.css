@@ -1,14 +1,32 @@
 .dialogs {
     display: grid;
-    grid-template-columns: 2fr 10fr;
+    grid-template-columns: 3fr 7fr;
 }
 
 .dialogsItems {
     padding: 10px;
+    font-weight: bold;
+    border-right: blue solid 2px;
 }
 
 .dialogsItems a.active {
     color: white;
+}
+.image {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border: tomato solid 1px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.dialog {
+    border-bottom: blueviolet dashed 1px;
+    border-right: blueviolet dashed 1px;
+}
+.image img {
+    width: 60px;
+    display: block;
 }
 
 .dialog a {
@@ -20,5 +38,8 @@
 }
 
 .message {
-
+    margin: 5px;
+    padding: 5px;
+    color: white;
+    background: steelblue;
 }
