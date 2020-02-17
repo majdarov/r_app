@@ -1,10 +1,27 @@
-.item {
-    text-align: start;
-    color: blue;
-}
-
-.item img {
+.image {
     width: 64px;
     height: 64px;
-    border-radius: 30px;
+    border-radius: 50%;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.image img {
+    display: block;
+    width: 64px;
+}
+
+.item {
+    display: block;
+    padding: 10px;
+    border-bottom: 1px dashed lightslategray;
+}
+
+.item .msg {
+    display: inline-block;
+    vertical-align: top;
+    padding: 5px;
+    font-weight: lighter;
+    color: blue;
+    
 }

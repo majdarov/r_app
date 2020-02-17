@@ -1,9 +1,16 @@
 .image {
+    display: inline-block;
     width: 10fr;
     height: 150px;
-    /* border: 1px solid green; */
-    background-image: url(https://images.samsung.com/is/image/samsung/p5/ru/explore/landscape-photography/Explore_How_To_Take_Great_Landscape_Photography_KV.jpg?$ORIGIN_JPG$);
-    background-position: 0 -600px;
+    overflow: hidden;
+    margin-right: 5px;
+    border-radius: 5px;
+}
+.image img {
+    width: 100%;
+    display: block;
+    position: relative;
+    top: -60%;
 }
 
 .descriptionBlock {

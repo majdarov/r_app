@@ -16,7 +16,8 @@
     display: inline-block;
     width: 60px;
     height: 60px;
-    border: tomato solid 1px;
+    /* border: tomato solid 1px; */
+    box-shadow: 2px 2px 10px rgb(110, 185, 185);
     border-radius: 50%;
     overflow: hidden;
 }
@@ -42,4 +43,5 @@
     padding: 5px;
     color: white;
     background: steelblue;
+    border-radius: 3px;
 }

@@ -1,7 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import state from "./redux/state";
+import store from "./redux/store";
 
 /** RENDER */
-ReactDOM.render(<App {...state} />, document.getElementById("root"));
+function renderApp() {
+  ReactDOM.render(<App store={store} />, document.getElementById("root"));
+}
+
+renderApp();
+
+store.subscribe(renderApp);

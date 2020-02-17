@@ -6,7 +6,7 @@ const Content = props => {
   return (
     <div>
       <ProfileInfo />
-      <MyPosts {...props} />
+      <MyPosts profilePage={props.profilePage} />
     </div>
   );
 };
