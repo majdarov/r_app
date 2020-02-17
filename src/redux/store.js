@@ -19,7 +19,7 @@ let store = {
       newTextMessage: "",
 
       _subscribe() {
-        console.log("-subscribe");
+        /* renderApp */
       },
 
       addDialog() {
@@ -49,7 +49,7 @@ let store = {
       newPostText: "",
 
       _subscribe() {
-        console.log("_subscribe");
+        /* renderApp */
       },
 
       addMessage() {
@@ -66,7 +66,14 @@ let store = {
         this.newPostText = text;
         this._subscribe();
       }
-    }
+    },
+    navBar: [
+      { link: "/Profile", title: "Профиль" },
+      { link: "/Dialogs", title: "Диалоги" },
+      { link: "/Muzik", title: "Музыка" },
+      { link: "/Users", title: "Пользователи" },
+      { link: "/Game", title: "Играть" }
+    ]
   },
 
   subscribe(observer) {
