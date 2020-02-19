@@ -16,18 +16,19 @@
     display: inline-block;
     width: 60px;
     height: 60px;
-    /* border: tomato solid 1px; */
     box-shadow: 2px 2px 10px rgb(110, 185, 185);
     border-radius: 50%;
     overflow: hidden;
 }
-.dialog {
-    border-bottom: blueviolet dashed 1px;
-    border-right: blueviolet dashed 1px;
-}
+
 .image img {
     width: 60px;
     display: block;
+}
+
+.dialog {
+    border-bottom: blueviolet dashed 1px;
+    border-right: blueviolet dashed 1px;
 }
 
 .dialog a {
@@ -44,4 +45,8 @@
     color: white;
     background: steelblue;
     border-radius: 3px;
+}
+
+.message > div {
+   
 }

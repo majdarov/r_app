@@ -23,6 +23,7 @@ let store = {
       },
 
       addDialog() {
+        if (!this.newTextMessage) return;
         let id = this.messages.length + 1;
         let msg = {
           id: id,

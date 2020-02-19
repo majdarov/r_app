@@ -5,7 +5,9 @@ const Message = props => {
   return (
     <div className={s.message}>
       <div>{props.value}</div>
-      <span>likes -> {props.likes}</span>
+      <div>
+        <span>likes -> {props.likes}</span>
+      </div>
     </div>
   );
 };

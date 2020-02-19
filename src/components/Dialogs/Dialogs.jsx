@@ -30,14 +30,14 @@ const Dialogs = props => {
   return (
     <div className={s.dialogs}>
       <div className={s.dialogsItems}>{dialogsElements}</div>
-      <div className={s.messages}>{messagesElements}</div>
+      <div className={s.messages}>messages{messagesElements}</div>
       <div className={s.textarea}>
         <textarea 
           onChange={onTextChange} 
           ref={newMessEl} 
           value={props.dialogsPage.newTextMessage}
           placeholder='add new message...' />
-        <button onClick={addNewDialog}>Add Message</button>
+        <button className="button" onClick={addNewDialog}>Add Message</button>
       </div>
     </div>
   );

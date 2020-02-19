@@ -1,4 +1,4 @@
-.image {
+/* .image {
     width: 64px;
     height: 64px;
     border-radius: 50%;
@@ -9,19 +9,19 @@
 .image img {
     display: block;
     width: 64px;
-}
+} */
 
 .item {
     display: block;
     padding: 10px;
     border-bottom: 1px dashed lightslategray;
+    overflow: auto;
 }
 
 .item .msg {
-    display: inline-block;
-    vertical-align: top;
+    display: block;
+    /* vertical-align: top; */
     padding: 5px;
     font-weight: lighter;
-    color: blue;
-    
+    color: blue; 
 }
