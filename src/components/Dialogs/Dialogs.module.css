@@ -1,52 +1,64 @@
 .dialogs {
-    display: grid;
-    grid-template-columns: 3fr 7fr;
+  display: grid;
+  grid-template-columns: 3fr 7fr;
 }
 
 .dialogsItems {
-    padding: 10px;
-    font-weight: bold;
-    border-right: blue solid 2px;
+  padding: 10px;
+  font-weight: bold;
+  border-right: blue solid 2px;
 }
 
 .dialogsItems a.active {
-    color: white;
+  color: white;
 }
 .image {
-    display: inline-block;
-    width: 60px;
-    height: 60px;
-    box-shadow: 2px 2px 10px rgb(110, 185, 185);
-    border-radius: 50%;
-    overflow: hidden;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  box-shadow: 2px 2px 10px rgb(110, 185, 185);
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .image img {
-    width: 60px;
-    display: block;
+  width: 60px;
+  display: block;
 }
 
 .dialog {
-    border-bottom: blueviolet dashed 1px;
-    border-right: blueviolet dashed 1px;
+  border-bottom: blueviolet dashed 1px;
+  border-right: blueviolet dashed 1px;
 }
 
 .dialog a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .messages {
-    padding: 10px;
+  padding: 10px;
 }
 
 .message {
-    margin: 5px;
-    padding: 5px;
-    color: white;
-    background: steelblue;
-    border-radius: 3px;
+  margin: 5px;
+  padding: 5px;
+  color: white;
+  background: steelblue;
+  border-radius: 3px;
 }
 
-.message > div {
-   
+.textarea {
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
+
+.textarea textarea {
+  width: 95%;
+  height: 2rem;
+  border: 2px solid blue;
+  padding: 5px;
+}
+
+/* .message .msg {
+    width: inherit;
+} */
