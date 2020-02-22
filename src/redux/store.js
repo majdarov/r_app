@@ -39,6 +39,7 @@ let store = {
       },
 
       addNewTextMessage(text) {
+        if (!this.user) return;
         this.newTextMessage = text;
         this._subscribe();
       },
