@@ -14,9 +14,11 @@ let store = {
         { id: 1, iduser: 3, message: "Message1", likes: 5 },
         { id: 2, iduser: 5, message: "Message2", likes: 10 },
         { id: 3, iduser: 2, message: "Message3", likes: 12 },
-        { id: 4, iduser: 3, message: "Message4", likes: 15 }
+        { id: 4, iduser: 3, message: "Message4", likes: 15 },
+        { id: 5, iduser: 0, message: "Message from user 0", likes: 3 }
       ],
       newTextMessage: "",
+      user: null,
 
       _subscribe() {
         /* renderApp */
@@ -28,7 +30,7 @@ let store = {
         let msg = {
           id: id,
           message: this.newTextMessage,
-          iduser: 4,
+          iduser: this.user,
           likes: 0
         };
         this.messages.push(msg);
@@ -39,9 +41,18 @@ let store = {
       addNewTextMessage(text) {
         this.newTextMessage = text;
         this._subscribe();
+      },
+
+      getCurrentUser() {
+        return this.user;
+      },
+
+      setCurrentUser(userid) {
+        this.user = userid;
       }
     },
     profilePage: {
+      profileDescription: "Profile description...",
       posts: [
         { message: "First Message", likes: "10" },
         { message: "Second Message", likes: "5" },
@@ -69,16 +80,27 @@ let store = {
       }
     },
     navBar: [
-      { link: "/Profile", title: "Профиль" },
-      { link: "/Dialogs", title: "Диалоги" },
-      { link: "/Muzik", title: "Музыка" },
-      { link: "/Users", title: "Пользователи" },
-      { link: "/Game", title: "Играть" }
+      { link: "/profile", title: "Профиль" },
+      { link: "/dialogs", title: "Диалоги" },
+      { link: "/muzik", title: "Музыка" },
+      { link: "/users", title: "Пользователи" },
+      { link: "/game", title: "Играть" }
     ]
   },
 
+  setProfileDescription(text) {
+    this.state.profilePage.profileDescription = text;
+    this._subscribe()
+  },
+
+  _subscribe() {
+    /* observer */
+  },
+
   subscribe(observer) {
-    this.state.dialogsPage._subscribe = this.state.profilePage._subscribe = observer;
+    this.state.dialogsPage._subscribe = 
+    this.state.profilePage._subscribe = 
+    this._subscribe = observer;
   }
 };
 

@@ -5,7 +5,10 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 const Content = props => {
   return (
     <div>
-      <ProfileInfo />
+      <ProfileInfo 
+      profileDescription={props.profilePage.profileDescription}
+      setProfileDescription={props.setProfileDescription}
+      />
       <MyPosts profilePage={props.profilePage} />
     </div>
   );

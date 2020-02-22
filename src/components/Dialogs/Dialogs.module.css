@@ -39,6 +39,10 @@
     padding: 10px;
 }
 
+.textarea {
+   grid-column: span 2; 
+}
+
 .message {
     margin: 5px;
     padding: 5px;
@@ -47,6 +51,9 @@
     border-radius: 3px;
 }
 
-.message > div {
-   
+.dialogs > a {
+   text-decoration: none;
+   font-weight: bold;
+   color: green;
+   border-bottom: 1px dashed green;
 }

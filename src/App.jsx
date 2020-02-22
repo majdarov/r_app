@@ -21,7 +21,12 @@ const App = props => {
         <Navbar navBar={props.store.state.navBar} />
         <div className="app-content">
           <Route path="/dialogs" render={() => <Dialogs dialogsPage={props.store.state.dialogsPage} />} />
-          <Route path="/profile" render={() => <Profile profilePage={props.store.state.profilePage} />} />
+          <Route path="/profile"
+            render={() => <Profile
+              profilePage={props.store.state.profilePage}
+              setProfileDescription={props.store.setProfileDescription.bind(props.store)}
+            />}
+          />
           <Route path="/muzik" component={Music} />
           <Route path="/users" component={Users} />
           <Route path="/game" component={Game} />
