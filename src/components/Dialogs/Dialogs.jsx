@@ -5,7 +5,6 @@ import DialogItem from "./DialogItem/DialogItem";
 import { NavLink } from "react-router-dom";
 
 const Dialogs = props => {
-
   let dialogsElements = props.dialogsPage.users.map((item, index) => {
     return <DialogItem
       user={item}
@@ -54,8 +53,11 @@ const Dialogs = props => {
           rows={"4"}
           wrap={"hard"}
           value={props.dialogsPage.newTextMessage}
-          placeholder='add new message...' />
-        <button className="button" onClick={addNewDialog}>Add Message</button>
+          placeholder="add new message..."
+        />
+        <button className="button" onClick={addNewDialog}>
+          Add Message
+        </button>
       </div>
     </div>
   );
