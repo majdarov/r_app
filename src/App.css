@@ -31,3 +31,9 @@
   box-shadow: 3px 3px 3px gray;
   cursor: default;
 }
+
+#root {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}

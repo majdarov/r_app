@@ -80,11 +80,6 @@ let store = {
         this.newPostText = text;
         this._subscribe();
       },
-
-      toggleShowTextArea() {
-        this.showTextArea = !this.showTextArea;
-        this._subscribe();
-      }
     },
     navBar: [
       { link: "/profile", title: "Профиль" },

@@ -2,6 +2,7 @@
     display: inline-block;
     width: 10fr;
     height: 20vw;
+    max-height: 240px;
     overflow: hidden;
     margin-right: 5px;
     border-radius: 5px;
@@ -19,14 +20,17 @@
 }
 
 .descriptionBlock button {
-    margin-left: 5px;
+    /* margin-left: 5px; */
+    /* position: relative;
+    left: 90%;
+    top: 25px; */
     border-radius: 5px;
     background-color: lightgray; 
 }
 
-.descriptionBlock > div, button {
+/* .descriptionBlock > div, button {
     box-shadow: 3px 3px 3px lightslategrey;
-}
+} */
 
 .ava {
     width: 100px;
