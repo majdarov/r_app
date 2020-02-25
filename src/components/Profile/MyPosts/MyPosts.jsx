@@ -1,6 +1,7 @@
 import React from "react";
 import s from "./MyPosts.module.css";
 import Post from "./Post/Post";
+import TextArea from "../../TextArea/TextArea";
 
 const MyPosts = props => {
 
@@ -25,10 +26,11 @@ const MyPosts = props => {
     <div className={s.myposts}>
       <h3>My Posts</h3>
       <div className={s.textarea}>
-        <textarea onChange={onPostChange} 
-          ref={newPostElement} 
+        <TextArea 
+          onChange={onPostChange}
+          refrence={newPostElement}
           value={props.profilePage.newPostText}
-          placeholder='add new message...' />
+        />
         <div className={"button " + s.btn_posts} onClick={addPost}>Add post</div >
       </div>
       <div className={s.posts}>{postElements}</div>

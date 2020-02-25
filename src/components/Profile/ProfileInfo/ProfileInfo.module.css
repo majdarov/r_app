@@ -18,6 +18,12 @@
     padding: 10px;
 }
 
+.descriptionBlock button {
+    margin-left: 5px;
+    border-radius: 5px;
+    background-color: lightgray; 
+}
+
 .descriptionBlock > div, button {
     box-shadow: 3px 3px 3px lightslategrey;
 }
@@ -42,10 +48,4 @@
     padding: 10px;
     border-radius: 10px;
     background-color: lightgray;
-}
-
-.descriptionBlock button {
-    margin-left: 5px;
-    border-radius: 5px;
-    background-color: lightgray; 
 }

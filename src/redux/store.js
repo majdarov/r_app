@@ -60,6 +60,7 @@ let store = {
         { message: "Third Message", likes: "5" }
       ],
       newPostText: "",
+      showTextArea: false,
 
       _subscribe() {
         /* renderApp */
@@ -78,6 +79,11 @@ let store = {
       addNewText(text) {
         this.newPostText = text;
         this._subscribe();
+      },
+
+      toggleShowTextArea() {
+        this.showTextArea = !this.showTextArea;
+        this._subscribe();
       }
     },
     navBar: [
@@ -91,7 +97,7 @@ let store = {
 
   setProfileDescription(text) {
     this.state.profilePage.profileDescription = text;
-    this._subscribe()
+    this._subscribe();
   },
 
   _subscribe() {
@@ -99,9 +105,7 @@ let store = {
   },
 
   subscribe(observer) {
-    this.state.dialogsPage._subscribe = 
-    this.state.profilePage._subscribe = 
-    this._subscribe = observer;
+    this.state.dialogsPage._subscribe = this.state.profilePage._subscribe = this._subscribe = observer;
   }
 };
 

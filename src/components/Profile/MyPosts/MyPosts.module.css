@@ -4,7 +4,7 @@
 
 .textarea {
     display: inline-block;
-    width: 70vw;
+    /* width: 70vw; */
     border-radius: 5px;
     /* padding: 10px; */
     background-color: lightsteelblue;

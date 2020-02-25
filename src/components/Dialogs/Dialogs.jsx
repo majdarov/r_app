@@ -3,6 +3,7 @@ import s from "./Dialogs.module.css";
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
 import { NavLink } from "react-router-dom";
+import TextArea from "../TextArea/TextArea";
 
 const Dialogs = props => {
   let dialogsElements = props.dialogsPage.users.map((item, index) => {
@@ -13,7 +14,6 @@ const Dialogs = props => {
 
   let arrMessage = props.dialogsPage.messages;
   let userid = +window.location.pathname.slice(window.location.pathname.lastIndexOf("/") + 1);
-  console.log(userid);
   
   props.dialogsPage.setCurrentUser(userid);
 
@@ -46,14 +46,10 @@ const Dialogs = props => {
         <div>ALL MESSAGES</div>
       </NavLink>
       <div className={s.textarea}>
-        <textarea
+        <TextArea 
           onChange={onTextChange}
-          ref={newMessEl}
-          cols={"60"}
-          rows={"4"}
-          wrap={"hard"}
+          refrence={newMessEl}
           value={props.dialogsPage.newTextMessage}
-          placeholder="add new message..."
         />
         <button className="button" onClick={addNewDialog}>
           Add Message
