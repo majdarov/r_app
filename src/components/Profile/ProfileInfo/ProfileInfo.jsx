@@ -1,8 +1,7 @@
 import React from "react";
 import s from "./ProfileInfo.module.css";
 import TextArea from "../../TextArea/TextArea";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const ProfileInfo = props => {
   let textarea;
@@ -38,8 +37,7 @@ const ProfileInfo = props => {
   function txtAreaFocusOut(e) {
     let description = e.target.value;
     if (description.length) {
-      // eslint-disable-next-line no-restricted-globals
-      let conf = confirm("Save changes?");
+      let conf = window.confirm("Save changes?");
       if (conf) {
         props.setProfileDescription(description);
       }

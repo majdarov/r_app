@@ -59,26 +59,13 @@ let store = {
         { message: "Second Message", likes: "5" },
         { message: "Third Message", likes: "5" }
       ],
-      newPostText: "",
-      showTextArea: false,
 
-      _subscribe() {
-        /* renderApp */
-      },
-
-      addMessage() {
+      addMessage(text) {
         let msg = {
-          message: this.newPostText,
+          message: text,
           likes: 0
         };
         this.posts.push(msg);
-        this.newPostText = "";
-        this._subscribe();
-      },
-
-      addNewText(text) {
-        this.newPostText = text;
-        this._subscribe();
       },
     },
     navBar: [

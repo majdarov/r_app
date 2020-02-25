@@ -2,6 +2,7 @@ import React from "react";
 import s from "./MyPosts.module.css";
 import Post from "./Post/Post";
 import TextArea from "../../TextArea/TextArea";
+import { useState } from "react";
 
 const MyPosts = props => {
 
@@ -11,15 +12,18 @@ const MyPosts = props => {
 
   let newPostElement = React.createRef();
 
+  const [newPostText, setNewPostText] = useState("");
+
   let addPost = () => {
     let text = newPostElement.current.value;
     if (!text.length) return;
-    props.profilePage.addMessage();
+    props.profilePage.addMessage(text);
+    setNewPostText("");
   }
 
   function onPostChange() {
     let text = newPostElement.current.value;
-    props.profilePage.addNewText(text);
+    setNewPostText(text);
   }
 
   return (
@@ -29,7 +33,7 @@ const MyPosts = props => {
         <TextArea 
           onChange={onPostChange}
           refrence={newPostElement}
-          value={props.profilePage.newPostText}
+          value={newPostText}
         />
         <div className={"button " + s.btn_posts} onClick={addPost}>Add post</div >
       </div>
