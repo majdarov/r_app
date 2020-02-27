@@ -49,37 +49,53 @@ let store = {
     this._subscribe = observer;
   },
 
+  setProfileDesription(text) {
+    this._state.profilePage.profileDescription = text;
+    this._subscribe();
+  },
+
+  addMessage(text) {
+    let msg = {
+      message: text,
+      likes: 0
+    };
+    this._state.profilePage.posts.push(msg);
+  },
+
+  addDialog() {
+    if (!this._state.dialogsPage.newTextMessage) return;
+    let id = this._state.dialogsPage.messages.length + 1;
+    let dialog = {
+      id: id,
+      message: this._state.dialogsPage.newTextMessage,
+      iduser: this._state.dialogsPage.user,
+      likes: 0
+    };
+    this._state.dialogsPage.messages.push(dialog);
+    this._state.dialogsPage.newTextMessage = "";
+    this._subscribe();
+  },
+
+  addNewTextMessage(text) {
+    if (!this._state.dialogsPage.user) return;
+    this._state.dialogsPage.newTextMessage = text;
+    this._subscribe();
+  },
+
   dispatch(action) {
     // {type: string, ...args}
     switch (action.type) {
       case "SET-PROFILE-DESCRIPTION":
-        this._state.profilePage.profileDescription = action.text;
-        this._subscribe();
+        this.setProfileDesription(action.text);
         break;
       case "ADD-MESSAGE":
-        let msg = {
-          message: action.text,
-          likes: 0
-        };
-        this._state.profilePage.posts.push(msg);
+        this.addMessage(action.text);
         break;
       case "ADD-DIALOG":
-        if (!this._state.dialogsPage.newTextMessage) return;
-        let id = this._state.dialogsPage.messages.length + 1;
-        let dialog = {
-          id: id,
-          message: this._state.dialogsPage.newTextMessage,
-          iduser: this._state.dialogsPage.user,
-          likes: 0
-        };
-        this._state.dialogsPage.messages.push(dialog);
-        this._state.dialogsPage.newTextMessage = "";
-        this._subscribe();
+        this.addDialog();
         break;
       case "ADD-NEW-TEXT-MESSAGE":
-        if (!this._state.dialogsPage.user) return;
-        this._state.dialogsPage.newTextMessage = action.text;
-        this._subscribe();
+        this.addNewTextMessage(action.text);
         break;
       case "GET-CURRENT-USER":
         return this._state.dialogsPage.user;
