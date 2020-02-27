@@ -5,7 +5,10 @@ import store from "./redux/store";
 
 /** RENDER */
 function renderApp() {
-  ReactDOM.render(<App store={store} />, document.getElementById("root"));
+  ReactDOM.render(<App 
+    state={store.getState()} 
+    dispatch={store.dispatch.bind(store)}
+  />, document.getElementById("root"));
 }
 
 renderApp();

@@ -5,13 +5,13 @@ import { useState, useEffect } from "react";
 
 const ProfileInfo = props => {
   let textarea;
-  let newDescription = React.createRef();
+  let newDescriptionRef = React.createRef();
 
   const [showTxt, setShowTxt] = useState(false);
 
   useEffect(() => {
     if (showTxt) {
-      newDescription.current.focus();
+      newDescriptionRef.current.focus();
     }
     return;
   });
@@ -20,7 +20,7 @@ const ProfileInfo = props => {
     let divTxt = props.profilePage.profileDescription;
     textarea = (
       <TextArea
-        refrence={newDescription}
+        refrence={newDescriptionRef}
         placeholder={divTxt}
         onBlur={txtAreaFocusOut}
       />
@@ -39,7 +39,7 @@ const ProfileInfo = props => {
     if (description.length) {
       let conf = window.confirm("Save changes?");
       if (conf) {
-        props.setProfileDescription(description);
+        props.dispatch({type: 'SET-PROFILE-DESCRIPTION', text: description});
       }
     }
     setShowTxt(false);

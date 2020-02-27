@@ -17,7 +17,7 @@ const MyPosts = props => {
   let addPost = () => {
     let text = newPostElement.current.value;
     if (!text.length) return;
-    props.profilePage.addMessage(text);
+    props.dispatch({type: 'ADD-MESSAGE', text: text});
     setNewPostText("");
   }
 

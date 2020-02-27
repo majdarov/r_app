@@ -1,5 +1,5 @@
 let store = {
-  state: {
+  _state: {
     link: "Main",
     dialogsPage: {
       users: [
@@ -18,39 +18,7 @@ let store = {
         { id: 5, iduser: 0, message: "Message from user 0", likes: 3 }
       ],
       newTextMessage: "",
-      user: null,
-
-      _subscribe() {
-        /* renderApp */
-      },
-
-      addDialog() {
-        if (!this.newTextMessage) return;
-        let id = this.messages.length + 1;
-        let msg = {
-          id: id,
-          message: this.newTextMessage,
-          iduser: this.user,
-          likes: 0
-        };
-        this.messages.push(msg);
-        this.newTextMessage = "";
-        this._subscribe();
-      },
-
-      addNewTextMessage(text) {
-        if (!this.user) return;
-        this.newTextMessage = text;
-        this._subscribe();
-      },
-
-      getCurrentUser() {
-        return this.user;
-      },
-
-      setCurrentUser(userid) {
-        this.user = userid;
-      }
+      user: null
     },
     profilePage: {
       profileDescription: "Profile description...",
@@ -58,15 +26,7 @@ let store = {
         { message: "First Message", likes: "10" },
         { message: "Second Message", likes: "5" },
         { message: "Third Message", likes: "5" }
-      ],
-
-      addMessage(text) {
-        let msg = {
-          message: text,
-          likes: 0
-        };
-        this.posts.push(msg);
-      },
+      ]
     },
     navBar: [
       { link: "/profile", title: "Профиль" },
@@ -77,9 +37,8 @@ let store = {
     ]
   },
 
-  setProfileDescription(text) {
-    this.state.profilePage.profileDescription = text;
-    this._subscribe();
+  getState() {
+    return this._state;
   },
 
   _subscribe() {
@@ -87,7 +46,49 @@ let store = {
   },
 
   subscribe(observer) {
-    this.state.dialogsPage._subscribe = this.state.profilePage._subscribe = this._subscribe = observer;
+    this._subscribe = observer;
+  },
+
+  dispatch(action) {
+    // {type: string, ...args}
+    switch (action.type) {
+      case "SET-PROFILE-DESCRIPTION":
+        this._state.profilePage.profileDescription = action.text;
+        this._subscribe();
+        break;
+      case "ADD-MESSAGE":
+        let msg = {
+          message: action.text,
+          likes: 0
+        };
+        this._state.profilePage.posts.push(msg);
+        break;
+      case "ADD-DIALOG":
+        if (!this._state.dialogsPage.newTextMessage) return;
+        let id = this._state.dialogsPage.messages.length + 1;
+        let dialog = {
+          id: id,
+          message: this._state.dialogsPage.newTextMessage,
+          iduser: this._state.dialogsPage.user,
+          likes: 0
+        };
+        this._state.dialogsPage.messages.push(dialog);
+        this._state.dialogsPage.newTextMessage = "";
+        this._subscribe();
+        break;
+      case "ADD-NEW-TEXT-MESSAGE":
+        if (!this._state.dialogsPage.user) return;
+        this._state.dialogsPage.newTextMessage = action.text;
+        this._subscribe();
+        break;
+      case "GET-CURRENT-USER":
+        return this._state.dialogsPage.user;
+      case "SET-CURRENT-USER":
+        this._state.dialogsPage.user = action.userid;
+        break;
+      default:
+        break;
+    }
   }
 };
 

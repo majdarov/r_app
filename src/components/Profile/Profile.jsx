@@ -7,9 +7,12 @@ const Content = props => {
     <div>
       <ProfileInfo
         profilePage={props.profilePage}
-        setProfileDescription={props.setProfileDescription}
+        dispatch={props.dispatch}
       />
-      <MyPosts profilePage={props.profilePage} />
+      <MyPosts 
+        profilePage={props.profilePage} 
+        dispatch={props.dispatch}
+        />
     </div>
   );
 };

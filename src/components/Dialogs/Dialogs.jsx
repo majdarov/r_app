@@ -14,10 +14,10 @@ const Dialogs = props => {
 
   let arrMessage = props.dialogsPage.messages;
   let userid = +window.location.pathname.slice(window.location.pathname.lastIndexOf("/") + 1);
-  
-  props.dialogsPage.setCurrentUser(userid);
 
-  if (props.dialogsPage.getCurrentUser() + 1) {
+  props.dispatch({ type: 'SET-CURRENT-USER', userid: userid });
+
+  if (props.dispatch({ type: 'GET-CURRENT-USER' }) + 1) {
     arrMessage = arrMessage.filter(item => item.iduser === userid);
   }
 
@@ -31,11 +31,11 @@ const Dialogs = props => {
 
   function onTextChange() {
     let text = newMessEl.current.value;
-    props.dialogsPage.addNewTextMessage(text);
+    props.dispatch({ type: 'ADD-NEW-TEXT-MESSAGE', text: text });
   }
 
   let addNewDialog = () => {
-    props.dialogsPage.addDialog(userid);
+    props.dispatch({ type: 'ADD-DIALOG' });
   }
 
   return (
@@ -46,7 +46,7 @@ const Dialogs = props => {
         <div>ALL MESSAGES</div>
       </NavLink>
       <div className={s.textarea}>
-        <TextArea 
+        <TextArea
           onChange={onTextChange}
           refrence={newMessEl}
           value={props.dialogsPage.newTextMessage}
