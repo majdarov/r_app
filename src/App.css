@@ -6,7 +6,7 @@
 .app {
   margin: 0.5rem auto;
   display: grid;
-  grid-template-rows: 1fr 10fr;
+  grid-template-rows: 80px 10fr;
   grid-template-columns: repeat(6, 2fr);
   grid-template-areas:
     "h h h h h h"
@@ -17,6 +17,7 @@
 
 .app-content {
   grid-area: c;
+  padding: 0.5rem;
   /* background-color: lavender; */
 }
 
