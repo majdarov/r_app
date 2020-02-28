@@ -11,11 +11,11 @@ const News = props => {
       element = <hr key={i}/>;
     } else {
       element = (
-        <>
-          <hr className={s.image} key={i}/>
+        <div key={i}>
+          <hr className={s.image} />
           <hr />
           <hr />
-        </>
+        </div>
       );
     }
     rowsElements.push(element);

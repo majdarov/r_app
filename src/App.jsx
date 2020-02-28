@@ -9,18 +9,18 @@ import Muzik from "./components/Muzik/Muzik";
 import Users from "./components/Users/Users";
 import Game from "./components/Game/Game";
 
-const App = props => {
- 
-  let Music = () => {
-    return <Muzik link={document.documentURI} />;
-  };
+const App = props => { 
+  
+  let path = window.location.pathname;
+  let title = props.dispatch({type: "GET-TITLE", path});
 
   return (
     <BrowserRouter>
       <div className="app">
-        <Header link={props.state.link} />
-        <Navbar navBar={props.state.navBar} />
+        <Header title={title} dispatch={props.dispatch}/>
+        <Navbar navBar={props.state.navBar} dispatch={props.dispatch}/>
         <div className="app-content">
+          {/* <Route exact path="/" /> */}
           <Route path="/dialogs" render={() => <Dialogs 
             dialogsPage={props.state.dialogsPage} 
             dispatch={props.dispatch}  
@@ -32,7 +32,7 @@ const App = props => {
               dispatch={props.dispatch}
             />}
           />
-          <Route path="/muzik" component={Music} />
+          <Route path="/muzik" render={() => <Muzik title={title}/>} />
           <Route path="/users" component={Users} />
           <Route path="/game" component={Game} />
         </div>

@@ -1,6 +1,6 @@
 let store = {
   _state: {
-    link: "Main",
+    _title: "",
     dialogsPage: {
       users: [
         { id: 0, name: "Dymich", photo: "0.jpg" },
@@ -29,6 +29,7 @@ let store = {
       ]
     },
     navBar: [
+      { link: "/", title: "Начало" },
       { link: "/profile", title: "Профиль" },
       { link: "/dialogs", title: "Диалоги" },
       { link: "/muzik", title: "Музыка" },
@@ -43,6 +44,19 @@ let store = {
 
   _subscribe() {
     /* observer */
+  },
+
+  getTitle(path) {
+      let nav = this._state.navBar.find(item => item.link === path);
+      if (nav !== undefined) {
+        return nav.title;
+      }
+      return this._state._title;
+  },
+
+  setTitle(title) {
+    this._state._title = title;
+    this._subscribe();
   },
 
   subscribe(observer) {
@@ -102,6 +116,11 @@ let store = {
       case "SET-CURRENT-USER":
         this._state.dialogsPage.user = action.userid;
         break;
+      case "SET-TITLE":
+        this.setTitle(action.title);
+        break;
+      case "GET-TITLE":
+        return this.getTitle(action.path);
       default:
         break;
     }

@@ -2,7 +2,7 @@ import React from "react";
 import s from "./Muzik.module.css";
 
 const Muzik = props => {
-  return <div className={s.item}>{props.link}</div>;
+  return <div className={s.item}>{props.title}</div>;
 };
 
 export default Muzik;
