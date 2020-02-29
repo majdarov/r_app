@@ -1,11 +1,12 @@
 import React from 'react';
 import s from './Navbar.module.css';
 import { NavLink } from 'react-router-dom';
+import { setTitleAC } from '../../redux/store';
 
 const Navbar = props => {
 
   function setTitle(title) {
-    props.dispatch({type: "SET-TITLE", title});
+    props.dispatch(setTitleAC(title));
   }
 
   let navElements = props.navBar.map((nav, idx) => {

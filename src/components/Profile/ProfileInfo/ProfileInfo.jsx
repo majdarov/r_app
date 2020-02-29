@@ -2,6 +2,7 @@ import React from "react";
 import s from "./ProfileInfo.module.css";
 import TextArea from "../../TextArea/TextArea";
 import { useState, useEffect } from "react";
+import { setProfileDesriptionAC } from "../../../redux/store";
 
 const ProfileInfo = props => {
   let textarea;
@@ -39,7 +40,7 @@ const ProfileInfo = props => {
     if (description.length) {
       let conf = window.confirm("Save changes?");
       if (conf) {
-        props.dispatch({type: 'SET-PROFILE-DESCRIPTION', text: description});
+        props.dispatch(setProfileDesriptionAC(description));
       }
     }
     setShowTxt(false);

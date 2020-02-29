@@ -8,11 +8,12 @@ import { Route, BrowserRouter } from "react-router-dom";
 import Muzik from "./components/Muzik/Muzik";
 import Users from "./components/Users/Users";
 import Game from "./components/Game/Game";
+import { getTitleAC } from "./redux/store";
 
 const App = props => { 
   
   let path = window.location.pathname;
-  let title = props.dispatch({type: "GET-TITLE", path});
+  let title = props.dispatch(getTitleAC(path));
 
   return (
     <BrowserRouter>

@@ -4,6 +4,7 @@ import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
 import { NavLink } from "react-router-dom";
 import TextArea from "../TextArea/TextArea";
+import { setCurrentUserAC, getCurrentUserAC, addNewTextMessageAC, addDialogAC } from "../../redux/store";
 
 const Dialogs = props => {
   let dialogsElements = props.dialogsPage.users.map((item, index) => {
@@ -15,9 +16,9 @@ const Dialogs = props => {
   let arrMessage = props.dialogsPage.messages;
   let userid = +window.location.pathname.slice(window.location.pathname.lastIndexOf("/") + 1);
 
-  props.dispatch({ type: 'SET-CURRENT-USER', userid: userid });
+  props.dispatch(setCurrentUserAC(userid));
 
-  if (props.dispatch({ type: 'GET-CURRENT-USER' }) + 1) {
+  if (props.dispatch(getCurrentUserAC()) + 1) {
     arrMessage = arrMessage.filter(item => item.iduser === userid);
   }
 
@@ -31,11 +32,11 @@ const Dialogs = props => {
 
   function onTextChange() {
     let text = newMessEl.current.value;
-    props.dispatch({ type: 'ADD-NEW-TEXT-MESSAGE', text: text });
+    props.dispatch(addNewTextMessageAC(text));
   }
 
   let addNewDialog = () => {
-    props.dispatch({ type: 'ADD-DIALOG' });
+    props.dispatch(addDialogAC());
   }
 
   return (

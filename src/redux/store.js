@@ -47,11 +47,11 @@ let store = {
   },
 
   getTitle(path) {
-      let nav = this._state.navBar.find(item => item.link === path);
-      if (nav !== undefined) {
-        return nav.title;
-      }
-      return this._state._title;
+    let nav = this._state.navBar.find(item => item.link === path);
+    if (nav !== undefined) {
+      return nav.title;
+    }
+    return this._state._title;
   },
 
   setTitle(title) {
@@ -99,32 +99,70 @@ let store = {
   dispatch(action) {
     // {type: string, ...args}
     switch (action.type) {
-      case "SET-PROFILE-DESCRIPTION":
+      case SET_PROFILE_DESCRIPTION:
         this.setProfileDesription(action.text);
         break;
-      case "ADD-MESSAGE":
+      case ADD_MESSAGE:
         this.addMessage(action.text);
         break;
-      case "ADD-DIALOG":
+      case ADD_DIALOG:
         this.addDialog();
         break;
-      case "ADD-NEW-TEXT-MESSAGE":
+      case ADD_NEW_TEXT_MESSAGE:
         this.addNewTextMessage(action.text);
         break;
-      case "GET-CURRENT-USER":
+      case GET_CURRENT_USER:
         return this._state.dialogsPage.user;
-      case "SET-CURRENT-USER":
+      case SET_CURRENT_USER:
         this._state.dialogsPage.user = action.userid;
         break;
-      case "SET-TITLE":
+      case SET_TITLE:
         this.setTitle(action.title);
         break;
-      case "GET-TITLE":
+      case GET_TITLE:
         return this.getTitle(action.path);
       default:
         break;
     }
   }
+};
+
+/* Action Creators */
+
+const ADD_MESSAGE = "ADD-MESSAGE";
+export const addMessageAC = text => {
+  return { type: ADD_MESSAGE, text: text };
+};
+
+const SET_CURRENT_USER = "SET-CURRENT-USER";
+export const setCurrentUserAC = userid => {
+  return { type: SET_CURRENT_USER, userid: userid };
+};
+
+const GET_CURRENT_USER = "GET-CURRENT-USER";
+export const getCurrentUserAC = () => {
+  return { type: GET_CURRENT_USER };
+};
+
+const ADD_NEW_TEXT_MESSAGE = "ADD-NEW-TEXT-MESSAGE";
+export const addNewTextMessageAC = text => {
+  return { type: ADD_NEW_TEXT_MESSAGE, text: text };
+};
+
+const ADD_DIALOG = "ADD-DIALOG";
+export const addDialogAC = () => {
+  return { type: ADD_DIALOG };
+};
+
+const GET_TITLE = "GET-TITLE";
+export const getTitleAC = path => ({ type: GET_TITLE, path });
+
+const SET_TITLE = "SET-TITLE";
+export const setTitleAC = title => ({ type: SET_TITLE, title });
+
+const SET_PROFILE_DESCRIPTION = "SET-PROFILE-DESCRIPTION";
+export const setProfileDesriptionAC = description => {
+  return { type: SET_PROFILE_DESCRIPTION, text: description };
 };
 
 export default store;

@@ -3,6 +3,7 @@ import s from "./MyPosts.module.css";
 import Post from "./Post/Post";
 import TextArea from "../../TextArea/TextArea";
 import { useState } from "react";
+import { addMessageAC } from "../../../redux/store";
 
 const MyPosts = props => {
 
@@ -17,7 +18,7 @@ const MyPosts = props => {
   let addPost = () => {
     let text = newPostElement.current.value;
     if (!text.length) return;
-    props.dispatch({type: 'ADD-MESSAGE', text: text});
+    props.dispatch(addMessageAC(text));
     setNewPostText("");
   }
 

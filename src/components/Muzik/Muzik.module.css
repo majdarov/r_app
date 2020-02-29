@@ -1,6 +1,38 @@
+.container {
+    display: flex;
+}
+
 .item {
     font-size: xx-large;
     font-weight: bold;
     color: blue;
     text-shadow: 3px 3px white;
+}
+
+.textdiv {
+    display: inline-flex;
+    width: 300px;
+    height: 200px;
+    /* overflow: hidden; */
+}
+
+.textdiv > .text {
+    width: 300px;
+    height: 210px;
+    color: lightgray;
+    background-color: darkblue;
+}
+
+.result > img {
+    max-width: 100px;
+}
+
+.result {
+    /* display: inline-flex; */
+    padding: 3px;
+    width: 300px;
+    height: 200px;
+    color: lightgray;
+    background-color: darkblue;
+    margin-left: 5px;
 }
