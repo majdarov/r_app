@@ -2,7 +2,7 @@ import React from "react";
 import s from "./ProfileInfo.module.css";
 import TextArea from "../../TextArea/TextArea";
 import { useState, useEffect } from "react";
-import { setProfileDesriptionAC } from "../../../redux/store";
+import { setProfileDesriptionAC } from "../../../redux/profileReduser";
 
 const ProfileInfo = props => {
   let textarea;

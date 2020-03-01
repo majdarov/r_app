@@ -4,29 +4,26 @@ import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
 import { NavLink } from "react-router-dom";
 import TextArea from "../TextArea/TextArea";
-import { setCurrentUserAC, getCurrentUserAC, addNewTextMessageAC, addDialogAC } from "../../redux/store";
+import { addNewTextMessageAC, addDialogAC } from "../../redux/dialogsReduser";
 
 const Dialogs = props => {
   let dialogsElements = props.dialogsPage.users.map((item, index) => {
-    return <DialogItem
-      user={item}
-      key={index} />;
+    return <DialogItem user={item} key={index} dispatch={props.dispatch} />;
   });
 
   let arrMessage = props.dialogsPage.messages;
-  let userid = +window.location.pathname.slice(window.location.pathname.lastIndexOf("/") + 1);
 
-  props.dispatch(setCurrentUserAC(userid));
+  let userid = +window.location.pathname.slice(
+    window.location.pathname.lastIndexOf("/") + 1
+  );
 
-  if (props.dispatch(getCurrentUserAC()) + 1) {
+  if (userid + 1) {
     arrMessage = arrMessage.filter(item => item.iduser === userid);
   }
 
   let messagesElements = arrMessage.map((item, idx) => {
     return <Message value={item.message} likes={item.likes} key={idx} />;
   });
-
-
 
   let newMessEl = React.createRef();
 
@@ -35,7 +32,7 @@ const Dialogs = props => {
     props.dispatch(addNewTextMessageAC(text));
   }
 
-  let addNewDialog = () => {
+  function addNewDialog() {
     props.dispatch(addDialogAC());
   }
 

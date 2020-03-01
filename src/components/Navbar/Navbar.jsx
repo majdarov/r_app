@@ -1,12 +1,13 @@
 import React from 'react';
 import s from './Navbar.module.css';
 import { NavLink } from 'react-router-dom';
-import { setTitleAC } from '../../redux/store';
+import { getTitleAC } from '../../redux/navReduser';
 
 const Navbar = props => {
 
-  function setTitle(title) {
-    props.dispatch(setTitleAC(title));
+  function getTitle(path) {
+    console.log(path);
+    props.dispatch(getTitleAC(path));
   }
 
   let navElements = props.navBar.map((nav, idx) => {
@@ -18,7 +19,7 @@ const Navbar = props => {
           exact={ex}
           to={nav.link} 
           activeClassName={s.active}
-          onClick={(e) => {setTitle(nav.title)}}
+          onClick={(e) => {getTitle(nav.link)}}
         >
           {nav.title}
         </NavLink>

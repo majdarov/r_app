@@ -17,7 +17,12 @@ const Muzik = props => {
       <div className={s.item}>{props.title}</div>
       <div className={s.container}>
         <div className={s.textdiv}>
-          <textarea className={s.text} value={text} onChange={changeText}>
+          <textarea 
+            className={s.text} 
+            cols={50}
+            rows={15}
+            value={text} 
+            onChange={changeText}>
             {text}
           </textarea>
         </div>

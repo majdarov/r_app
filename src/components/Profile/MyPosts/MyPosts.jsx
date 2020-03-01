@@ -3,7 +3,7 @@ import s from "./MyPosts.module.css";
 import Post from "./Post/Post";
 import TextArea from "../../TextArea/TextArea";
 import { useState } from "react";
-import { addMessageAC } from "../../../redux/store";
+import { addMessageAC } from "../../../redux/profileReduser";
 
 const MyPosts = props => {
 

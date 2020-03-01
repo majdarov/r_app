@@ -11,14 +11,14 @@
 
 .textdiv {
     display: inline-flex;
-    width: 300px;
-    height: 200px;
+    /* width: 300px;
+    height: 200px; */
     /* overflow: hidden; */
 }
 
 .textdiv > .text {
-    width: 300px;
-    height: 210px;
+    /* width: 300px;
+    height: 210px; */
     color: lightgray;
     background-color: darkblue;
 }
