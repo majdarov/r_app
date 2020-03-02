@@ -8,9 +8,16 @@ import { Route } from "react-router-dom";
 import Muzik from "./components/Muzik/Muzik";
 import Users from "./components/Users/Users";
 import Game from "./components/Game/Game";
+import { getTitleAC } from "./redux/navReduser";
 
 const App = props => { 
   
+  let path = window.location.pathname;
+  
+  if (!props.state.navigation._title) {
+    props.dispatch(getTitleAC(path));
+  }
+
   let title = props.state.navigation._title;
 
   return (
