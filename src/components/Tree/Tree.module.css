@@ -1,0 +1,20 @@
+.tree {
+    grid-column: 1/2;
+    padding: 10px;
+    border: 1px solid blue;
+    background-color: cornsilk;
+    cursor: default;
+}
+
+.tree span {
+    font-weight: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+ul a {
+    text-decoration: none;
+    cursor: default;
+}

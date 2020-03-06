@@ -1,0 +1,20 @@
+.container {
+    display: grid;
+    grid-template-columns: 220px 2fr;
+    /* grid-template-rows: auto; */
+    /* grid-auto-flow: dense; */
+}
+
+.item {
+    font-size: xx-large;
+    font-weight: bold;
+    color: blue;
+    text-shadow: 3px 3px white;
+}
+
+.list {
+    grid-column: 2/3;
+    padding: 10px;
+    border: 1px solid blue;
+    background-color: cornsilk;
+}

@@ -17,10 +17,14 @@ const dialogsReduser = (state, action) => {
       state.newTextMessage = "";
       return state;
     case ADD_NEW_TEXT_MESSAGE:
-      if (!state.user) return state;
+      if (!state.user) {
+        state.newTextMessage = 'Выберите пользователя';
+        return state;
+      }
       state.newTextMessage = action.text;
       return state;
     case SET_CURRENT_USER:
+      state.newTextMessage = '';
       state.user = action.userid;
       return state;
     default:

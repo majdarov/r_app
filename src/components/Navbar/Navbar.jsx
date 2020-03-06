@@ -6,7 +6,7 @@ import { getTitleAC } from '../../redux/navReduser';
 const Navbar = props => {
 
   function getTitle(path) {
-    console.log(path);
+    // console.log(path);
     props.dispatch(getTitleAC(path));
   }
 

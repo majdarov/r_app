@@ -13,6 +13,7 @@ function renderApp(state) {
     document.getElementById("root")
   );
 }
+window.state = store._state;
 
 renderApp(store.getState());
 

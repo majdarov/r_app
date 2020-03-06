@@ -9,6 +9,7 @@ import Muzik from "./components/Muzik/Muzik";
 import Users from "./components/Users/Users";
 import Game from "./components/Game/Game";
 import { getTitleAC } from "./redux/navReduser";
+import Commodity from "./components/Commodity/Commdoity";
 
 const App = props => { 
   
@@ -38,6 +39,10 @@ const App = props => {
             />}
           />
           <Route path="/muzik" render={() => <Muzik title={title}/>} />
+          <Route path="/commodity" render={() => <Commodity 
+            title={title}
+            data={props.state.commodityPage.data}
+            />} />
           <Route path="/users" component={Users} />
           <Route path="/game" component={Game} />
         </div>
