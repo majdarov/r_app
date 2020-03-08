@@ -1,7 +1,16 @@
 const SET_PROFILE_DESCRIPTION = "SET-PROFILE-DESCRIPTION";
 const ADD_MESSAGE = "ADD-MESSAGE";
 
-const profileReduser = (state, action) => {
+let initialState = {
+  profileDescription: "Profile description...",
+  posts: [
+    { message: "First Message", likes: "10" },
+    { message: "Second Message", likes: "5" },
+    { message: "Third Message", likes: "5" }
+  ]
+};
+
+const profileReduser = (state = initialState, action) => {
   switch (action.type) {
     case SET_PROFILE_DESCRIPTION:
       state.profileDescription = action.text;

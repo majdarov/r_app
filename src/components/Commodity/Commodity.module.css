@@ -1,18 +1,28 @@
 .container {
-    display: grid;
-    grid-template-columns: 2fr 4fr;
-}
-
-.item {
-    font-size: xx-large;
-    font-weight: bold;
-    color: blue;
-    text-shadow: 3px 3px white;
+  display: grid;
+  grid-template-columns: 2fr 4fr;
 }
 
 .list {
-    /* grid-column: 2/7; */
-    padding: 10px;
-    border: 1px solid blue;
-    background-color: cornsilk;
+  /* grid-column: 2/7; */
+  padding: 10px;
+  border: 1px solid blue;
+  background-color: cornsilk;
 }
+
+.list h2 {
+    text-align: center;
+    border-bottom: grey solid 2px;
+}
+
+.list h2::before {
+  content: "\cb";
+  font-family: "Wingdings";
+  margin-right: 1rem;
+}
+
+.list h2::after {
+    content: "\cb";
+    font-family: "Wingdings";
+    margin-left: 1rem;
+  }

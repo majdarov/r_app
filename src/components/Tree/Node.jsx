@@ -1,9 +1,8 @@
 import React from "react";
-import s from "./Tree.module.css";
 
 const Node = props => {
   let ul;
-  let closed = props.hidden ? "fas fa-folder" : "fas fa-folder-open";
+  let closed = props.hidden ? "far fa-folder" : "far fa-folder-open";
   if (props.children.length) {
     ul = <ul hidden={props.hidden}>{props.children}</ul>;
   }

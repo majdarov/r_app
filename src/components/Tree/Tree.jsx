@@ -40,9 +40,9 @@ const Tree = props => {
     if (!target) return;
     target.hidden = !target.hidden;
     if (target.hidden) {
-      elem.firstElementChild.className = "fas fa-folder";
+      elem.firstElementChild.className = "far fa-folder";
     } else {
-      elem.firstElementChild.className = "fas fa-folder-open";
+      elem.firstElementChild.className = "far fa-folder-open";
     }
   }
 

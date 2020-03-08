@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import store from "./redux/store";
+import store from "./redux/redux-store";
 import { BrowserRouter } from "react-router-dom";
 
 /** RENDER */
@@ -13,8 +13,11 @@ function renderApp(state) {
     document.getElementById("root")
   );
 }
-window.state = store._state;
+window.state = store.getState();
 
 renderApp(store.getState());
 
-store.subscribe(renderApp);
+store.subscribe(() => {
+  let state = store.getState();  
+  renderApp(state)
+});

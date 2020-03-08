@@ -30,5 +30,17 @@ ul {
 
 .tree h2 {
   text-align: center;
-  border-bottom: solid 1px;
+  border-bottom: grey solid 2px;
 }
+
+.tree h2::before {
+  content: "\cb";
+  font-family: "Wingdings";
+  margin-right: 1rem;
+}
+
+.tree h2::after {
+    content: "\cb";
+    font-family: "Wingdings";
+    margin-left: 1rem;
+  }
