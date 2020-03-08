@@ -4,7 +4,11 @@ import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
 import { NavLink } from "react-router-dom";
 import TextArea from "../TextArea/TextArea";
-import { addNewTextMessageAC, addDialogAC, setCurrentUserAC } from "../../redux/dialogsReduser";
+import {
+  addNewTextMessageAC,
+  addDialogAC,
+  setCurrentUserAC
+} from "../../redux/dialogsReduser";
 
 const Dialogs = props => {
   let dialogsElements = props.dialogsPage.users.map((item, index) => {
@@ -40,7 +44,10 @@ const Dialogs = props => {
     <div className={s.dialogs}>
       <div className={s.dialogsItems}>{dialogsElements}</div>
       <div className={s.messages}>messages{messagesElements}</div>
-      <NavLink to={"../dialogs"} onClick={() => setCurrentUserAC(null)}>
+      <NavLink
+        to={"../dialogs"}
+        onClick={() => props.dispatch(setCurrentUserAC(null))}
+      >
         <div>ALL MESSAGES</div>
       </NavLink>
       <div className={s.textarea}>

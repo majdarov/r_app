@@ -4,17 +4,18 @@
 
 .textarea {
     border-radius: 5px;
-    padding: 10px;
+    padding: 5px;
     background-color: lightsteelblue;
     overflow: hidden;
 }
 
 textarea {
     display: block;
-    width: inherit;
-    margin: 5px;
+    width: 100%;
+    padding: 3px;
     background: transparent;
     border: none;
+    resize: none;
 }
 
 .posts {

@@ -1,15 +1,20 @@
 import React from "react";
+import s from "./Tree.module.css";
 
 const Node = props => {
   let ul;
+  let closed = props.hidden ? "fas fa-folder" : "fas fa-folder-open";
   if (props.children.length) {
-    ul = <ul>{props.children}</ul>;
+    ul = <ul hidden={props.hidden}>{props.children}</ul>;
   }
 
   return (
     <>
       <li id={props.id}>
-        <a href='#' onDoubleClick={props.toggleHidden}>{props.label}</a>
+        <i className={closed}></i>
+        <span >
+          {props.label}
+        </span>
         {ul}
       </li>
     </>
