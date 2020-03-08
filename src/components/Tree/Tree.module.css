@@ -12,11 +12,24 @@
 }
 
 .tree span {
-  font-family: FontAwesome;
+  font-family: "Font Awesome 5 Free";
 }
 
 .tree li {
     white-space: nowrap;
+}
+
+.tree li::before {
+  content: "\f105";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 0.1rem;
+}
+
+.tree li[class="open"]::before {
+  content: "\f107";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
 }
 
 .tree span:active {
@@ -34,13 +47,17 @@ ul {
 }
 
 .tree h2::before {
-  content: "\cb";
-  font-family: "Wingdings";
+  content: "\f50c";
+  font-family: "Font Awesome 5 Brands";
+  font-weight: 400;
+  color: blue;
   margin-right: 1rem;
 }
 
 .tree h2::after {
-    content: "\cb";
-    font-family: "Wingdings";
+    content: "\f50c";
+    font-family: "Font Awesome 5 Brands";
+    font-weight: 400;
+    color: blue;
     margin-left: 1rem;
   }

@@ -16,13 +16,17 @@
 }
 
 .list h2::before {
-  content: "\cb";
-  font-family: "Wingdings";
+  content: "\f50d";
+  font-weight: 400;
+  color: navy;
+  font-family: "Font Awesome 5 Brands";
   margin-right: 1rem;
 }
 
 .list h2::after {
-    content: "\cb";
-    font-family: "Wingdings";
+    content: "\f50d";
+    font-weight: 400;
+    color: navy;
+    font-family: "Font Awesome 5 Brands";
     margin-left: 1rem;
   }

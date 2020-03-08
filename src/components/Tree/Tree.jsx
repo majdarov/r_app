@@ -5,7 +5,7 @@ import Node from "./Node";
 
 const Tree = props => {
   let nodeRoot = { id: 0, label: "rootNode", childs: [] };
-  let tree = { id: "Tree", label: "Товары", childs: [nodeRoot] };
+  let tree = { id: "Tree", label: "Groups", childs: [nodeRoot] };
   createTree(props.data, tree);
 
   function createSubTree(item, lvl = 0) {
@@ -40,9 +40,11 @@ const Tree = props => {
     if (!target) return;
     target.hidden = !target.hidden;
     if (target.hidden) {
-      elem.firstElementChild.className = "far fa-folder";
+      elem.className = "closed";
+      elem.firstElementChild.className = "fas fa-folder";
     } else {
-      elem.firstElementChild.className = "far fa-folder-open";
+      elem.className = "open";
+      elem.firstElementChild.className = "fas fa-folder-open";
     }
   }
 
