@@ -4,7 +4,7 @@ import createTree from "./treeFunction";
 import Node from "./Node";
 
 const Tree = props => {
-  let nodeRoot = { id: 0, label: "rootNode", childs: [] };
+  let nodeRoot = { id: 0, label: props.price, childs: [] };
   let tree = { id: "Tree", label: "Groups", childs: [nodeRoot] };
   createTree(props.data, tree);
 
@@ -22,7 +22,7 @@ const Tree = props => {
       <Node
         id={item.id}
         key={item.id}
-        label={item.label + " lvl: " + lvl}
+        label={item.label}
         children={children}
         hidden={hidden}
         toggleHidden={toggleHidden}
@@ -34,6 +34,16 @@ const Tree = props => {
 
   function toggleHidden(e) {
     if (e.target.tagName === "LI") return;
+    // ***SPAN toggle selected
+    document.getElementById(tree.id).querySelectorAll("span").forEach(item => {
+      if (item.className === s.selected) item.className = null;
+    })
+    if (e.target.tagName === "SPAN") {
+      e.target.className = s.selected;
+    } else {
+      e.target.nextSibling.className = "selected";
+    }
+    // SPAN***
     let elem = e.target.closest("li");
     if (!elem) return;
     let target = elem.querySelector("ul");

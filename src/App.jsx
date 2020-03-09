@@ -45,7 +45,8 @@ const App = props => {
           <Route path="/muzik" render={() => <Muzik title={title}/>} />
           <Route path="/commodity" render={() => <Commodity 
             title={title}
-            data={props.state.commodityPage.data}
+            dispatch={props.dispatch}
+            {...props.state.commodityPage}
             />} />
           <Route path="/users" component={Users} />
           <Route path="/game" component={Game} />
