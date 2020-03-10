@@ -23,13 +23,17 @@
   content: "\f105";
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
-  margin-right: 0.1rem;
+  margin-right: 0.3rem;
 }
 
 .tree li[class="open"]::before {
   content: "\f107";
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
+}
+
+.tree li[class="open"] > ul {
+  border-left: dashed 1px;
 }
 
 .tree span:active {
@@ -41,12 +45,12 @@ ul {
   list-style: none;
 }
 
-.tree h2 {
+.tree h3 {
   text-align: center;
   border-bottom: grey solid 2px;
 }
 
-.tree h2::before {
+.tree h3::before {
   content: "\f50c";
   font-family: "Font Awesome 5 Brands";
   font-weight: 400;
@@ -54,7 +58,7 @@ ul {
   margin-right: 1rem;
 }
 
-.tree h2::after {
+.tree h3::after {
     content: "\f50c";
     font-family: "Font Awesome 5 Brands";
     font-weight: 400;

@@ -10,12 +10,12 @@
   background-color: cornsilk;
 }
 
-.list h2 {
+.list h3 {
     text-align: center;
     border-bottom: grey solid 2px;
 }
 
-.list h2::before {
+.list h3::before {
   content: "\f50d";
   font-weight: 400;
   color: navy;
@@ -23,7 +23,7 @@
   margin-right: 1rem;
 }
 
-.list h2::after {
+.list h3::after {
     content: "\f50d";
     font-weight: 400;
     color: navy;

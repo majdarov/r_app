@@ -19,11 +19,10 @@ const Commodity = props => {
   } else {
     return (
       <div>
-        {/* <div className={s.item}>{props.title}</div> */}
         <div className={s.container}>
           <Tree data={props.data} price="Price" />
           <div className={s.list}>
-            <h2>Commodity</h2>
+            <h3>Commodity</h3>
           </div>
         </div>
       </div>

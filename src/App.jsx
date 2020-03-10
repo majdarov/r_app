@@ -1,10 +1,10 @@
 import React from "react";
 import Header from "./components/Header/Header";
+import "./App.css";
 import "./css/fontawesome.css";
 import "./css/solid.css";
 import "./css/regular.css";
 import "./css/brands.css";
-import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";

@@ -25,23 +25,24 @@ const Tree = props => {
         label={item.label}
         children={children}
         hidden={hidden}
-        toggleHidden={toggleHidden}
+        // handleClick={handleClick}
       />
     );
   }
 
   let treeElements = createSubTree(nodeRoot);
 
-  function toggleHidden(e) {
+  function handleClick(e) {
     if (e.target.tagName === "LI") return;
     // ***SPAN toggle selected
-    document.getElementById(tree.id).querySelectorAll("span").forEach(item => {
+    document.getElementById(tree.id)
+      .querySelectorAll("span").forEach(item => {
       if (item.className === s.selected) item.className = null;
     })
     if (e.target.tagName === "SPAN") {
       e.target.className = s.selected;
     } else {
-      e.target.nextSibling.className = "selected";
+      e.target.nextSibling.className = s.selected;
     }
     // SPAN***
     let elem = e.target.closest("li");
@@ -59,8 +60,8 @@ const Tree = props => {
   }
 
   return (
-    <div id={tree.id} className={s.tree} onClick={toggleHidden}>
-      <h2>{tree.label}</h2>
+    <div id={tree.id} className={s.tree} onClick={handleClick}>
+      <h3>{tree.label}</h3>
       <ul>{treeElements}</ul>
     </div>
   );
