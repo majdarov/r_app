@@ -1,6 +1,9 @@
 const SET_DATA = "SET-DATA";
+const GET_COMMODITIES = "GET-COMMODITIES";
+const SET_PID = "SET-PID";
 
 let initialState = {
+  dataServer: "http://localhost:5000/commodity",
   data: [
     /* { id: 1, pid: null, label: "node1" }, // node
     { id: 2, pid: null, label: "node2" },
@@ -11,7 +14,19 @@ let initialState = {
     { id: 7, pid: 5, label: "node1_5_7" },
     { id: 8, pid: 6, label: "node3_6_8" } */
   ],
+  commodities: [
+    // { uuid: 1, code: 0, label: "node1" }, // node
+    // { uuid: 2, code: 1, label: "node2" },
+    // { uuid: 3, code: 2, label: "node3" },
+    // { uuid: 4, code: 3, label: "node1_4" },
+    // { uuid: 5, code: 4, label: "node1_5" },
+    // { uuid: 6, code: 5, label: "node3_6" },
+    // { uuid: 7, code: 6, label: "node1_5_7" },
+    // { uuid: 8, code: 7, label: "node3_6_8" }
+  ],
+  pid: null,
   isLoaded: false,
+  comIsLoaded: false,
   error: null
 };
 
@@ -19,7 +34,7 @@ const commodityReduser = (state = initialState, action) => {
   switch (action.type) {
     case SET_DATA:
       let data = [];
-      fetch("http://localhost:5000/commodity", {
+      fetch(state.dataServer, {
         method: "GET",
         headers: { get: "groups" }
       })
@@ -44,6 +59,41 @@ const commodityReduser = (state = initialState, action) => {
         );
       return state;
 
+    case SET_PID:
+      state.pid = action.pid;
+      state.comIsLoaded = false;
+      return state;
+
+    case GET_COMMODITIES:
+      let commodities = [];
+      fetch(state.dataServer, {
+        method: "GET",
+        headers: {
+          get: "commodities",
+          parentId: state.pid
+        }
+      })
+        .then(res => res.json())
+        .then(
+          data => {
+            data.forEach(item => {
+              if (item.g) return;
+              let commodity = {
+                uuid: item.UUID,
+                code: item.code,
+                label: item.name
+              };
+              commodities.push(commodity);
+            });
+            state.commodities = commodities;
+            state.comIsLoaded = true;
+          },
+          error => {
+            state.error = error;
+          }
+        );
+      return state;
+
     default:
       return state;
   }
@@ -51,6 +101,12 @@ const commodityReduser = (state = initialState, action) => {
 
 export const setDataTreeAC = data => {
   return { type: SET_DATA };
+};
+export const getCommoditiesAC = () => {
+  return { type: GET_COMMODITIES };
+};
+export const setPidAC = pid => {
+  return { type: SET_PID, pid: pid };
 };
 
 export default commodityReduser;

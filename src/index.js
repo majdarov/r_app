@@ -5,10 +5,10 @@ import store from "./redux/redux-store";
 import { BrowserRouter } from "react-router-dom";
 
 /** RENDER */
-function renderApp(state) {
+function renderApp() {
   ReactDOM.render(
     <BrowserRouter>
-      <App state={state} dispatch={store.dispatch.bind(store)} />
+      <App store={store} />
     </BrowserRouter>,
     document.getElementById("root")
   );
@@ -17,7 +17,4 @@ window.state = store.getState();
 
 renderApp(store.getState());
 
-store.subscribe(() => {
-  let state = store.getState();  
-  renderApp(state)
-});
+store.subscribe(() => {renderApp()});

@@ -5,48 +5,45 @@ import "./css/fontawesome.css";
 import "./css/solid.css";
 import "./css/regular.css";
 import "./css/brands.css";
-import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
-import Dialogs from "./components/Dialogs/Dialogs";
 import { Route } from "react-router-dom";
 import Muzik from "./components/Muzik/Muzik";
 import Users from "./components/Users/Users";
 import Game from "./components/Game/Game";
 import { getTitleAC } from "./redux/navReduser";
 import Commodity from "./components/Commodity/Commdoity";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import NavbarContainer from "./components/Navbar/NavbarContainer";
 
 const App = props => { 
   
-  let path = window.location.pathname;
-  
-  if (!props.state.navigation._title) {
-    props.dispatch(getTitleAC(path));
+  let path = '/' + window.location.pathname.split('/')[1];
+  let state = props.store.getState();
+
+  if (!state.navigation._title) {
+    props.store.dispatch(getTitleAC(path));
   }
 
-  let title = props.state.navigation._title;
+  let title = state.navigation._title;
 
   return (
       <div className="app">
         <Header title={title}/>
-        <Navbar navBar={props.state.navigation.navBar} dispatch={props.dispatch}/>
+        <NavbarContainer store={props.store}/>
         <div className="app-content">
           {/* <Route exact path="/" /> */}
-          <Route path="/dialogs" render={() => <Dialogs 
-            dialogsPage={props.state.dialogsPage} 
-            dispatch={props.dispatch}  
+          <Route path="/dialogs" render={() => <DialogsContainer 
+            store={props.store}  
             />} 
           />
           <Route path="/profile"
             render={() => <Profile
-              profilePage={props.state.profilePage}
-              dispatch={props.dispatch}
+              store={props.store}
             />}
           />
           <Route path="/muzik" render={() => <Muzik title={title}/>} />
           <Route path="/commodity" render={() => <Commodity 
-            title={title}
-            dispatch={props.dispatch}
-            {...props.state.commodityPage}
+           store={props.store}
             />} />
           <Route path="/users" component={Users} />
           <Route path="/game" component={Game} />

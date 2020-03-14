@@ -1,17 +1,26 @@
 import React from "react";
-import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import { setProfileDesriptionAC } from "../../redux/profileReduser";
+import MyPostsContainer from "./MyPosts/MyPostsContainer";
 
 const Content = props => {
+
+  let state = props.store.getState();
+
+  function updateDescription(description) {
+    props.store.dispatch(setProfileDesriptionAC(description));
+  }
+
+
   return (
     <div>
       <ProfileInfo
-        profilePage={props.profilePage}
-        dispatch={props.dispatch}
+        profilePage={state.profilePage}
+        updateDescription={updateDescription}
       />
-      <MyPosts 
-        profilePage={props.profilePage} 
-        dispatch={props.dispatch}
+      <MyPostsContainer 
+        profilePage={state.profilePage} 
+        store={props.store}
         />
     </div>
   );

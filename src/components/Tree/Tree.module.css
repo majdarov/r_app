@@ -1,6 +1,6 @@
 .tree {
   /* grid-column: 1/2; */
-  padding: 10px;
+  padding: 0.5rem;
   border: 1px solid blue;
   background-color: cornsilk;
   cursor: default;
@@ -12,7 +12,7 @@
 }
 
 .tree span {
-  font-family: "Font Awesome 5 Free";
+  /* font-family: "Font Awesome 5 Free"; */
 }
 
 .tree li {
@@ -21,14 +21,14 @@
 
 .tree li::before {
   content: "\f105";
-  font-family: "Font Awesome 5 Free";
+  /* font-family: "Font Awesome 5 Free"; */
   font-weight: 900;
   margin-right: 0.3rem;
 }
 
 .tree li[class="open"]::before {
   content: "\f107";
-  font-family: "Font Awesome 5 Free";
+  /* font-family: "Font Awesome 5 Free"; */
   font-weight: 900;
 }
 
@@ -41,7 +41,7 @@
 }
 
 ul {
-  padding-left: 10px;
+  padding-left: 1rem;
   list-style: none;
 }
 
@@ -64,8 +64,4 @@ ul {
     font-weight: 400;
     color: blue;
     margin-left: 1rem;
-  }
-
-  .selected {
-    background-color: cyan;
   }

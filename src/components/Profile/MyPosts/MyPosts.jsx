@@ -1,30 +1,17 @@
 import React from "react";
 import s from "./MyPosts.module.css";
-import Post from "./Post/Post";
 import TextArea from "../../TextArea/TextArea";
-import { useState } from "react";
-import { addMessageAC } from "../../../redux/profileReduser";
 
 const MyPosts = props => {
 
-  let postElements = props.profilePage.posts.map((item, idx) => (
-    <Post message={item.message} likes={item.likes} key={idx} />
-  ));
-
-  let newPostElement = React.createRef();
-
-  const [newPostText, setNewPostText] = useState("");
-
   let addPost = () => {
-    let text = newPostElement.current.value;
-    if (!text.length) return;
-    props.dispatch(addMessageAC(text));
-    setNewPostText("");
+    let text = props.newPostElement.current.value;
+    props.addPost(text);
   }
 
   function onPostChange() {
-    let text = newPostElement.current.value;
-    setNewPostText(text);
+    let text = props.newPostElement.current.value;
+    props.onPostChange(text);
   }
 
   return (
@@ -33,12 +20,12 @@ const MyPosts = props => {
       <div className={s.textarea}>
         <TextArea 
           onChange={onPostChange}
-          refrence={newPostElement}
-          value={newPostText}
+          refrence={props.newPostElement}
+          value={props.newPostText}
         />
         <div className={"button " + s.btn_posts} onClick={addPost}>Add post</div >
       </div>
-      <div className={s.posts}>{postElements}</div>
+      <div className={s.posts}>{props.postElements}</div>
     </div>
   );
 };

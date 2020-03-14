@@ -28,4 +28,4 @@ const navReduser = (state = initialState, action) => {
 
 export default navReduser;
 
-export const getTitleAC = path => ({ type: GET_TITLE, path });
+export const getTitleAC = path => ({ type: GET_TITLE, path: path });
