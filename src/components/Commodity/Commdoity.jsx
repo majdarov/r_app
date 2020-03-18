@@ -14,11 +14,11 @@ const Commodity = props => {
     if (!state.isLoaded) {
       props.store.dispatch(setDataTreeAC());
     }
-  });
+  }, [props.store, state.isLoaded]);
 
   function handleClick(e, id) {
     // debugger;
-    if (e.target.tagName === "LI") return;
+    if (e.target.tagName !== "SPAN" && e.target.tagName !== "I") return;
     // ***SPAN toggle selected
     document.getElementById(id)
       .querySelectorAll("span").forEach(item => {
@@ -54,22 +54,22 @@ const Commodity = props => {
     return <div>Загрузка...</div>;
   } else {
     return (
-        <div className={s.container}>
-          <Tree 
-            data={state.data}
+      <div className={s.container}>
+        <Tree
+          data={state.data}
+          /* dispatch={props.store.dispatch} */
+          price="Price"
+          pid={state.pid}
+          handleClick={handleClick} />
+        <div className={s.list}>
+          <h3>Commodities</h3>
+          <ListCommodities
+            commodities={state.commodities}
             dispatch={props.store.dispatch}
-            price="Price"
-            pid={state.pid}
-            handleClick={handleClick}/>
-          <div className={s.list}>
-            <h3>Commodities</h3>
-            <ListCommodities 
-              commodities={state.commodities}
-              dispatch={props.store.dispatch}
-              comIsLoaded={state.comIsLoaded}
-              error={state.error}/>
-          </div>
+            comIsLoaded={state.comIsLoaded}
+            error={state.error} />
         </div>
+      </div>
     );
   }
 };

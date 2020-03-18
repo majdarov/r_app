@@ -1,5 +1,7 @@
 const GET_TITLE = "GET-TITLE";
 
+export const getTitleAC = path => ({ type: GET_TITLE, path: path });
+
 let initialState = {
   _title: "",
   navBar: [
@@ -15,17 +17,18 @@ let initialState = {
 
 const navReduser = (state = initialState, action) => {
   switch (action.type) {
+
     case GET_TITLE:
+      let title;
       let nav = state.navBar.find(item => item.link === action.path);
       if (nav !== undefined) {
-        state._title = nav.title;
+        title = nav.title;
       }
-      return state;
+      return Object.assign({}, state, {_title: title});
+
     default:
       return state;
   }
 };
 
 export default navReduser;
-
-export const getTitleAC = path => ({ type: GET_TITLE, path: path });

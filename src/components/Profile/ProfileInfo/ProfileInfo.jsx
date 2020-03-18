@@ -1,52 +1,7 @@
 import React from "react";
 import s from "./ProfileInfo.module.css";
-import TextArea from "../../TextArea/TextArea";
-import { useState, useEffect } from "react";
 
 const ProfileInfo = props => {
-  let textarea;
-  let newDescriptionRef = React.createRef();
-
-  const [showTxt, setShowTxt] = useState(false);
-
-  useEffect(() => {
-    if (showTxt) {
-      newDescriptionRef.current.focus();
-    }
-    return;
-  });
-
-  if (showTxt) {
-    let divTxt = props.profilePage.profileDescription;
-    textarea = (
-      <TextArea
-        refrence={newDescriptionRef}
-        placeholder={divTxt}
-        onBlur={txtAreaFocusOut}
-      />
-    );
-  } else {
-    textarea = null;
-  }
-
-  function editDescription(e) {
-    e.currentTarget.setAttribute("disabled", true);
-    setShowTxt(true);
-  }
-
-  function txtAreaFocusOut(e) {
-    let description = e.target.value;
-    if (description.length) {
-      let conf = window.confirm("Save changes?");
-      if (conf) {
-        props.updateDescription(description);
-      }
-    }
-    setShowTxt(false);
-    document
-      .querySelector("[class*='descriptionBlock'] button")
-      .removeAttribute("disabled");
-  }
 
   return (
     <div>
@@ -64,9 +19,9 @@ const ProfileInfo = props => {
           />
         </div>
         <div className={s.description} id="description">
-          <h3>{props.profilePage.profileDescription}</h3>
-          {textarea}
-          <button onClick={editDescription}>Edit</button>
+          <h3 dangerouslySetInnerHTML={{__html: props.description}}></h3>
+          {props.textarea}
+          <button onClick={props.onClick}>Edit</button>
         </div>
       </div>
     </div>

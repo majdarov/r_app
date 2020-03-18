@@ -11,7 +11,8 @@
   margin-right: 5px;
 }
 
-.tree span {
+.tree span:hover {
+  background-color: lavender;
   /* font-family: "Font Awesome 5 Free"; */
 }
 
@@ -33,7 +34,7 @@
 }
 
 .tree li[class="open"] > ul {
-  border-left: dashed 1px;
+  border-left: solid 1px rgb(160, 158, 158);
 }
 
 .tree span:active {

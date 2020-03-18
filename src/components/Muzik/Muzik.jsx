@@ -1,16 +1,7 @@
 import React from "react";
 import s from "./Muzik.module.css";
-import { useState } from "react";
 
 const Muzik = props => {
-  
-  const [text, setText] = useState("");
-
-  function changeText(e) {
-    let txt = e.currentTarget.value;
-    setText(txt);
-    document.getElementById("div").innerHTML = txt;
-  }
 
   return (
     <div>
@@ -21,12 +12,12 @@ const Muzik = props => {
             className={s.text} 
             cols={50}
             rows={15}
-            value={text} 
-            onChange={changeText}>
-            {text}
+            value={props.textHTML} 
+            onChange={e => props.onChangeText(e.currentTarget.value)}>
+            {props.textHTML}
           </textarea>
         </div>
-        <div className={s.result} id="div"></div>
+        <div className={s.result} id="div" dangerouslySetInnerHTML={{__html: props.textHTML}}></div>
       </div>
     </div>
   );

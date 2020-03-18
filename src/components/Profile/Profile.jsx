@@ -1,7 +1,7 @@
 import React from "react";
-import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import { setProfileDesriptionAC } from "../../redux/profileReduser";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import ProfileInfoContainer from "./ProfileInfo/ProfileInfoContainer";
 
 const Content = props => {
 
@@ -14,12 +14,11 @@ const Content = props => {
 
   return (
     <div>
-      <ProfileInfo
+      <ProfileInfoContainer
         profilePage={state.profilePage}
         updateDescription={updateDescription}
       />
       <MyPostsContainer 
-        profilePage={state.profilePage} 
         store={props.store}
         />
     </div>

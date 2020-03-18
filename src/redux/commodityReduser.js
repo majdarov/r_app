@@ -2,6 +2,16 @@ const SET_DATA = "SET-DATA";
 const GET_COMMODITIES = "GET-COMMODITIES";
 const SET_PID = "SET-PID";
 
+export const setDataTreeAC = data => {
+  return { type: SET_DATA };
+};
+export const getCommoditiesAC = () => {
+  return { type: GET_COMMODITIES };
+};
+export const setPidAC = pid => {
+  return { type: SET_PID, pid: pid };
+};
+
 let initialState = {
   dataServer: "http://localhost:5000/commodity",
   data: [
@@ -60,9 +70,12 @@ const commodityReduser = (state = initialState, action) => {
       return state;
 
     case SET_PID:
-      state.pid = action.pid;
-      state.comIsLoaded = false;
-      return state;
+      // state.pid = action.pid;
+      // state.comIsLoaded = false;
+      return Object.assign({}, state, {
+        pid: action.pid,
+        comIsLoaded: false
+      });
 
     case GET_COMMODITIES:
       let commodities = [];
@@ -92,21 +105,11 @@ const commodityReduser = (state = initialState, action) => {
             state.error = error;
           }
         );
-      return state;
+        return state;
 
     default:
       return state;
   }
-};
-
-export const setDataTreeAC = data => {
-  return { type: SET_DATA };
-};
-export const getCommoditiesAC = () => {
-  return { type: GET_COMMODITIES };
-};
-export const setPidAC = pid => {
-  return { type: SET_PID, pid: pid };
 };
 
 export default commodityReduser;

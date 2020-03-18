@@ -3,6 +3,7 @@ import profileReduser from "./profileReduser";
 import dialogsReduser from "./dialogsReduser";
 import navReduser from "./navReduser";
 import commodityReduser from "./commodityReduser";
+import muzReduser from "./MuzikReduser";
 
 /* fetch("http://localhost:5000/commodity", { //This Work!!!
     method: "GET",
@@ -16,7 +17,8 @@ let redusers = combineReducers({
     profilePage: profileReduser,
     dialogsPage: dialogsReduser,
     navigation: navReduser,
-    commodityPage: commodityReduser
+    commodityPage: commodityReduser,
+    muzik: muzReduser
 });
 
 let store = createStore(redusers);

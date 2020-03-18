@@ -2,6 +2,18 @@ const SET_CURRENT_USER = "SET-CURRENT-USER";
 const ADD_NEW_TEXT_MESSAGE = "ADD-NEW-TEXT-MESSAGE";
 const ADD_DIALOG = "ADD-DIALOG";
 
+export const setCurrentUserAC = userid => {
+  return { type: SET_CURRENT_USER, userid: userid };
+};
+
+export const addNewTextMessageAC = text => {
+  return { type: ADD_NEW_TEXT_MESSAGE, text: text };
+};
+
+export const addDialogAC = () => {
+  return { type: ADD_DIALOG };
+};
+
 let initialState = {
   users: [
     { id: 0, name: "Dymich", photo: "0.jpg" },
@@ -24,6 +36,7 @@ let initialState = {
 
 const dialogsReduser = (state = initialState, action) => {
   switch (action.type) {
+
     case ADD_DIALOG:
       if (!state.newTextMessage) return state;
       let id = state.messages.length + 1;
@@ -33,34 +46,32 @@ const dialogsReduser = (state = initialState, action) => {
         iduser: state.user,
         likes: 0
       };
-      state.messages.push(dialog);
-      state.newTextMessage = "";
-      return state;
+      return Object.assign({}, state, {
+        messages: [
+          ...state.messages,
+          dialog
+        ],
+        newTextMessage: ""
+      });
+
     case ADD_NEW_TEXT_MESSAGE:
       if (!state.user) {
-        state.newTextMessage = "Выберите пользователя";
-        return state;
+        return Object.assign({}, state, {
+          newTextMessage: "Выберите пользователя"
+        });
       }
-      state.newTextMessage = action.text;
-      return state;
+      return Object.assign({}, state, {
+        newTextMessage: action.text
+      });
+
     case SET_CURRENT_USER:
-      state.newTextMessage = "";
-      state.user = action.userid;
-      return state;
+      return Object.assign({}, state, {
+        newTextMessage: "",
+        user: action.userid
+      });
+      
     default:
       return state;
   }
 };
 export default dialogsReduser;
-
-export const setCurrentUserAC = userid => {
-  return { type: SET_CURRENT_USER, userid: userid };
-};
-
-export const addNewTextMessageAC = text => {
-  return { type: ADD_NEW_TEXT_MESSAGE, text: text };
-};
-
-export const addDialogAC = () => {
-  return { type: ADD_DIALOG };
-};

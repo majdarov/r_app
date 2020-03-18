@@ -13,9 +13,10 @@ function TextArea(props) {
         <textarea
           onChange={props.onChange}
           onBlur={props.onBlur}
+          onKeyDown={props.onKeyDown}
           ref={props.refrence}
-          cols={"60"}
-          rows={"4"}
+          // cols={props.cols}
+          // rows={"4"}
           wrap={"hard"}
           value={props.value}
           placeholder={placeholder}

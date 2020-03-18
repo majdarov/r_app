@@ -6,7 +6,9 @@ import MyPosts from "./MyPosts";
 
 const MyPostsContainer = props => {
 
-  let postElements = props.profilePage.posts.map((item, idx) => (
+  let profilePage = props.store.getState().profilePage;
+
+  let postElements = profilePage.posts.map((item, idx) => (
     <Post message={item.message} likes={item.likes} key={idx} />
   ));
 
