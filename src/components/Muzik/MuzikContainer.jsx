@@ -12,9 +12,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onChangeText: txt => {
+    onChangeText: e => {
+      let txt = e.target.value;
       dispatch(setMuzikTextAC(txt));
-      document.getElementById("div").innerHTML = txt;
+      // document.getElementById("div").innerHTML = txt;
     }
   }
 }

@@ -24,8 +24,6 @@ const mapStateToProps = state => {
     }
 }
 
-const HeaderContainer = connect(
-    mapStateToProps
-)(Header);
+const HeaderContainer = connect(mapStateToProps)(Header);
 
 export default HeaderContainer;

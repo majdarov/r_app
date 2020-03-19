@@ -1,55 +1,65 @@
 import React from "react";
 import Message from "./Message/Message";
-import DialogItem from "./DialogItem/DialogItem";
+import DialogItemContainer from "./DialogItem/DialogItemContainer";
 import Dialogs from "./Dialogs";
 import { addNewTextMessageAC, addDialogAC, setCurrentUserAC } from "../../redux/dialogsReduser";
+import { connect } from "react-redux";
 
-const DialogsContainer = props => {
-
-  let dispatch = props.store.dispatch;
-  let state = props.store.getState();
-
-  function setUser(id) {
-    dispatch(setCurrentUserAC(id));
-  }
-
-  let dialogsElements = state.dialogsPage.users.map((item, index) => {
-    return <DialogItem user={item} key={index} setUser={setUser} />;
-  });
-
+function messagesElements(state) {
+  
+  let messages;
+  let userid = state.dialogsPage.user;
   let arrMessage = state.dialogsPage.messages;
 
- let userid = +window.location.pathname.split("/")[2];
-
   if (userid + 1) {
-    arrMessage = arrMessage.filter(item => item.iduser === userid);
+    messages = arrMessage.filter(item => item.iduser === userid);
+  } else {
+    messages = state.dialogsPage.messages;
   }
 
-  let messagesElements = arrMessage.map((item, idx) => {
-    return <Message value={item.message} likes={item.likes} key={idx} />;
+  messages = messages.map((item, idx) => {
+    return <Message value={item.message} likes={item.likes} key={idx} username={item.iduser}/>;
   });
+  return messages;
+}
 
-  let newMessEl = React.createRef();
+function dialogsElements(state) {
+  let elements = state.dialogsPage.users.map((item, index) => {
+    return <DialogItemContainer user={item} key={index}/>
+  });
+  return elements;
+}
 
-  function onTextChange() {
-    let text = newMessEl.current.value;
-    dispatch(addNewTextMessageAC(text));
+let newMessEl = React.createRef();
+
+const mapStateToProps = state => {
+  
+  return {
+    dialogsElements: dialogsElements(state),
+    messagesElements: messagesElements(state),
+    newTextMessage: state.dialogsPage.newTextMessage,
+    newMessEl: newMessEl
   }
+}
 
-  function addNewDialog() {
-    dispatch(addDialogAC());
+const mapDispatchToProps = dispatch => {
+  return {
+    onTextChange: function () {
+      let text = newMessEl.current.value;
+      dispatch(addNewTextMessageAC(text));
+    },
+    addNewDialog: function () {
+      dispatch(addDialogAC());
+    },
+    setUser: id => {
+      dispatch(setCurrentUserAC(id));
+    }
   }
+}
 
-  return (
-    <Dialogs
-      dialogsElements={dialogsElements}
-      messagesElements={messagesElements}
-      newMessEl={newMessEl}
-      onTextChange={onTextChange}
-      addNewDialog={addNewDialog}
-      setUser={setUser}
-      newTextMessage={state.dialogsPage.newTextMessage} />
-  )
-};
+const DialogsContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Dialogs);
 
 export default DialogsContainer;

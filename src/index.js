@@ -16,7 +16,7 @@ function renderApp() {
     ,document.getElementById("root")
   );
 }
-window.state = store.getState();
+// window.state = store.getState();
 
 renderApp(store.getState());
 

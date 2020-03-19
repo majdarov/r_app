@@ -10,10 +10,10 @@ const Muzik = props => {
         <div className={s.textdiv}>
           <textarea 
             className={s.text} 
-            cols={50}
+            // cols={50}
             rows={15}
             value={props.textHTML} 
-            onChange={e => props.onChangeText(e.currentTarget.value)}>
+            onChange={props.onChangeText}>
             {props.textHTML}
           </textarea>
         </div>
