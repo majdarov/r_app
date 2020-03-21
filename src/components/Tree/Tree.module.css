@@ -33,7 +33,7 @@
   font-weight: 900;
 }
 
-.tree li[class="open"] > ul {
+.tree li[class="open"] > ul:hover {
   border-left: solid 1px rgb(160, 158, 158);
 }
 
