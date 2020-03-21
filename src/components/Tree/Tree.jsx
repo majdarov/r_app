@@ -32,7 +32,7 @@ const Tree = props => {
   let treeElements = createSubTree(nodeRoot);
 
   return (
-    <div id={tree.id} className={s.tree} onClick={(e) => props.handleClick(e,tree.id)}>
+    <div id={tree.id} className={s.tree} onClick={(e) => props.handleClick(e)}>
       <h3>{tree.label}</h3>
       <ul>{treeElements}</ul>
     </div>

@@ -1,15 +1,17 @@
 const SET_DATA = "SET-DATA";
-const GET_COMMODITIES = "GET-COMMODITIES";
 const SET_PID = "SET-PID";
+const RECEIVE_COMMODITIES = "RECEIVE-COMMODITIES";
 
 export const setDataTreeAC = data => {
   return { type: SET_DATA };
 };
-export const getCommoditiesAC = () => {
-  return { type: GET_COMMODITIES };
-};
+
 export const setPidAC = pid => {
   return { type: SET_PID, pid: pid };
+};
+
+export const receiveCommoditiesAC = commodities => {
+  return { type: RECEIVE_COMMODITIES, commodities };
 };
 
 let initialState = {
@@ -59,8 +61,6 @@ const commodityReduser = (state = initialState, action) => {
               };
               data.push(group);
             });
-            // state.data = data;
-            // state.isLoaded = true;
           },
           error => {
             state.isLoaded = true;
@@ -71,50 +71,16 @@ const commodityReduser = (state = initialState, action) => {
         data: data,
         isLoaded: true
       });
-    // return state;
 
     case SET_PID:
-      // console.log("pid: " + action.pid);
       return Object.assign({}, state, {
         pid: action.pid,
         comIsLoaded: false
       });
 
-    case GET_COMMODITIES:
-      if (!state.pid) return state;
-      let commodities = [];
-      fetch(state.dataServer, {
-        method: "GET",
-        headers: {
-          get: "commodities",
-          parentId: state.pid
-        }
-      })
-        .then(res => res.json())
-        .then(
-          data => {
-            data.forEach(item => {
-              if (item.g) return;
-              let commodity = {
-                uuid: item.UUID,
-                code: item.code,
-                label: item.name
-              };
-              commodities.push(commodity);
-            });
-            // state.commodities = commodities;
-            // state.comIsLoaded = true;
-          },
-          error => {
-            return Object.assign({}, state, {
-              error: error,
-              comIsLoaded: true
-            });
-          }
-        );
-      // return state;
+    case RECEIVE_COMMODITIES:
       return Object.assign({}, state, {
-        commodities: commodities,
+        commodities: action.commodities,
         comIsLoaded: true
       });
 
