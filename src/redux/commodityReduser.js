@@ -1,9 +1,9 @@
-const SET_DATA = "SET-DATA";
+const GET_GROUPS = "GET-GROUPS";
 const SET_PID = "SET-PID";
 const RECEIVE_COMMODITIES = "RECEIVE-COMMODITIES";
 
-export const setDataTreeAC = data => {
-  return { type: SET_DATA };
+export const getGroupsAC = groups => {
+  return { type: GET_GROUPS, groups };
 };
 
 export const setPidAC = pid => {
@@ -16,7 +16,7 @@ export const receiveCommoditiesAC = commodities => {
 
 let initialState = {
   dataServer: "http://localhost:5000/commodity",
-  data: [
+  groups: [
     /* { id: 1, pid: null, label: "node1" }, // node
     { id: 2, pid: null, label: "node2" },
     { id: 3, pid: null, label: "node3" },
@@ -44,31 +44,19 @@ let initialState = {
 
 const commodityReduser = (state = initialState, action) => {
   switch (action.type) {
-    case SET_DATA:
-      let data = [];
-      fetch(state.dataServer, {
-        method: "GET",
-        headers: { get: "groups" }
-      })
-        .then(res => res.json())
-        .then(
-          groups => {
-            groups.forEach(item => {
-              let group = {
-                id: item.UUID,
-                pid: item.parentCode,
-                label: item.name
-              };
-              data.push(group);
-            });
-          },
-          error => {
-            state.isLoaded = true;
-            state.error = error;
-          }
-        );
+    case GET_GROUPS:
+      let groups = [];
+      action.groups.forEach(item => {
+        let group = {
+          id: item.UUID,
+          pid: item.parentCode,
+          label: item.name
+        };
+        groups.push(group);
+      });
+
       return Object.assign({}, state, {
-        data: data,
+        groups: groups,
         isLoaded: true
       });
 
@@ -79,8 +67,18 @@ const commodityReduser = (state = initialState, action) => {
       });
 
     case RECEIVE_COMMODITIES:
+      let commodities = [];
+      action.commodities.forEach(item => {
+        if (item.g) return;
+        let commodity = {
+          uuid: item.UUID,
+          code: item.code,
+          label: item.name
+        };
+        commodities.push(commodity);
+      });
       return Object.assign({}, state, {
-        commodities: action.commodities,
+        commodities: commodities,
         comIsLoaded: true
       });
 

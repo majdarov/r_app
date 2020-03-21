@@ -7,14 +7,17 @@ const Commodity = props => {
 
   if (!props.isLoaded) {
     props.setPid("0");
-    props.setData();
+    let headers = {
+      get: "groups"
+    };
+    props.receiveData(props.dataServer, headers);
   }
   if (!props.comIsLoaded) {
     let headers = {
       get: "commodities",
       parentId: props.pid
     };
-    props.receiveCommodities(props.pid, props.dataServer, headers);
+    props.receiveData(props.dataServer, headers);
   }
 
   function handleClick(e) {
@@ -58,9 +61,8 @@ const Commodity = props => {
     return (
       <div className={s.container}>
         <Tree
-          data={props.data}
+          data={props.groups}
           price="Price"
-          pid={props.pid}
           handleClick={handleClick}
         />
         <div className={s.list}>

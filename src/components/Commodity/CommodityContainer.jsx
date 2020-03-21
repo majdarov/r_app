@@ -1,17 +1,14 @@
 import Commodity from "./Commdoity";
-import {
-  setDataTreeAC,
-  setPidAC,
-} from "../../redux/commodityReduser";
+import { setPidAC } from "../../redux/commodityReduser";
 import { connect } from "react-redux";
-import { fetchCommodities } from "./AsincFunction";
+import { fetchData } from "./fetchData";
 
 const mapState = state => {
   state = state.commodityPage;
   return {
     dataServer: state.dataServer,
     isLoaded: state.isLoaded,
-    data: state.data,
+    groups: state.groups,
     price: "Price",
     pid: state.pid,
     commodities: state.commodities,
@@ -21,11 +18,10 @@ const mapState = state => {
 };
 
 const mapDispatch = dispatch => {
-  
   return {
-    setData: () => dispatch(setDataTreeAC()),
     setPid: pid => dispatch(setPidAC(pid)),
-    receiveCommodities: (pid, dataServer, headers) => fetchCommodities(pid, dataServer, headers, dispatch),
+    receiveData: (dataServer, headers) =>
+      fetchData(dataServer, headers, dispatch)
   };
 };
 
