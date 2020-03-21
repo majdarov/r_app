@@ -10,16 +10,15 @@ function renderApp() {
   ReactDOM.render(
     <Provider store={store}>
       <BrowserRouter>
-        <App store={store}/>
+        <App />
       </BrowserRouter>
     </Provider>
     ,document.getElementById("root")
   );
 }
-window.state = store.getState();
+// window.state = store.getState();
+renderApp();
 
-renderApp(store.getState());
-
-store.subscribe(() => {
-  renderApp();
-});
+// store.subscribe(() => {
+//   renderApp();
+// });

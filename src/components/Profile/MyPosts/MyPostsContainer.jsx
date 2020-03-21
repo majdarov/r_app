@@ -1,37 +1,32 @@
 import React from "react";
 import Post from "./Post/Post";
-import { useState } from "react";
-import { addMessageAC } from "../../../redux/profileReduser";
+import { addMessageAC, setNewPosTextAC } from "../../../redux/profileReduser";
 import MyPosts from "./MyPosts";
+import { connect } from "react-redux";
 
-const MyPostsContainer = props => {
-
-  let profilePage = props.store.getState().profilePage;
-
-  let postElements = profilePage.posts.map((item, idx) => (
+const mapState = state => {
+  let newPostElement = React.createRef();
+  let postElements = state.profilePage.posts.map((item, idx) => (
     <Post message={item.message} likes={item.likes} key={idx} />
   ));
-
-  let newPostElement = React.createRef();
-
-  const [newPostText, setNewPostText] = useState("");
-
-  let addPost = (text) => {
-    if (!text.length) return;
-    props.store.dispatch(addMessageAC(text));
-    setNewPostText("");
+  return {
+    postElements: postElements,
+    newPostText: state.profilePage.newPostText,
+    newPostElement: newPostElement
   }
+}
 
-  function onPostChange(text) {
-    setNewPostText(text);
+const mapDispatch = dispatch => {
+  return {
+    onPostChange: e => { 
+      let txt = e.target.value;
+      dispatch(setNewPosTextAC(txt)) 
+    },
+    addPost: () => { dispatch(addMessageAC()) },
+
   }
+}
 
-  return <MyPosts 
-    newPostText={newPostText}
-    newPostElement={newPostElement}
-    onPostChange={onPostChange}
-    addPost={addPost}
-    postElements={postElements}/>
-};
+const MyPostsContainer = connect(mapState, mapDispatch)(MyPosts);
 
 export default MyPostsContainer;

@@ -19,6 +19,7 @@ const navReduser = (state = initialState, action) => {
   switch (action.type) {
 
     case GET_TITLE:
+      // debugger;
       let title;
       let nav = state.navBar.find(item => item.link === action.path);
       if (nav !== undefined) {

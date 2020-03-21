@@ -20,6 +20,7 @@ function TextArea(props) {
           wrap={"hard"}
           value={props.value}
           placeholder={placeholder}
+          autoFocus
         />
     );
 }

@@ -44,12 +44,17 @@
 }
 
 .message {
-  margin: 5px;
-  padding: 5px;
+  margin: 3px;
+  padding: 3px;
   color: white;
   background: steelblue;
   border-radius: 3px;
 }
+
+.message h5 {
+  border-bottom: deepskyblue solid 1px;
+}
+
 
 .dialogs > a {
    text-decoration: none;

@@ -24,14 +24,14 @@ let initialState = {
     { id: 5, name: "Gala", photo: "5.jpg" }
   ],
   messages: [
-    { id: 1, iduser: 3, message: "Message1", likes: 5 },
-    { id: 2, iduser: 5, message: "Message2", likes: 10 },
-    { id: 3, iduser: 2, message: "Message3", likes: 12 },
-    { id: 4, iduser: 3, message: "Message4", likes: 15 },
+    { id: 1, iduser: 3, message: "Message from user 3", likes: 5 },
+    { id: 2, iduser: 5, message: "Messagefrom user 5", likes: 10 },
+    { id: 3, iduser: 2, message: "Message from user 2", likes: 12 },
+    { id: 4, iduser: 3, message: "Message from user 3", likes: 15 },
     { id: 5, iduser: 0, message: "Message from user 0", likes: 3 }
   ],
   newTextMessage: "",
-  user: null
+  user: -1
 };
 
 const dialogsReduser = (state = initialState, action) => {
@@ -55,7 +55,7 @@ const dialogsReduser = (state = initialState, action) => {
       });
 
     case ADD_NEW_TEXT_MESSAGE:
-      if (!state.user) {
+      if (!(state.user + 1)) {
         return Object.assign({}, state, {
           newTextMessage: "Выберите пользователя"
         });

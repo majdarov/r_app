@@ -11,7 +11,7 @@ const Dialogs = props => {
       <div className={s.messages}>messages{props.messagesElements}</div>
       <NavLink
         to={"../dialogs"}
-        onClick={() => props.setUser(null)}>
+        onClick={() => props.setUser(-1)}>
         <div>ALL MESSAGES</div>
       </NavLink>
       <div className={s.textarea}>
