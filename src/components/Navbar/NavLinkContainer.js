@@ -11,12 +11,10 @@ const mapState = (state, ownProps) => {
   };
 };
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch, ownProps) => {
+  let { to } = ownProps;
   return {
-    onClick: e => {
-      let path = "/" + e.target.href.split("/")[3];
-      dispatch(getTitleAC(path))
-    }
+    onClick:() => {dispatch(getTitleAC(to))}
   }
 };
 

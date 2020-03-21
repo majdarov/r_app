@@ -1,23 +1,22 @@
 import React from "react";
 import s from "./Commodity.module.css";
 import Tree from "../Tree/Tree";
-import { setDataTreeAC, setPidAC } from "../../redux/commodityReduser";
 import { useEffect } from "react";
 import ListCommodities from "./ListCommodities/ListCommodities";
 
 const Commodity = props => {
-
-  let state = props.store.getState().commodityPage;
-  // let dispatch = props.store.dispatch;
-
+  // debugger;
   useEffect(() => {
-    if (!state.isLoaded) {
-      props.store.dispatch(setDataTreeAC());
+    if (!props.isLoaded) {
+      props.setData();
     }
-  }, [props.store, state.isLoaded]);
+    if (!props.comIsLoaded) {
+      props.getCommodities();
+    }
+  });
 
   function handleClick(e, id) {
-    // debugger;
+
     if (e.target.tagName !== "SPAN" && e.target.tagName !== "I") return;
     // ***SPAN toggle selected
     document.getElementById(id)
@@ -44,30 +43,28 @@ const Commodity = props => {
       }
     }
     // console.log(elem.id);
-    if (state.pid === elem.id) return;
-    props.store.dispatch(setPidAC(elem.id));
+    if (props.pid === elem.id) return;
+    props.setPid(elem.id);
   }
 
-  if (state.error) {
-    return <div>Ошибка...{state.error.message}</div>;
-  } else if (!state.isLoaded) {
+  if (props.error) {
+    return <div>Ошибка...{props.error.message}</div>;
+  } else if (!props.isLoaded) {
     return <div>Загрузка...</div>;
   } else {
     return (
       <div className={s.container}>
         <Tree
-          data={state.data}
-          /* dispatch={props.store.dispatch} */
+          data={props.data}
           price="Price"
-          pid={state.pid}
+          pid={props.pid}
           handleClick={handleClick} />
         <div className={s.list}>
           <h3>Commodities</h3>
           <ListCommodities
-            commodities={state.commodities}
-            dispatch={props.store.dispatch}
-            comIsLoaded={state.comIsLoaded}
-            error={state.error} />
+            commodities={props.commodities}
+            comIsLoaded={props.comIsLoaded}
+            error={props.error} />
         </div>
       </div>
     );

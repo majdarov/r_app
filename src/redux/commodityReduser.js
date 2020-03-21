@@ -59,25 +59,29 @@ const commodityReduser = (state = initialState, action) => {
               };
               data.push(group);
             });
-            state.data = data;
-            state.isLoaded = true;
+            // state.data = data;
+            // state.isLoaded = true;
           },
           error => {
             state.isLoaded = true;
             state.error = error;
           }
         );
-      return state;
+      return Object.assign({}, state, {
+        data: data,
+        isLoaded: true
+      });
+    // return state;
 
     case SET_PID:
-      // state.pid = action.pid;
-      // state.comIsLoaded = false;
+      // console.log("pid: " + action.pid);
       return Object.assign({}, state, {
         pid: action.pid,
         comIsLoaded: false
       });
 
     case GET_COMMODITIES:
+      if (!state.pid) return state;
       let commodities = [];
       fetch(state.dataServer, {
         method: "GET",
@@ -98,14 +102,21 @@ const commodityReduser = (state = initialState, action) => {
               };
               commodities.push(commodity);
             });
-            state.commodities = commodities;
-            state.comIsLoaded = true;
+            // state.commodities = commodities;
+            // state.comIsLoaded = true;
           },
           error => {
-            state.error = error;
+            return Object.assign({}, state, {
+              error: error,
+              comIsLoaded: true
+            });
           }
         );
-        return state;
+      // return state;
+      return Object.assign({}, state, {
+        commodities: commodities,
+        comIsLoaded: true
+      });
 
     default:
       return state;
