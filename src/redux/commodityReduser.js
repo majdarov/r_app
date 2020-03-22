@@ -16,6 +16,7 @@ export const receiveCommoditiesAC = commodities => {
 
 let initialState = {
   dataServer: "http://localhost:5000/commodity",
+  // dataServer: "/commodity",
   groups: [
     /* { id: 1, pid: null, label: "node1" }, // node
     { id: 2, pid: null, label: "node2" },

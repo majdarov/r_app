@@ -4,7 +4,6 @@ import Tree from "../Tree/Tree";
 import ListCommodities from "./ListCommodities/ListCommodities";
 
 const Commodity = props => {
-
   if (!props.isLoaded) {
     props.setPid("0");
     let headers = {
@@ -37,15 +36,17 @@ const Commodity = props => {
     // SPAN***
     let elem = e.target.closest("li");
     if (!elem) return;
-    let target = elem.querySelector("ul");
-    if (target) {
-      target.hidden = !target.hidden;
-      if (target.hidden) {
-        elem.className = "closed";
-        elem.firstElementChild.className = "fas fa-folder";
-      } else {
-        elem.className = "open";
-        elem.firstElementChild.className = "fas fa-folder-open";
+    if (elem.id !== "0") {
+      let target = elem.querySelector("ul");
+      if (target) {
+        target.hidden = !target.hidden;
+        if (target.hidden) {
+          elem.className = "closed";
+          elem.firstElementChild.className = "fas fa-folder";
+        } else {
+          elem.className = "open";
+          elem.firstElementChild.className = "fas fa-folder-open";
+        }
       }
     }
 
@@ -60,11 +61,7 @@ const Commodity = props => {
   } else {
     return (
       <div className={s.container}>
-        <Tree
-          data={props.groups}
-          price="Price"
-          handleClick={handleClick}
-        />
+        <Tree data={props.groups} price="Price" handleClick={handleClick} />
         <div className={s.list}>
           <h3>Commodities</h3>
           <ListCommodities
