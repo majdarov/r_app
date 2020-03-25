@@ -6,7 +6,6 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 
 /** RENDER */
-function renderApp() {
   ReactDOM.render(
     <Provider store={store}>
       <BrowserRouter>
@@ -15,10 +14,3 @@ function renderApp() {
     </Provider>
     ,document.getElementById("root")
   );
-}
-// window.state = store.getState();
-renderApp();
-
-// store.subscribe(() => {
-//   renderApp();
-// });

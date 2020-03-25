@@ -36,7 +36,7 @@
 }
 
 .messages {
-  padding: 10px;
+  padding: 1rem;
 }
 
 .textarea {
@@ -44,15 +44,32 @@
 }
 
 .message {
-  margin: 3px;
-  padding: 3px;
+  margin: 0.2rem;
+  padding: 0.5rem;
   color: white;
   background: steelblue;
-  border-radius: 3px;
+  border-radius: 0.2rem;
 }
 
 .message h5 {
+  color: greenyellow;
   border-bottom: deepskyblue solid 1px;
+}
+
+.message i {
+  color: red;
+  margin-right: 0.5rem;
+}
+
+.message span+i {
+  color: lavender;
+  margin-left: 2rem;
+}
+
+.likes {
+  margin-top: 1rem;
+  padding: 0.2rem;
+  border-top: solid 1px deepskyblue;
 }
 
 

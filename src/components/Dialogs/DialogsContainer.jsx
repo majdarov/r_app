@@ -1,9 +1,9 @@
 import React from "react";
-import Message from "./Message/Message";
 import DialogItemContainer from "./DialogItem/DialogItemContainer";
 import Dialogs from "./Dialogs";
 import { addNewTextMessageAC, addDialogAC, setCurrentUserAC } from "../../redux/dialogsReduser";
 import { connect } from "react-redux";
+import MessageContainer from "./Message/MessageContainer";
 
 function messagesElements(state) {
   
@@ -17,8 +17,22 @@ function messagesElements(state) {
     messages = state.dialogsPage.messages;
   }
 
+  const getUserName = iduser => {
+    let user = state.dialogsPage.users.find(user => user.id === iduser);
+    return user.name;
+  }
+
+  messages.sort((a, b) => {
+    return (a.likes > b.likes) ? -1 : 1;
+  });
+
   messages = messages.map((item, idx) => {
-    return <Message value={item.message} likes={item.likes} key={idx} username={item.iduser}/>;
+    return <MessageContainer
+      value={item.message} 
+      likes={item.likes} 
+      key={idx} 
+      id={item.id}
+      username={getUserName(item.iduser)}/>;
   });
   return messages;
 }
@@ -33,12 +47,19 @@ function dialogsElements(state) {
 let newMessEl = React.createRef();
 
 const mapStateToProps = state => {
-  
+  let placeholder;
+  if (state.dialogsPage.user === -1) {
+    placeholder = "Select user...";
+  } else {
+    placeholder = null;
+  }
+
   return {
     dialogsElements: dialogsElements(state),
     messagesElements: messagesElements(state),
     newTextMessage: state.dialogsPage.newTextMessage,
-    newMessEl: newMessEl
+    newMessEl: newMessEl,
+    placeholder
   }
 }
 

@@ -1,6 +1,7 @@
 const SET_CURRENT_USER = "SET-CURRENT-USER";
 const ADD_NEW_TEXT_MESSAGE = "ADD-NEW-TEXT-MESSAGE";
 const ADD_DIALOG = "ADD-DIALOG";
+const SET_LIKE = "SET-LIKE";
 
 export const setCurrentUserAC = userid => {
   return { type: SET_CURRENT_USER, userid: userid };
@@ -12,6 +13,10 @@ export const addNewTextMessageAC = text => {
 
 export const addDialogAC = () => {
   return { type: ADD_DIALOG };
+};
+
+export const setLikeAC = (id, like) => {
+  return { type: SET_LIKE, id, like };
 };
 
 let initialState = {
@@ -56,9 +61,7 @@ const dialogsReduser = (state = initialState, action) => {
 
     case ADD_NEW_TEXT_MESSAGE:
       if (!(state.user + 1)) {
-        return Object.assign({}, state, {
-          newTextMessage: "Выберите пользователя"
-        });
+        return state;
       }
       return Object.assign({}, state, {
         newTextMessage: action.text
@@ -68,6 +71,15 @@ const dialogsReduser = (state = initialState, action) => {
       return Object.assign({}, state, {
         newTextMessage: "",
         user: action.userid
+      });
+
+    case SET_LIKE:
+      let messages = [...state.messages];
+      let message = messages.find(item => item.id === action.id);
+      message.likes += action.like;
+      if (message.likes < 0) message.likes = 0;
+      return Object.assign({}, state, {
+        messages: messages
       });
       
     default:

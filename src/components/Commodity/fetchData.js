@@ -1,6 +1,7 @@
 import {
-  receiveCommoditiesAC,
-  getGroupsAC
+  getGroupsAC,
+  getCommoditiesAC,
+  setError
 } from "../../redux/commodityReduser";
 
 export function fetchData(dataServer, headers, dispatch) {
@@ -12,13 +13,13 @@ export function fetchData(dataServer, headers, dispatch) {
     .then(
       data => {
         if (headers.get === "commodities") {
-          dispatch(receiveCommoditiesAC(data));
+          dispatch(getCommoditiesAC(data));
         } else if (headers.get === "groups") {
           dispatch(getGroupsAC(data));
         }
       },
       error => {
-        return error;
+        dispatch(setError(error));
       }
     );
 }

@@ -1,6 +1,7 @@
 const GET_GROUPS = "GET-GROUPS";
 const SET_PID = "SET-PID";
-const RECEIVE_COMMODITIES = "RECEIVE-COMMODITIES";
+const GET_COMMODITIES = "GET-COMMODITIES";
+const SET_ERROR = "SET-ERROR";
 
 export const getGroupsAC = groups => {
   return { type: GET_GROUPS, groups };
@@ -10,9 +11,13 @@ export const setPidAC = pid => {
   return { type: SET_PID, pid: pid };
 };
 
-export const receiveCommoditiesAC = commodities => {
-  return { type: RECEIVE_COMMODITIES, commodities };
+export const getCommoditiesAC = commodities => {
+  return { type: GET_COMMODITIES, commodities };
 };
+
+export const setError = error => {
+  return { type: SET_ERROR, error }
+}
 
 let initialState = {
   dataServer: "http://localhost:5000/commodity",
@@ -67,7 +72,7 @@ const commodityReduser = (state = initialState, action) => {
         comIsLoaded: false
       });
 
-    case RECEIVE_COMMODITIES:
+    case GET_COMMODITIES:
       let commodities = [];
       action.commodities.forEach(item => {
         if (item.g) return;
@@ -81,6 +86,11 @@ const commodityReduser = (state = initialState, action) => {
       return Object.assign({}, state, {
         commodities: commodities,
         comIsLoaded: true
+      });
+
+    case SET_ERROR:
+      return Object.assign({}, state, {
+        error: action.error
       });
 
     default:

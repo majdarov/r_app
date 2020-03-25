@@ -2,29 +2,22 @@ import React from "react";
 import s from "../Users.module.css";
 
 const News = props => {
-  let rowsElements = [];
-  let rowsCount = Math.floor(Math.random() * 10);
+  let element;
 
-  for (let i = 0; i < rowsCount + 1; i++) {
-    let element;
-    if (rowsCount) {
-      element = <hr key={i}/>;
-    } else {
-      element = (
-        <div key={i}>
-          <hr className={s.image} />
-          <hr />
-          <hr />
-        </div>
-      );
-    }
-    rowsElements.push(element);
-  }
+  element = (
+    <div >
+      {props.name}<hr />
+      {props.description}<hr />
+      {props.article}
+    </div>
+  );
 
   return (
     <article className={s.article}>
-      {props.index}
-      {rowsElements}
+      {/* {props.index}
+      {rowsElements} */}
+      <h3>{props.index}</h3>
+      {element}
     </article>
   );
 };
