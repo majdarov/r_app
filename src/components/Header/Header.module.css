@@ -11,3 +11,19 @@ header {
     grid-area: h;
     background-color: darkorange;
 }
+
+.needupdate {
+    display: inline;
+    color: red;
+    font-weight: bold;
+}
+
+.updated {
+    display: inline;
+    color: lightgreen;
+    font-weight: bold;
+}
+
+.needupdate:hover {
+    cursor: pointer;
+}

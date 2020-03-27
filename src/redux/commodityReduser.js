@@ -2,6 +2,8 @@ const GET_GROUPS = "GET-GROUPS";
 const SET_PID = "SET-PID";
 const GET_COMMODITIES = "GET-COMMODITIES";
 const SET_ERROR = "SET-ERROR";
+const UPDATE_COMMODITY = "UPDATE-COMMODITY";
+const SET_UPDATE_OK = "SET-UPDATE-OK";
 
 export const getGroupsAC = groups => {
   return { type: GET_GROUPS, groups };
@@ -17,6 +19,14 @@ export const getCommoditiesAC = commodities => {
 
 export const setError = error => {
   return { type: SET_ERROR, error }
+}
+
+export const updateCommodityAC = () => {
+  return { type: UPDATE_COMMODITY }
+}
+
+export const setUpdateOkAC = update => {
+  return { type: SET_UPDATE_OK, update }
 }
 
 let initialState = {
@@ -45,7 +55,9 @@ let initialState = {
   pid: null,
   isLoaded: false,
   comIsLoaded: false,
-  error: null
+  error: null,
+  lastUpdate: 1585166400000,
+  updateOk: false
 };
 
 const commodityReduser = (state = initialState, action) => {
@@ -92,6 +104,23 @@ const commodityReduser = (state = initialState, action) => {
       return Object.assign({}, state, {
         error: action.error
       });
+
+    case UPDATE_COMMODITY:
+      let lastUpdate;
+      if (!state.updateOk) {
+        lastUpdate = state.lastUpdate;
+      } else {
+        lastUpdate = Date.now();
+      }
+      return Object.assign({}, state, {
+        lastUpdate: lastUpdate,
+        updateOk: false
+      })
+
+    case SET_UPDATE_OK:
+      return Object.assign({}, state, {
+        updateOk: action.update
+      })
 
     default:
       return state;

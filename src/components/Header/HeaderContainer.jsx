@@ -1,6 +1,7 @@
-import './Header.module.css';
+import s from './Header.module.css';
 import { connect } from 'react-redux';
 import Header from './Header';
+import { fetchData } from '../Commodity/fetchData';
 
 function getTitle(navBar) {
     let title;
@@ -19,11 +20,36 @@ const mapStateToProps = state => {
     if (!title) {
         title = getTitle(state.navigation.navBar);
     }
+    let update;
+    let className;
+    if (title === "Товары") {
+        let lastUpdate = state.commodityPage.lastUpdate;
+        if (!lastUpdate || Date.now() - lastUpdate > 86400000) {
+            update = true;
+            className = s.needupdate;
+        } else {
+            update = false;
+            className = s.updated;
+        }
+    } else {
+        update = null;
+    }
     return {
-        title: title
+        dataServer: state.commodityPage.dataServer,
+        title,
+        update,
+        className
     }
 }
 
-const HeaderContainer = connect(mapStateToProps)(Header);
+const mapDispatch = dispatch => {
+    return {
+      receiveData: (dataServer, headers) =>
+        fetchData(dataServer, headers, dispatch)
+    };
+  };
+
+
+const HeaderContainer = connect(mapStateToProps, mapDispatch)(Header);
 
 export default HeaderContainer;

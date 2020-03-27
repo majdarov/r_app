@@ -5,7 +5,7 @@ import Node from "./Node";
 
 const Tree = props => {
   let nodeRoot = { id: 0, label: props.price, childs: [] };
-  let tree = { id: "Tree", label: "Groups", childs: [nodeRoot] };
+  let tree = { id: "Tree", label: props.treeLabel, childs: [nodeRoot] };
   createTree(props.data, tree);
 
   function createSubTree(item, lvl = 0) {

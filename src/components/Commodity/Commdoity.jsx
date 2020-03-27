@@ -61,7 +61,7 @@ const Commodity = props => {
   } else {
     return (
       <div className={s.container}>
-        <Tree data={props.groups} price="Price" handleClick={handleClick} />
+        <Tree data={props.groups} price="Price" treeLabel="Groups" handleClick={handleClick} />
         <div className={s.list}>
           <h3>Commodities</h3>
           <ListCommodities
