@@ -1,39 +1,60 @@
 import React from "react";
-import News from "./News/News";
 import s from "./Users.module.css";
-import readXlsxFile from "read-excel-file";
-import { useState } from "react";
+import avatar from "../../Assets/img/user.png";
 
-const Users = props => {
+const Users = (props) => {
 
-  const [childElements, setChildElements] = useState([]);
-
-  let elements = [];
-
-  const inpChange = (e) => {
-    readXlsxFile(e.target.files[0]).then(rows => {
-      rows.forEach((item, idx) => {
-        if (!idx) return;
-        const element = <News
-          index={item[3]}
-          key={item[0]}
-          name={item[1]}
-          description={item[8]}
-          article={item[9]} />;
-        elements.push(element);
-      });
-    }).then(() => {
-      setChildElements(elements)
-    })
-  }
-
-  return (
-    <div className={s.page}>
-      <input type="file" id="input" onChange={(e) => inpChange(e)} />
-      <h1>LATEST NEWS</h1>
-      <div className={s.archive}>{childElements}</div>
-    </div>
-  );
-};
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+    let pages = [];
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i);
+    }
+    return (
+        <div>
+            <div style={{ "marginBottom": "5px" }}>
+                {pages.map(p => {
+                    if (!(props.pageNumber - 3 > p || p > props.pageNumber + 5) || p === pagesCount || p === 1) {
+                        return <span
+                            key={p}
+                            className={props.pageNumber === p ? s.selected + " " + s.pages : s.pages}
+                            onClick={() => props.changePage(p)}>{p}</span>
+                    } else if (p === props.pageNumber + 6 || p === props.pageNumber - 4) {
+                        return "...";
+                    }
+                    return "";
+                })}
+            </div>
+            {
+                props.users.map(u => {
+                    return (
+                        <div key={u.id} id={u.id} className={s.user}>
+                            <span>
+                                <div>
+                                    <img src={u.photos.small != null ? u.photos.small : avatar} alt="..." />
+                                </div>
+                                <div>
+                                    {u.followed ? <button onClick={() => props.unfollow(u.id)}>UnFollow</button>
+                                        : <button onClick={() => props.follow(u.id)}>Follow</button>}
+                                </div>
+                            </span>
+                            <span>
+                                <span>
+                                    <h4>{u.name}</h4>
+                                    <div>{u.status}</div>
+                                </span>
+                                <span>
+                                    <div>
+                                        <div>{"u.location.country"}</div>
+                                        <div>{"u.location.city"}</div>
+                                    </div>
+                                </span>
+                            </span>
+                        </div>
+                    )
+                })
+            }
+        </div >
+    )
+}
 
 export default Users;

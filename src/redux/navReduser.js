@@ -11,7 +11,8 @@ let initialState = {
     { link: "/muzik", title: "Музыка" },
     { link: "/users", title: "Пользователи" },
     { link: "/commodity", title: "Товары" },
-    { link: "/game", title: "Играть" }
+    { link: "/game", title: "Играть" },
+    { link: "/table", title: "Экспорт Excel" }
   ]
 };
 

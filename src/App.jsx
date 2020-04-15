@@ -6,13 +6,14 @@ import "./css/regular.css";
 import "./css/brands.css";
 import Profile from "./components/Profile/Profile";
 import { Route } from "react-router-dom";
-import Users from "./components/Users/Users";
 import Game from "./components/Game/Game";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
 import MuzikContainer from "./components/Muzik/MuzikContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import CommodityContainer from "./components/Commodity/CommodityContainer";
+import ImpExcel from "./components/ImpExcel/ImpExcel";
+import UsersContainer from "./components/Users/UsersContainer";
 
 const App = () => {
 
@@ -26,8 +27,9 @@ const App = () => {
         <Route path="/profile" render={() => <Profile />}/>
         <Route path="/muzik" component={MuzikContainer} />
         <Route path="/commodity" component={CommodityContainer} />
-        <Route path="/users" component={Users} />
+        <Route path="/users" render={() => <UsersContainer />} />
         <Route path="/game" component={Game} />
+        <Route path="/table" component={ImpExcel} />
       </div>
     </div>
   );

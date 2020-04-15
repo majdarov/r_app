@@ -42,8 +42,9 @@ const profileReduser = (state = initialState, action) => {
         message: state.newPostText,
         likes: 0
       };
-      state.posts.push(msg);
+      // state.posts.push(msg);
       return Object.assign({}, state, {
+        posts: [...state.posts, msg],
         newPostText: ""
       });
 
