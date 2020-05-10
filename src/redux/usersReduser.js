@@ -2,6 +2,7 @@ const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SET_USERS = "SET-USERS";
 const SET_PAGE = "SET-PAGE";
+const SET_ISFETCHING = "ISFETCHING-SWITCH";
 
 let initialState = {
   users: [
@@ -57,6 +58,7 @@ let initialState = {
   pageSize: 10,
   totalUsersCount: 0,
   pageNumber: 1,
+  isFetching: false,
 };
 
 const usersReduser = (state = initialState, action) => {
@@ -92,25 +94,34 @@ const usersReduser = (state = initialState, action) => {
         ...state,
         pageNumber: action.p
       };
+      case SET_ISFETCHING:
+        return {
+          ...state,
+          isFetching: action.isFetching
+        };
     default:
       return state;
   }
 };
 
-export const followAC = (userId) => {
+export const follow = (userId) => {
   return { type: FOLLOW, userId };
 };
 
-export const unFollowAC = (userId) => {
+export const unfollow = (userId) => {
   return { type: UNFOLLOW, userId };
 };
 
-export const setUsersAC = (users, totalCount) => {
+export const setUsers = (users, totalCount) => {
   return { type: SET_USERS, users, totalCount };
 };
 
-export const setPageAC = p => {
+export const setPage = p => {
   return { type: SET_PAGE, p }
-}
+};
+
+export const setIsFetching = isFetching => {
+  return { type: SET_ISFETCHING, isFetching };
+};
 
 export default usersReduser;

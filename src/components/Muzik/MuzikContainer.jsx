@@ -15,7 +15,6 @@ const mapDispatchToProps = dispatch => {
     onChangeText: e => {
       let txt = e.target.value;
       dispatch(setMuzikTextAC(txt));
-      // document.getElementById("div").innerHTML = txt;
     }
   }
 }

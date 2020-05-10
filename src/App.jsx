@@ -22,12 +22,12 @@ const App = () => {
       <HeaderContainer />
       <NavbarContainer />
       <div className="app-content">
-        {/* <Route exact path="/" /> */}
-        <Route path="/dialogs" render={() => <DialogsContainer/>}/>
-        <Route path="/profile" render={() => <Profile />}/>
+        <Route exact path="/" />
+        <Route path="/dialogs" component={DialogsContainer}/>
+        <Route path="/profile" component={Profile}/>
         <Route path="/muzik" component={MuzikContainer} />
         <Route path="/commodity" component={CommodityContainer} />
-        <Route path="/users" render={() => <UsersContainer />} />
+        <Route path="/users" component={UsersContainer} />
         <Route path="/game" component={Game} />
         <Route path="/table" component={ImpExcel} />
       </div>

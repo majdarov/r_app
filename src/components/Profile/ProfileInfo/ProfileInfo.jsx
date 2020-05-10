@@ -7,7 +7,8 @@ const ProfileInfo = props => {
     <div>
       <div className={s.image}>
         <img
-          src="Explore_How_To_Take_Great_Landscape_Photography_KV.webp"
+          // src="Explore_How_To_Take_Great_Landscape_Photography_KV.webp"
+          src="https://lh3.googleusercontent.com/METdMcRQGttkaCLkronud61rK3f-ApSumfzenVkrgcTKca7xSkzpW1_U5vr286w1wPSWIqfhPhd5S0moEyiB6qhiMzzyZSLoVkLheG9Q9lChPHzvvYgCwP7ZjIVWJwPLCfqzv1LcAhTKXQ0rDceS29v5B3eFqc7I72OWMQcQEg7sG9fHmWumnKq8BoFyOKrp70T0VO3_DyfYMPBPJcY7jfjJixQwqnjr4UpymEPmp3unOG73KHaZPuoUl1NQglXlbXA8xdc6IDTMmS8iulgylmpuAvfO8Y5TgL1zJIgDsS2GdO_dStA7alw6mtcOcWBmDlw3C8SxlgSHbajkWbndUHK2QJ8NS2FMp0S8D3uUNu8Y0Zj1ZA0O9Jbl99qEdtiBOfdwJh5mIBuW6aIYpLlu9oyImf2e1AlcowQDkbn_pQGpTwbWwip5OsXfD3cTvBXq24uZ5LBrBrLE_8c4241QBCn6PGHPZsLZlmbys8FMJoG4j9WMP_-RdUQjGngIizZSQoYTOZJOCqaqEEDoSXRhPFpePrazyjoC5YxAefe7kOB772qYC47ZY2ULuS6CzZDtf0-uAyGezjffgdFBlm3AFxYxnTyl0XYMeM2ASR76G1F2Nqwk5DTYMw3lIyrzXRCGHH0VU_7fhng_mWdaYFbCaCgx5wxD8rcMqkdwim8BYqtMeqarCXMN1yI32EzHRw6N4ZGiCo0ssvzfQGDj7os9l6WNoVtofjHs01x-HIxp7FWNq0BRUr5zrKA=w1266-h633-no"
           alt="..."
         />
       </div>
