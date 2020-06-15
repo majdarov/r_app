@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { toggleShowTxtAC } from "../../../redux/profileReduser";
 
 
-const mapState = state => {
+const mapState = (state) => {
   
   let textarea;
   if (state.profilePage.showTxt) {
@@ -16,7 +16,8 @@ const mapState = state => {
 
   return {
     description: state.profilePage.profileDescription,
-    textarea: textarea
+    textarea: textarea,
+    userProfile: state.profilePage.userProfile
   }
 }
 
@@ -29,7 +30,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-
-const ProfileInfoContainer = connect(mapState, mapDispatch)(ProfileInfo);
-
-export default ProfileInfoContainer;
+export default connect(mapState, mapDispatch)(ProfileInfo);

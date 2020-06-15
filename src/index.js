@@ -14,3 +14,5 @@ import { Provider } from "react-redux";
     </Provider>
     ,document.getElementById("root")
   );
+
+  window.store = store;

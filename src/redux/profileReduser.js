@@ -2,6 +2,7 @@ const SET_PROFILE_DESCRIPTION = "SET-PROFILE-DESCRIPTION";
 const ADD_MESSAGE = "ADD-MESSAGE";
 const TOGGLE_SHOW_TXT = "SHOW-TXT";
 const SET_NEW_POST_TEXT = "SET-NEW-POST-TEXT";
+const SET_USER_PROFILE = "SET-USER-PROFILE";
 
 export const setProfileDesriptionAC = description => {
   return { type: SET_PROFILE_DESCRIPTION, text: description };
@@ -19,6 +20,10 @@ export const setNewPosTextAC = text => {
   return {type: SET_NEW_POST_TEXT, text}
 }
 
+export const setUserProfile = profile => {
+  return {type: SET_USER_PROFILE, profile}
+}
+
 let initialState = {
   profileDescription: "Profile description...",
   showTxt: false,
@@ -27,7 +32,8 @@ let initialState = {
     { message: "Second Message", likes: "5" },
     { message: "Third Message", likes: "5" }
   ],
-  newPostText: ""
+  newPostText: "",
+  userProfile: null
 };
 
 const profileReduser = (state = initialState, action) => {
@@ -37,16 +43,16 @@ const profileReduser = (state = initialState, action) => {
       return Object.assign({}, state, { profileDescription: action.text });
     
       case ADD_MESSAGE:
-      if (!state.newPostText.length) return;
+      if (!state.newPostText.length) return state;
       let msg = {
         message: state.newPostText,
         likes: 0
       };
       // state.posts.push(msg);
-      return Object.assign({}, state, {
+      return {...state,
         posts: [...state.posts, msg],
         newPostText: ""
-      });
+      };
 
       case TOGGLE_SHOW_TXT:
         return Object.assign({}, state, {
@@ -58,7 +64,8 @@ const profileReduser = (state = initialState, action) => {
         return Object.assign({}, state, {
           newPostText: action.text
         });
-
+      case SET_USER_PROFILE:
+        return {...state, userProfile: action.profile}
     default:
       return state;
   }

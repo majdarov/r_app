@@ -44,8 +44,8 @@ const mapStateToProps = state => {
 
 const mapDispatch = dispatch => {
     return {
-      receiveData: (dataServer, headers) =>
-        fetchData(dataServer, headers, dispatch)
+      receiveData: (dataServer, headers, path) =>
+        fetchData(dataServer, path, headers, dispatch)
     };
   };
 

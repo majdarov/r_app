@@ -4,7 +4,6 @@ import "./css/fontawesome.css";
 import "./css/solid.css";
 import "./css/regular.css";
 import "./css/brands.css";
-import Profile from "./components/Profile/Profile";
 import { Route } from "react-router-dom";
 import Game from "./components/Game/Game";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
@@ -14,6 +13,7 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import CommodityContainer from "./components/Commodity/CommodityContainer";
 import ImpExcel from "./components/ImpExcel/ImpExcel";
 import UsersContainer from "./components/Users/UsersContainer";
+import ProfileContainer from "./components/Profile/ProfileContainer";
 
 const App = () => {
 
@@ -24,7 +24,7 @@ const App = () => {
       <div className="app-content">
         <Route exact path="/" />
         <Route path="/dialogs" component={DialogsContainer}/>
-        <Route path="/profile" component={Profile}/>
+        <Route path="/profile/:userId?" component={ProfileContainer}/>
         <Route path="/muzik" component={MuzikContainer} />
         <Route path="/commodity" component={CommodityContainer} />
         <Route path="/users" component={UsersContainer} />

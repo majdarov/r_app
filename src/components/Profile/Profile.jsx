@@ -3,7 +3,6 @@ import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import ProfileInfoContainer from "./ProfileInfo/ProfileInfoContainer";
 
 const Content = props => {
-
   return (
     <div>
       <ProfileInfoContainer />

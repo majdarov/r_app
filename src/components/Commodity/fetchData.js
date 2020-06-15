@@ -6,8 +6,8 @@ import {
   updateCommodityAC
 } from "../../redux/commodityReduser";
 
-export function fetchData(dataServer, headers, dispatch) {
-  fetch(dataServer, {
+export function fetchData(dataServer, path,  headers, dispatch) {
+  fetch(dataServer + path, {
     method: "GET",
     headers
   })
@@ -16,9 +16,9 @@ export function fetchData(dataServer, headers, dispatch) {
       data => {
         // console.log(data);
         if (headers.get === "commodities") {
-          dispatch(getCommoditiesAC(data));
+          dispatch(getCommoditiesAC(data.items));
         } else if (headers.get === "groups") {
-          dispatch(getGroupsAC(data));
+          dispatch(getGroupsAC(data.items));
         } else if (headers.get === "update") {
           dispatch(setUpdateOkAC(data.ok));
           console.log("updated: " + Date());

@@ -30,7 +30,7 @@ export const setUpdateOkAC = update => {
 }
 
 let initialState = {
-  dataServer: "http://localhost:5000/commodity",
+  dataServer: "http://localhost:5000/api/v2",
   // dataServer: "/commodity",
   groups: [
     /* { id: 1, pid: null, label: "node1" }, // node
@@ -66,11 +66,14 @@ const commodityReduser = (state = initialState, action) => {
       let groups = [];
       action.groups.forEach(item => {
         let group = {
-          id: item.UUID,
-          pid: item.parentCode,
-          label: item.name
+          id: item.id,
+          // id: item.UUID,
+          pid: item.parent_id ? item.parent_id : null,
+          // pid: item.parentCode,
+          label: item.name,
         };
         groups.push(group);
+        // groups.sort((a, b) => a.code - b.code)
       });
 
       return Object.assign({}, state, {
@@ -87,9 +90,9 @@ const commodityReduser = (state = initialState, action) => {
     case GET_COMMODITIES:
       let commodities = [];
       action.commodities.forEach(item => {
-        if (item.g) return;
+        // if (item.g) return;
         let commodity = {
-          uuid: item.UUID,
+          uuid: item.id,
           code: item.code,
           label: item.name
         };

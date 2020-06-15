@@ -22,7 +22,9 @@ const mapDispatch = dispatch => {
       let txt = e.target.value;
       dispatch(setNewPosTextAC(txt)) 
     },
-    addPost: () => { dispatch(addMessageAC()) },
+    addPost: () => { 
+      dispatch(addMessageAC());
+    },
 
   }
 }

@@ -4,7 +4,7 @@ const Header = (props) => {
 
     function clickUpdate() {
         let headers = { get: "update" };
-        props.receiveData(props.dataServer, headers);
+        props.receiveData(props.dataServer, headers, '');
     }
    
     let update;

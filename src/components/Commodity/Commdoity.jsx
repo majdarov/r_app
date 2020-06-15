@@ -9,14 +9,14 @@ const Commodity = props => {
     let headers = {
       get: "groups"
     };
-    props.receiveData(props.dataServer, headers);
+    props.receiveData(props.dataServer, headers, '/groups');
   }
   if (!props.comIsLoaded) {
     let headers = {
       get: "commodities",
       parentId: props.pid
     };
-    props.receiveData(props.dataServer, headers);
+    props.receiveData(props.dataServer, headers, `/products/p/${props.pid}`);
   }
 
   function handleClick(e) {

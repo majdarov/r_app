@@ -20,8 +20,8 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     setPid: pid => dispatch(setPidAC(pid)),
-    receiveData: (dataServer, headers) =>
-      fetchData(dataServer, headers, dispatch)
+    receiveData: (dataServer, headers, path) =>
+      fetchData(dataServer, path, headers, dispatch)
   };
 };
 
