@@ -5,6 +5,7 @@ import navReduser from "./navReduser";
 import commodityReduser from "./commodityReduser";
 import muzReduser from "./MuzikReduser";
 import usersReduser from "./usersReduser";
+import authReduser from "./auth_reduser";
 
 /* fetch("http://localhost:5000/commodity", { //This Work!!!
     method: "GET",
@@ -20,7 +21,8 @@ let redusers = combineReducers({
     navigation: navReduser,
     commodityPage: commodityReduser,
     muzik: muzReduser,
-    usersPage: usersReduser
+    usersPage: usersReduser,
+    auth: authReduser
 });
 
 let store = createStore(redusers);

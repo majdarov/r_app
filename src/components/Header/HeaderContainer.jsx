@@ -1,28 +1,40 @@
+import React from 'react';
 import s from './Header.module.css';
 import { connect } from 'react-redux';
 import Header from './Header';
 import { fetchData } from '../Commodity/fetchData';
+import { withRouter } from 'react-router-dom';
+import { getTitleAC } from '../../redux/navReduser';
+import Axios from 'axios';
+import { setUserDataAC } from '../../redux/auth_reduser';
 
-function getTitle(navBar) {
-    let title;
-    let path = '/' + window.location.pathname.split('/')[1];
-    let nav = navBar.find(item => item.link === path);
-    if (nav !== undefined) {
-        title = nav.title;
-    } else {
-        title = "UnSet";
+class HeaderContainer extends React.Component {
+    componentDidMount() {
+        let path = '/' + this.props.location.pathname.split('/')[1];
+        this.props.getTitle(path);
+        
+        Axios.get('https://social-network.samuraijs.com/api/1.0/auth/me', {
+            withCredentials: true
+        })
+            .then(res => {
+                if (res.resultCode === 0) {
+                    this.props.setUserData(res.data.data);
+                } else {
+                    console.log('no login');
+                    // this.props.setUserData({userId: 1, email: 'test@test', login: 'test_user' });
+                }
+            });
+    };
+    render() {
+        return <Header {...this.props} />
     }
-    return title;
 }
 
 const mapStateToProps = state => {
-    let title = state.navigation._title;
-    if (!title) {
-        title = getTitle(state.navigation.navBar);
-    }
+
     let update;
     let className;
-    if (title === "Товары") {
+    if (state.title === "Товары") {
         let lastUpdate = state.commodityPage.lastUpdate;
         if (!lastUpdate || Date.now() - lastUpdate > 86400000) {
             update = true;
@@ -35,8 +47,15 @@ const mapStateToProps = state => {
         update = null;
     }
     return {
+        user: {
+            id: state.auth.userId,
+            email: state.auth.email,
+            login: state.auth.login
+        },
+        isAuth: state.auth.isAuth,
         dataServer: state.commodityPage.dataServer,
-        title,
+        navBar: state.navigation.navBar,
+        title: state.navigation.title,
         update,
         className
     }
@@ -44,12 +63,11 @@ const mapStateToProps = state => {
 
 const mapDispatch = dispatch => {
     return {
-      receiveData: (dataServer, headers, path) =>
-        fetchData(dataServer, path, headers, dispatch)
+        receiveData: (dataServer, headers, path) =>
+            fetchData(dataServer, path, headers, dispatch),
+        getTitle: path => dispatch(getTitleAC(path)),
+        setUserData: data => dispatch(setUserDataAC(data))
     };
-  };
+};
 
-
-const HeaderContainer = connect(mapStateToProps, mapDispatch)(Header);
-
-export default HeaderContainer;
+export default connect(mapStateToProps, mapDispatch)(withRouter(HeaderContainer));

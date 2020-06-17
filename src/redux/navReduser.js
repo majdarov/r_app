@@ -3,7 +3,7 @@ const GET_TITLE = "GET-TITLE";
 export const getTitleAC = path => ({ type: GET_TITLE, path: path });
 
 let initialState = {
-  _title: "",
+  title: "",
   navBar: [
     { link: "/", title: "Начало" },
     { link: "/profile", title: "Профиль" },
@@ -26,7 +26,7 @@ const navReduser = (state = initialState, action) => {
       if (nav !== undefined) {
         title = nav.title;
       }
-      return Object.assign({}, state, {_title: title});
+      return Object.assign({}, state, {title: title});
 
     default:
       return state;
