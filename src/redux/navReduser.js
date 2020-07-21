@@ -26,11 +26,17 @@ const navReduser = (state = initialState, action) => {
       if (nav !== undefined) {
         title = nav.title;
       }
-      return Object.assign({}, state, {title: title});
+      return { ...state, title}
 
     default:
       return state;
   }
 };
+
+export const getTitle = (path) => {
+  return dispatch => {
+    dispatch(getTitleAC(path))
+  }
+}
 
 export default navReduser;

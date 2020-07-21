@@ -12,7 +12,7 @@ const Tree = props => {
     let hidden;
     lvl += 1;
     let children = [];
-    if (item.childs.length) {
+    if (item.childs?.length) {
       children = item.childs.map(elem => {
         return createSubTree(elem, lvl);
       });

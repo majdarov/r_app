@@ -1,3 +1,5 @@
+import { usersApi } from "../api/api";
+
 const SET_PROFILE_DESCRIPTION = "SET-PROFILE-DESCRIPTION";
 const ADD_MESSAGE = "ADD-MESSAGE";
 const TOGGLE_SHOW_TXT = "SHOW-TXT";
@@ -48,7 +50,6 @@ const profileReduser = (state = initialState, action) => {
         message: state.newPostText,
         likes: 0
       };
-      // state.posts.push(msg);
       return {...state,
         posts: [...state.posts, msg],
         newPostText: ""
@@ -60,7 +61,6 @@ const profileReduser = (state = initialState, action) => {
         });
 
       case SET_NEW_POST_TEXT:
-        // debugger;
         return Object.assign({}, state, {
           newPostText: action.text
         });
@@ -70,4 +70,12 @@ const profileReduser = (state = initialState, action) => {
       return state;
   }
 };
+
+export const setUser = (id) => {
+  return (dispatch) => {
+    usersApi.getUserId(id)
+      .then(res => dispatch(setUserProfile(res)));
+  }
+}
+
 export default profileReduser;

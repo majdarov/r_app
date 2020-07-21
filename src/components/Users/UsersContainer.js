@@ -1,32 +1,22 @@
-import React from "react";
-import { connect } from "react-redux";
-import { follow, unfollow, setUsers, setPage, setIsFetching } from "../../redux/usersReduser";
-import Axios from "axios";
-import Users from "./Users";
-import Preloader from "../common/Preloader/Preloader";
+import React from 'react';
+import { connect } from 'react-redux';
+import {
+  followUser,
+  unFollowUser,
+  setPage,
+  getUsers,
+} from '../../redux/usersReduser';
+import Users from './Users';
+import Preloader from '../common/Preloader/Preloader';
 
 class UsersContainer extends React.Component {
   componentDidMount() {
-    if (!this.props.users.length) {
-      this.props.setIsFetching(true);
-      Axios.get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.pageNumber}&count=${this.props.pageSize}`
-      ).then((res) => {
-        this.props.setUsers(res.data.items, res.data.totalCount);
-        this.props.setIsFetching(false);
-      });
-    }
+      this.changePage(this.props.pageNumber);
   }
 
   changePage = (p) => {
-    this.props.setPage(p);
-    this.props.setIsFetching(true);
-    Axios.get(
-      `https://social-network.samuraijs.com/api/1.0/users?page=${p}&count=${this.props.pageSize}`
-    ).then((res) => {
-      this.props.setUsers(res.data.items, res.data.totalCount);
-      this.props.setIsFetching(false);
-    });
+    if (p !== this.props.pageNumber) this.props.setPage(p);
+    this.props.getUsers(p, this.props.pageSize);
   };
 
   render() {
@@ -49,7 +39,13 @@ const mapState = (state) => {
     totalUsersCount: state.usersPage.totalUsersCount,
     pageNumber: state.usersPage.pageNumber,
     isFetching: state.usersPage.isFetching,
+    currentFollowers: state.usersPage.currentFollowers
   };
 };
 
-export default connect(mapState, {follow, unfollow, setUsers, setPage, setIsFetching})(UsersContainer);
+export default connect(mapState, {
+  followUser,
+  unFollowUser,
+  setPage,
+  getUsers,
+})(UsersContainer);

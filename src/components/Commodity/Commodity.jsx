@@ -6,17 +6,10 @@ import ListCommodities from "./ListCommodities/ListCommodities";
 const Commodity = props => {
   if (!props.isLoaded) {
     props.setPid("0");
-    let headers = {
-      get: "groups"
-    };
-    props.receiveData(props.dataServer, headers, '/groups');
+    props.getGroups();
   }
   if (!props.comIsLoaded) {
-    let headers = {
-      get: "commodities",
-      parentId: props.pid
-    };
-    props.receiveData(props.dataServer, headers, `/products/p/${props.pid}`);
+    props.getProducts(props.pid);
   }
 
   function handleClick(e) {
@@ -60,17 +53,27 @@ const Commodity = props => {
     return <div>Загрузка...</div>;
   } else {
     return (
-      <div className={s.container}>
-        <Tree data={props.groups} price="Price" treeLabel="Groups" handleClick={handleClick} />
-        <div className={s.list}>
-          <h3>Commodities</h3>
-          <ListCommodities
-            commodities={props.commodities}
-            comIsLoaded={props.comIsLoaded}
-            error={props.error}
-          />
+      <>
+        <div className={s.form_commodity} hidden>
+          <form action="" name='form'>
+            <fieldset>
+              <input name="commodity_name" type="text" placeholder="Наименование товара..." />
+            </fieldset>
+            <input type='submit' />
+          </form>
         </div>
-      </div>
+        <div className={s.container}>
+          <Tree data={props.groups} price="Price" treeLabel="Groups" handleClick={handleClick} />
+          <div className={s.list}>
+            <h3>Commodities</h3>
+            <ListCommodities
+              commodities={props.commodities}
+              comIsLoaded={props.comIsLoaded}
+              error={props.error}
+            />
+          </div>
+        </div>
+      </>
     );
   }
 };

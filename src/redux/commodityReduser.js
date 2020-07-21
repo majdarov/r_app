@@ -1,37 +1,37 @@
-const GET_GROUPS = "GET-GROUPS";
-const SET_PID = "SET-PID";
-const GET_COMMODITIES = "GET-COMMODITIES";
-const SET_ERROR = "SET-ERROR";
-const UPDATE_COMMODITY = "UPDATE-COMMODITY";
-const SET_UPDATE_OK = "SET-UPDATE-OK";
+import { productsApi } from '../api/api';
 
-export const getGroupsAC = groups => {
+const GET_GROUPS = 'GET-GROUPS';
+const SET_PID = 'SET-PID';
+const GET_COMMODITIES = 'GET-COMMODITIES';
+const SET_ERROR = 'SET-ERROR';
+const UPDATE_COMMODITY = 'UPDATE-COMMODITY';
+const SET_UPDATE_OK = 'SET-UPDATE-OK';
+
+export const getGroupsAC = (groups) => {
   return { type: GET_GROUPS, groups };
 };
 
-export const setPidAC = pid => {
+export const setPidAC = (pid) => {
   return { type: SET_PID, pid: pid };
 };
 
-export const getCommoditiesAC = commodities => {
+export const getCommoditiesAC = (commodities) => {
   return { type: GET_COMMODITIES, commodities };
 };
 
-export const setError = error => {
-  return { type: SET_ERROR, error }
-}
+export const setError = (error) => {
+  return { type: SET_ERROR, error };
+};
 
 export const updateCommodityAC = () => {
-  return { type: UPDATE_COMMODITY }
-}
+  return { type: UPDATE_COMMODITY };
+};
 
-export const setUpdateOkAC = update => {
-  return { type: SET_UPDATE_OK, update }
-}
+export const setUpdateOkAC = (update) => {
+  return { type: SET_UPDATE_OK, update };
+};
 
 let initialState = {
-  dataServer: "http://localhost:5000/api/v2",
-  // dataServer: "/commodity",
   groups: [
     /* { id: 1, pid: null, label: "node1" }, // node
     { id: 2, pid: null, label: "node2" },
@@ -57,14 +57,14 @@ let initialState = {
   comIsLoaded: false,
   error: null,
   lastUpdate: 1585166400000,
-  updateOk: false
+  updateOk: false,
 };
 
 const commodityReduser = (state = initialState, action) => {
   switch (action.type) {
     case GET_GROUPS:
       let groups = [];
-      action.groups.forEach(item => {
+      action.groups.forEach((item) => {
         let group = {
           id: item.id,
           // id: item.UUID,
@@ -78,34 +78,34 @@ const commodityReduser = (state = initialState, action) => {
 
       return Object.assign({}, state, {
         groups: groups,
-        isLoaded: true
+        isLoaded: true,
       });
 
     case SET_PID:
       return Object.assign({}, state, {
         pid: action.pid,
-        comIsLoaded: false
+        comIsLoaded: false,
       });
 
     case GET_COMMODITIES:
       let commodities = [];
-      action.commodities.forEach(item => {
+      action.commodities.forEach((item) => {
         // if (item.g) return;
         let commodity = {
           uuid: item.id,
           code: item.code,
-          label: item.name
+          label: item.name,
         };
         commodities.push(commodity);
       });
       return Object.assign({}, state, {
         commodities: commodities,
-        comIsLoaded: true
+        comIsLoaded: true,
       });
 
     case SET_ERROR:
       return Object.assign({}, state, {
-        error: action.error
+        error: action.error,
       });
 
     case UPDATE_COMMODITY:
@@ -115,19 +115,46 @@ const commodityReduser = (state = initialState, action) => {
       } else {
         lastUpdate = Date.now();
       }
-      return Object.assign({}, state, {
-        lastUpdate: lastUpdate,
-        updateOk: false
-      })
+      return { ...state, lastUpdate, updateOk: false };
 
     case SET_UPDATE_OK:
-      return Object.assign({}, state, {
-        updateOk: action.update
-      })
+      return { ...state, updateOk: action.update };
 
     default:
       return state;
   }
+};
+
+export const setPid = (pId) => {
+  return (dispatch) => {
+    dispatch(setPidAC(pId));
+  };
+};
+
+export const getProducts = (pId) => {
+  return (dispatch) => {
+    productsApi
+      .getData(`products?parent_id=${pId}`)
+      .then((res) => dispatch(getCommoditiesAC(res.items)));
+  };
+};
+
+export const getGroups = () => {
+  return (dispatch) => {
+    productsApi
+      .getData(`groups`)
+      .then((res) => dispatch(getGroupsAC(res.items)));
+  };
+};
+
+export const updateProducts = () => {
+  return (dispatch) => {
+    productsApi.getData('products/update').then((res) => {
+      dispatch(setUpdateOkAC(true));
+      dispatch(updateCommodityAC());
+      alert(`Updated at ${Date()}`);
+    });
+  };
 };
 
 export default commodityReduser;

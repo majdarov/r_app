@@ -1,11 +1,13 @@
+import { usersApi } from '../api/api';
+
 const SET_USER_DATA = 'SET_USER_DATA';
 
 let initialState = {
-  userId: null,
+  id: null,
   email: null,
   login: null,
   isFetching: false,
-  isAuth: false
+  isAuth: false,
 };
 
 const authReduser = (state = initialState, action) => {
@@ -14,7 +16,7 @@ const authReduser = (state = initialState, action) => {
       return {
         ...state,
         ...action.data,
-        isAuth: true
+        isAuth: true,
       };
     default:
       return state;
@@ -24,6 +26,15 @@ const authReduser = (state = initialState, action) => {
 export const setUserDataAC = (data) => {
   // data - {userId, email, login}
   return { type: SET_USER_DATA, data };
+};
+
+export const authMe = () => {
+  return (dispatch) => {
+    usersApi
+      .getAuth()
+      .then((res) => dispatch(setUserDataAC(res.data)))
+      .catch((e) => alert(e.message));
+  };
 };
 
 export default authReduser;

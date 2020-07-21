@@ -34,6 +34,7 @@ function createNode(item) {
 function addNode(subNode, node) {
   let pNode = findNode(subNode.pid, node);
   try {
+    if (pNode === undefined) return;
     pNode.childs.push(subNode);
   } catch (e) {
     console.error(e.message);

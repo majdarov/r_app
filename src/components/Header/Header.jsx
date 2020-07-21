@@ -5,8 +5,11 @@ import { NavLink } from 'react-router-dom';
 const Header = (props) => {
 
     function clickUpdate() {
-        let headers = { get: "update" };
-        props.receiveData(props.dataServer, headers, '');
+        if (props.update) {
+            console.log('update products');
+            props.updateProducts();
+        }
+        // alert(`Updated at ${Date(props.lastUpdate)}`);
     }
 
     let update;

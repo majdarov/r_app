@@ -1,12 +1,10 @@
-import Commodity from "./Commdoity";
-import { setPidAC } from "../../redux/commodityReduser";
+import Commodity from "./Commodity";
+import { setPid, getGroups, getProducts } from "../../redux/commodityReduser";
 import { connect } from "react-redux";
-import { fetchData } from "./fetchData";
 
 const mapState = state => {
   state = state.commodityPage;
   return {
-    dataServer: state.dataServer,
     isLoaded: state.isLoaded,
     groups: state.groups,
     price: "Price",
@@ -17,14 +15,6 @@ const mapState = state => {
   };
 };
 
-const mapDispatch = dispatch => {
-  return {
-    setPid: pid => dispatch(setPidAC(pid)),
-    receiveData: (dataServer, headers, path) =>
-      fetchData(dataServer, path, headers, dispatch)
-  };
-};
-
-const CommodityContainer = connect(mapState, mapDispatch)(Commodity);
+const CommodityContainer = connect(mapState, { getGroups, getProducts, setPid })(Commodity);
 
 export default CommodityContainer;

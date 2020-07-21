@@ -10,6 +10,8 @@ const Users = (props) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
+
+
     return (
         <div>
             <div style={{ "marginBottom": "5px" }}>
@@ -36,8 +38,17 @@ const Users = (props) => {
                                     </NavLink>
                                 </div>
                                 <div>
-                                    {u.followed ? <button onClick={() => props.unfollow(u.id)}>UnFollow</button>
-                                        : <button onClick={() => props.follow(u.id)}>Follow</button>}
+                                    {
+                                        u.followed ?
+                                            <button 
+                                                onClick={() => props.unFollowUser(u.id)} 
+                                                disabled={props.currentFollowers.some(item => item === u.id)}
+                                            >UnFollow</button>
+                                            : <button 
+                                                onClick={() => props.followUser(u.id)} 
+                                                disabled={props.currentFollowers.some(item => item === u.id)}
+                                            >Follow</button>
+                                    }
                                 </div>
                             </span>
                             <span>
