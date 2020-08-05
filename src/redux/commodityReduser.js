@@ -5,7 +5,10 @@ const SET_PID = 'SET-PID';
 const GET_COMMODITIES = 'GET-COMMODITIES';
 const SET_ERROR = 'SET-ERROR';
 const UPDATE_COMMODITY = 'UPDATE-COMMODITY';
-const SET_UPDATE_OK = 'SET-UPDATE-OK';
+const SET_UPDATED = 'SET-UPDATED';
+const VIEW_FORM = 'VIEW-FORM';
+const SET_FORM_DATA = 'SET-FORM-DATA';
+const TOGGLE_FORM_POST = 'TOGGLE-FORM-POST';
 
 export const getGroupsAC = (groups) => {
   return { type: GET_GROUPS, groups };
@@ -27,8 +30,20 @@ export const updateCommodityAC = () => {
   return { type: UPDATE_COMMODITY };
 };
 
-export const setUpdateOkAC = (update) => {
-  return { type: SET_UPDATE_OK, update };
+export const setUpdatedAC = (update) => {
+  return { type: SET_UPDATED, update };
+};
+
+export const viewFormAC = (view) => {
+  return { type: VIEW_FORM, viewForm: view };
+};
+
+export const setFormDataAC = (formData) => {
+  return { type: SET_FORM_DATA, formData };
+};
+
+export const toggleFormPostAC = (formPost) => {
+  return { type: TOGGLE_FORM_POST, formPost };
 };
 
 let initialState = {
@@ -57,7 +72,29 @@ let initialState = {
   comIsLoaded: false,
   error: null,
   lastUpdate: 1585166400000,
-  updateOk: false,
+  isUpdated: false,
+  viewForm: false,
+  form: {
+    formData: {
+      id: '',
+      name: '',
+      code: '',
+      measure_name: 'шт',
+      tax: 'NO_VAT',
+      allow_to_sell: true,
+      description: '',
+      article_number: '',
+      parent_id: null,
+      type: 'NORMAL',
+      price: 0,
+      cost_price: 0,
+      quantity: 0,
+      photo: null,
+      barcodes: [],
+    },
+    formPost: false,
+    resMessage: null,
+  },
 };
 
 const commodityReduser = (state = initialState, action) => {
@@ -67,19 +104,14 @@ const commodityReduser = (state = initialState, action) => {
       action.groups.forEach((item) => {
         let group = {
           id: item.id,
-          // id: item.UUID,
           pid: item.parent_id ? item.parent_id : null,
-          // pid: item.parentCode,
           label: item.name,
+          // code: Date.parse(item.createdAt)
         };
         groups.push(group);
-        // groups.sort((a, b) => a.code - b.code)
       });
-
-      return Object.assign({}, state, {
-        groups: groups,
-        isLoaded: true,
-      });
+      // groups.sort((a,b) => a.code - b.code);
+      return { ...state, groups: groups, isLoaded: true };
 
     case SET_PID:
       return Object.assign({}, state, {
@@ -95,6 +127,7 @@ const commodityReduser = (state = initialState, action) => {
           uuid: item.id,
           code: item.code,
           label: item.name,
+          price: item.price,
         };
         commodities.push(commodity);
       });
@@ -109,33 +142,50 @@ const commodityReduser = (state = initialState, action) => {
       });
 
     case UPDATE_COMMODITY:
-      let lastUpdate;
-      if (!state.updateOk) {
-        lastUpdate = state.lastUpdate;
-      } else {
-        lastUpdate = Date.now();
-      }
-      return { ...state, lastUpdate, updateOk: false };
+      let lastUpdate = Date.now();
+      // if (!state.updateOk) {
+      //   lastUpdate = state.lastUpdate;
+      // } else {
+      //   lastUpdate = Date.now();
+      // }
+      return { ...state, lastUpdate };
 
-    case SET_UPDATE_OK:
-      return { ...state, updateOk: action.update };
+    case SET_UPDATED:
+      return { ...state, isUpdated: action.update };
+
+    case VIEW_FORM:
+      return { ...state, viewForm: action.viewForm };
+
+    case TOGGLE_FORM_POST:
+      return { ...state, form: { ...state.form, formPost: action.formPost } };
+
+    case SET_FORM_DATA:
+      return { ...state, form: { ...state.form, formData: action.formData } };
 
     default:
       return state;
   }
 };
 
-export const setPid = (pId) => {
-  return (dispatch) => {
-    dispatch(setPidAC(pId));
-  };
-};
-
 export const getProducts = (pId) => {
   return (dispatch) => {
     productsApi
-      .getData(`products?parent_id=${pId}`)
+      .getData(`products`, { parent_id: pId })
       .then((res) => dispatch(getCommoditiesAC(res.items)));
+  };
+};
+
+export const getProductId = (id) => {
+  return (dispatch) => {
+    productsApi
+      .getData(`products/${id}`)
+      .then((res) => {
+        dispatch(setFormDataAC(res));
+        return true;
+      })
+      .then((result) => {
+        if (result) dispatch(viewFormAC(true));
+      });
   };
 };
 
@@ -150,11 +200,46 @@ export const getGroups = () => {
 export const updateProducts = () => {
   return (dispatch) => {
     productsApi.getData('products/update').then((res) => {
-      dispatch(setUpdateOkAC(true));
       dispatch(updateCommodityAC());
+      dispatch(setUpdatedAC(false));
       alert(`Updated at ${Date()}`);
     });
   };
+};
+
+export const setUpdated = (updated) => (dispatch) =>
+  dispatch(setUpdatedAC(updated));
+
+export const setViewForm = (view) => (dispatch) => dispatch(viewFormAC(view));
+
+export const setFormData = (formData) => (dispatch) =>
+  dispatch(setFormDataAC(formData));
+
+export const postFormData = (typeData, body) => (dispatch) => {
+  let path;
+  switch (typeData) {
+    case 'product':
+      path = 'products';
+      break;
+    case 'group':
+      path = 'groups';
+      break;
+    default:
+      path = 'products';
+      break;
+  }
+  productsApi
+    .postData(path, body)
+    .then((res) => {
+      console.log(res.data)
+      if(res.data.errors?.length) {
+        throw new Error(res.data.errors[0].message);
+      }
+    })
+    .then(dispatch(toggleFormPostAC(false)))
+    .then(dispatch(viewFormAC(false)))
+    .then(dispatch(setFormDataAC(initialState.form.formData)))
+    .catch(e => console.error(e.message));
 };
 
 export default commodityReduser;

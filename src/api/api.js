@@ -1,6 +1,7 @@
 import * as axios from 'axios';
 import apiConfig from './apiConfig.json';
 
+/* Раскомментировать для сборки for create 'build' */
 // const apiSamurai = axios.create({
 //   baseURL: 'https://social-network.samuraijs.com/api/1.0/',
 //   withCredentials: true,
@@ -8,14 +9,18 @@ import apiConfig from './apiConfig.json';
 //     'API-KEY': '1204f868-84dd-4ccb-ad64-0310201501d1',
 //   },
 // });
+// const apiProducts = axios.create({
+//   baseURL: '/api/v2'
+// });
 
 const apiSamurai = axios.create(apiConfig.apiSamurai);
 const apiProducts = axios.create(apiConfig.apiProducts);
 
+
 export const usersApi = {
   getUsers(pageNumber, pageSize) {
     return apiSamurai
-      .get(`users?page=${pageNumber}&count=${pageSize}`)
+      .get(`users`, { params: { page: pageNumber, count: pageSize } })
       .then((res) => res.data);
   },
   followUser(id) {
@@ -36,13 +41,10 @@ export const usersApi = {
 };
 
 export const productsApi = {
-  // getGroups(search) {
-  //   return apiProducts.get('groups' + search).then(res => res.items)
-  // },
-  // getProducts(search) {
-  //   return apiProducts.get('products' + search).then(res => res.items)
-  // },
-  getData(path, search = '') {
-    return apiProducts.get(path + search).then(res => res.data)
+  getData(path, query) {
+    return apiProducts.get(path, { params: query }).then((res) => res.data);
+  },
+  postData(path, body) {
+    return apiProducts.post(path, body);
   }
-}
+};

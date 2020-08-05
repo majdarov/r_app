@@ -32,7 +32,10 @@ export const authMe = () => {
   return (dispatch) => {
     usersApi
       .getAuth()
-      .then((res) => dispatch(setUserDataAC(res.data)))
+      .then((res) => {
+        if (res.resultCode !== 0) return;
+        dispatch(setUserDataAC(res.data))
+      })
       .catch((e) => alert(e.message));
   };
 };

@@ -14,6 +14,7 @@ import CommodityContainer from "./components/Commodity/CommodityContainer";
 import ImpExcel from "./components/ImpExcel/ImpExcel";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
+import Login from './components/Login/login';
 
 const App = () => {
 
@@ -22,7 +23,7 @@ const App = () => {
       <HeaderContainer />
       <NavbarContainer />
       <div className="app-content">
-        <Route exact path="/" />
+        <Route exact path="/" location={'http://localhost:5000'}/>
         <Route path="/dialogs" component={DialogsContainer}/>
         <Route path="/profile/:userId?" component={ProfileContainer}/>
         <Route path="/muzik" component={MuzikContainer} />
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/users" component={UsersContainer} />
         <Route path="/game" component={Game} />
         <Route path="/table" component={ImpExcel} />
+        <Route path="/login" component={Login} />
       </div>
     </div>
   );

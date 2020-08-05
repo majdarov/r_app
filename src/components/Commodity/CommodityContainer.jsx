@@ -1,5 +1,7 @@
 import Commodity from "./Commodity";
-import { setPid, getGroups, getProducts } from "../../redux/commodityReduser";
+import { setPidAC, getGroups, getProducts, 
+  setViewForm, getProductId, setFormData, 
+  toggleFormPostAC, postFormData } from "../../redux/commodityReduser";
 import { connect } from "react-redux";
 
 const mapState = state => {
@@ -11,10 +13,32 @@ const mapState = state => {
     pid: state.pid,
     commodities: state.commodities,
     comIsLoaded: state.comIsLoaded,
-    error: state.error
+    error: state.error,
+    viewForm: state.viewForm,
+    formData: state.form.formData,
+    formPost: state.form.formPost
   };
 };
 
-const CommodityContainer = connect(mapState, { getGroups, getProducts, setPid })(Commodity);
+const setPid = (pId) => {
+  return (dispatch) => {
+    dispatch(setPidAC(pId));
+  };
+};
+
+const toggleFormPost = formPost => {
+  return dispatch => dispatch(toggleFormPostAC(formPost));
+}
+
+const CommodityContainer = connect(mapState, {
+  getGroups,
+  getProducts,
+  setPid,
+  setViewForm,
+  getProductId,
+  setFormData,
+  toggleFormPost,
+  postFormData
+})(Commodity);
 
 export default CommodityContainer;

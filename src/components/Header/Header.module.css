@@ -10,6 +10,8 @@ header h2 {
 header {
   grid-area: h;
   background-color: darkorange;
+  /* position: fixed;
+  width: 88vw; */
 }
 
 .needupdate {
@@ -20,7 +22,7 @@ header {
 
 .updated {
   display: inline;
-  color: lightgreen;
+  color: green;
   font-weight: bold;
 }
 
@@ -31,5 +33,5 @@ header {
 .loginBlock {
   font-weight: 600;
   float: right;
-  margin-right: 5px;
+  margin-right: 10px;
 }

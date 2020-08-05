@@ -71,7 +71,7 @@ const profileReduser = (state = initialState, action) => {
   }
 };
 
-export const setUser = (id) => {
+export const getUser = (id) => {
   return (dispatch) => {
     usersApi.getUserId(id)
       .then(res => dispatch(setUserProfile(res)));

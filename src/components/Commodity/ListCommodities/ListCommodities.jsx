@@ -1,31 +1,29 @@
 import React from 'react';
-import s from '../Commodity.module.css';
+// import s from '../Commodity.module.css';
+import Preloader from '../../common/Preloader/Preloader';
 
 const ListCommodities = props => {
     let liElements;
     let commodities = props.commodities;
 
     function liClick(e) {
-        let div = document.getElementsByClassName(s.form_commodity)[0];
-        let form = document.forms.form;
-        let element = e.target;
-        form.commodity_name.value = element.innerText;
-        div.hidden = false;
+        let id = e.target.id;
+        props.getProductId(id);
     }
 
     if (props.error) {
         return props.error.message;
     } else if (!props.comIsLoaded) {
-        return "Загрузка...";
+        return <Preloader />
     } else {
         liElements = commodities.map(item => {
             return (
-                <li id={item.code} key={item.uuid} onDoubleClick={liClick}>
-                    {item.label}
+                <li id={item.uuid} key={item.uuid} onDoubleClick={liClick} data-price={item.price} data-code={item.code}>
+                    {item.label} | {item.price ? item.price.toFixed(2) : '0.00'}
                 </li>
             )
         })
-        
+
         return (
             <>
                 <ul>

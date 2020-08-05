@@ -3,7 +3,7 @@ import spiner from "../../../Assets/img/placeholder.svg";
 
 let Preloader = (props) => {
   return (
-    <div style={{ backgroundColor: "lavender" }}>
+    <div>
       <img src={spiner} alt="" />
     </div>
   );

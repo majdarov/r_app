@@ -5,7 +5,7 @@ import Header from './Header';
 import { withRouter } from 'react-router-dom';
 import { getTitle } from '../../redux/navReduser';
 import { authMe } from '../../redux/auth_reduser';
-import { updateProducts } from '../../redux/commodityReduser';
+import { updateProducts, setUpdated } from '../../redux/commodityReduser';
 
 class HeaderContainer extends React.Component {
     componentDidMount() {
@@ -46,18 +46,9 @@ const mapStateToProps = state => {
         title: state.navigation.title,
         update,
         className,
-        lastUpdate
+        lastUpdate,
+        isUpdated: state.commodityPage.isUpdated
     }
 }
 
-// const mapDispatch = dispatch => {
-//     return {
-//         receiveData: (dataServer, headers, path) =>
-//             fetchData(dataServer, path, headers, dispatch),
-//         getTitle: path => dispatch(getTitleAC(path)),
-//         // setUserData: data => dispatch(setUserDataAC(data)),
-//         authMe
-//     };
-// };
-
-export default connect(mapStateToProps, { authMe, getTitle, updateProducts })(withRouter(HeaderContainer));
+export default connect(mapStateToProps, { authMe, getTitle, updateProducts, setUpdated })(withRouter(HeaderContainer));

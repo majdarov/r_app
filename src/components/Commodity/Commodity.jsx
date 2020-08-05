@@ -1,11 +1,14 @@
 import React from "react";
 import s from "./Commodity.module.css";
-import Tree from "../Tree/Tree";
+import Tree from "../common/Tree/Tree";
 import ListCommodities from "./ListCommodities/ListCommodities";
+import Preloader from "../common/Preloader/Preloader";
+import FormModalWrapper from "./Forms/FormModalWrapper";
+import FormProduct from "./Forms/FormProduct";
 
 const Commodity = props => {
   if (!props.isLoaded) {
-    props.setPid("0");
+    props.setPid(0);
     props.getGroups();
   }
   if (!props.comIsLoaded) {
@@ -50,18 +53,26 @@ const Commodity = props => {
   if (props.error) {
     return <div>Ошибка...{props.error.message}</div>;
   } else if (!props.isLoaded) {
-    return <div>Загрузка...</div>;
+    return <Preloader />
   } else {
     return (
       <>
-        <div className={s.form_commodity} hidden>
-          <form action="" name='form'>
-            <fieldset>
-              <input name="commodity_name" type="text" placeholder="Наименование товара..." />
-            </fieldset>
-            <input type='submit' />
-          </form>
-        </div>
+        {props.viewForm ?
+        // <FormProductFormik />
+          <FormModalWrapper
+            form={
+              <FormProduct
+                groups={props.groups}
+                formData={props.formData}
+                formPost={props.formPost}
+                setViewForm={props.setViewForm}
+                setFormData={props.setFormData}
+                toggleFormPost={props.toggleFormPost}
+                postFormData={props.postFormData}
+              />
+            }
+          /> 
+          : null}
         <div className={s.container}>
           <Tree data={props.groups} price="Price" treeLabel="Groups" handleClick={handleClick} />
           <div className={s.list}>
@@ -70,9 +81,11 @@ const Commodity = props => {
               commodities={props.commodities}
               comIsLoaded={props.comIsLoaded}
               error={props.error}
+              getProductId={props.getProductId}
             />
           </div>
         </div>
+
       </>
     );
   }

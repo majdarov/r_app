@@ -11,6 +11,7 @@
   border: 1px solid blue;
   background-color: cornsilk;
   cursor: default;
+  overflow: auto;
 }
 
 .list ul {
@@ -55,15 +56,4 @@
 
   .selected {
     background-color: lavender;
-  }
-
-  .form_commodity {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9000;
-    background-color: silver;
-    /* opacity: 0.3; */
   }
