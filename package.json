@@ -2,8 +2,7 @@
   "name": "r-app",
   "version": "0.1.0",
   "private": true,
-  "description": "build => homepage: /app",
-  "homepage": "/",
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",

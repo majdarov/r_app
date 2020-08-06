@@ -39,6 +39,7 @@ export const viewFormAC = (view) => {
 };
 
 export const setFormDataAC = (formData) => {
+  formData = formData === null ? initialState.form.formData : formData;
   return { type: SET_FORM_DATA, formData };
 };
 
@@ -47,26 +48,8 @@ export const toggleFormPostAC = (formPost) => {
 };
 
 let initialState = {
-  groups: [
-    /* { id: 1, pid: null, label: "node1" }, // node
-    { id: 2, pid: null, label: "node2" },
-    { id: 3, pid: null, label: "node3" },
-    { id: 4, pid: 1, label: "node1_4" },
-    { id: 5, pid: 1, label: "node1_5" },
-    { id: 6, pid: 3, label: "node3_6" },
-    { id: 7, pid: 5, label: "node1_5_7" },
-    { id: 8, pid: 6, label: "node3_6_8" } */
-  ],
-  commodities: [
-    // { uuid: 1, code: 0, label: "node1" }, // node
-    // { uuid: 2, code: 1, label: "node2" },
-    // { uuid: 3, code: 2, label: "node3" },
-    // { uuid: 4, code: 3, label: "node1_4" },
-    // { uuid: 5, code: 4, label: "node1_5" },
-    // { uuid: 6, code: 5, label: "node3_6" },
-    // { uuid: 7, code: 6, label: "node1_5_7" },
-    // { uuid: 8, code: 7, label: "node3_6_8" }
-  ],
+  groups: [],
+  commodities: [],
   pid: null,
   isLoaded: false,
   comIsLoaded: false,
@@ -176,6 +159,7 @@ export const getProducts = (pId) => {
 };
 
 export const getProductId = (id) => {
+  if (!id) return dispatch => dispatch(viewFormAC(true));
   return (dispatch) => {
     productsApi
       .getData(`products/${id}`)
@@ -231,15 +215,17 @@ export const postFormData = (typeData, body) => (dispatch) => {
   productsApi
     .postData(path, body)
     .then((res) => {
-      console.log(res.data)
-      if(res.data.errors?.length) {
+      console.log(res.data);
+      if (res.data.errors?.length) {
         throw new Error(res.data.errors[0].message);
       }
     })
-    .then(dispatch(toggleFormPostAC(false)))
-    .then(dispatch(viewFormAC(false)))
-    .then(dispatch(setFormDataAC(initialState.form.formData)))
-    .catch(e => console.error(e.message));
+    .then(() => {
+      dispatch(toggleFormPostAC(false));
+      dispatch(viewFormAC(false));
+      dispatch(setFormDataAC(initialState.form.formData));
+    })
+    .catch((e) => console.error(e.message));
 };
 
 export default commodityReduser;

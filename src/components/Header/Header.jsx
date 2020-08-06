@@ -2,6 +2,7 @@ import React from 'react';
 import s from './Header.module.css';
 import { NavLink } from 'react-router-dom';
 import Preloader from '../common/Preloader/Preloader';
+import logo from '../../Assets/img/terminal-5.png';
 
 const Header = (props) => {
 
@@ -24,7 +25,7 @@ const Header = (props) => {
 
     return (
         <header>
-            <img src='terminal-5.png' alt='...'></img>
+            <img src={logo} alt='Logo'></img>
             <h2>{props.title}</h2>
             <div style={{display: 'inline-block'}}>
                 {props.isUpdated ? <Preloader /> :

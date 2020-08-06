@@ -76,15 +76,22 @@ label:hover {
   border: 1px lawngreen double;
 }
 
-img {
+.picture-small {
   width: 128px;
   cursor: pointer;
   display: inline-block;
 }
 
-#picture:hover{
-  width: 300px;
-  transition: ease 0.2s 0.15s;
+.picture-large {
+  display: inline-block;
+  width: 30vw;
+  transition: ease-out 0.5s;
+}
+
+.select::after {
+  content: "\f00d";
+  font-weight: bolder;
+  margin-right: 0.3rem;
 }
 
 input,
@@ -93,6 +100,11 @@ select,
 button
  {
   color: darkblue;
+}
+
+.buttons {
+  display: flex;
+  justify-content: right;
 }
 
 *:disabled {

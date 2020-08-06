@@ -1,5 +1,5 @@
 import React from 'react';
-// import s from '../Commodity.module.css';
+import s from '../Commodity.module.css';
 import Preloader from '../../common/Preloader/Preloader';
 
 const ListCommodities = props => {
@@ -18,7 +18,7 @@ const ListCommodities = props => {
     } else {
         liElements = commodities.map(item => {
             return (
-                <li id={item.uuid} key={item.uuid} onDoubleClick={liClick} data-price={item.price} data-code={item.code}>
+                <li id={item.uuid} key={item.uuid} className={s.clickable} onClick={liClick} data-price={item.price} data-code={item.code}>
                     {item.label} | {item.price ? item.price.toFixed(2) : '0.00'}
                 </li>
             )

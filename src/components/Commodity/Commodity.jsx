@@ -50,6 +50,10 @@ const Commodity = props => {
     props.setPid(elem.id);
   }
 
+  function newData() {
+    props.getProductId('');
+  }
+
   if (props.error) {
     return <div>Ошибка...{props.error.message}</div>;
   } else if (!props.isLoaded) {
@@ -57,8 +61,11 @@ const Commodity = props => {
   } else {
     return (
       <>
+        <div className={s.buttons}>
+          <button onClick={newData}>New Product</button>
+        </div>
         {props.viewForm ?
-        // <FormProductFormik />
+          // <FormProductFormik />
           <FormModalWrapper
             form={
               <FormProduct
@@ -71,7 +78,7 @@ const Commodity = props => {
                 postFormData={props.postFormData}
               />
             }
-          /> 
+          />
           : null}
         <div className={s.container}>
           <Tree data={props.groups} price="Price" treeLabel="Groups" handleClick={handleClick} />
@@ -84,8 +91,8 @@ const Commodity = props => {
               getProductId={props.getProductId}
             />
           </div>
-        </div>
 
+        </div>
       </>
     );
   }

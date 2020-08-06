@@ -22,7 +22,7 @@ export const setNewPosTextAC = text => {
   return {type: SET_NEW_POST_TEXT, text}
 }
 
-export const setUserProfile = profile => {
+export const setUserProfileAC = profile => {
   return {type: SET_USER_PROFILE, profile}
 }
 
@@ -74,7 +74,7 @@ const profileReduser = (state = initialState, action) => {
 export const getUser = (id) => {
   return (dispatch) => {
     usersApi.getUserId(id)
-      .then(res => dispatch(setUserProfile(res)));
+      .then(res => dispatch(setUserProfileAC(res)));
   }
 }
 

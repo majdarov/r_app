@@ -7,6 +7,6 @@
     }
   },
   "apiProducts": {
-    "baseURL": "http://localhost:5000/api/v2"
+    "baseURL": "/api/v2"
   }
 }

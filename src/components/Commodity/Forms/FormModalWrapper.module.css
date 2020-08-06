@@ -19,6 +19,7 @@
   display: block;
   transition: ease-in-out top 0.1s 0.1s;
   text-align: center;
+  font-family: "Font Awesome 5 Free";
 }
 
 #container::before{
