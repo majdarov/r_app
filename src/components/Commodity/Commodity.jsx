@@ -15,6 +15,11 @@ const Commodity = props => {
     props.getProducts(props.pid);
   }
 
+  if (props.error) {
+    alert(`${props.error.name}\n\r${props.error.message}`);
+    props.setError(null);
+  }
+
   function handleClick(e) {
     if (e.target.tagName !== "SPAN" && e.target.tagName !== "I") return;
     // ***SPAN toggle selected
@@ -61,8 +66,10 @@ const Commodity = props => {
   } else {
     return (
       <>
-        <div className={s.buttons}>
-          <button onClick={newData}>New Product</button>
+        <div className={s.head}>
+          <div className={s.buttons}>
+            <button onClick={newData}>New Product</button>
+          </div>
         </div>
         {props.viewForm ?
           // <FormProductFormik />
@@ -72,16 +79,19 @@ const Commodity = props => {
                 groups={props.groups}
                 formData={props.formData}
                 formPost={props.formPost}
+                formError={props.formError}
                 setViewForm={props.setViewForm}
                 setFormData={props.setFormData}
                 toggleFormPost={props.toggleFormPost}
                 postFormData={props.postFormData}
+                setFormError={props.setFormError}
+                pid={props.pid}
               />
             }
           />
           : null}
         <div className={s.container}>
-          <Tree data={props.groups} price="Price" treeLabel="Groups" handleClick={handleClick} />
+            <Tree data={props.groups} price="Price" treeLabel="Groups" handleClick={handleClick} />
           <div className={s.list}>
             <h3>Commodities</h3>
             <ListCommodities
@@ -89,6 +99,8 @@ const Commodity = props => {
               comIsLoaded={props.comIsLoaded}
               error={props.error}
               getProductId={props.getProductId}
+              deleteProduct={props.deleteProduct}
+              pid={props.pid}
             />
           </div>
 

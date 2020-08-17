@@ -1,4 +1,9 @@
 import { productsApi } from '../api/api';
+import {
+  SequelizeValidationError,
+  SequelizeError,
+  SequelizeUniqueConstraintError,
+} from '../components/Erroros/SequelizeErrors';
 
 const GET_GROUPS = 'GET-GROUPS';
 const SET_PID = 'SET-PID';
@@ -9,6 +14,7 @@ const SET_UPDATED = 'SET-UPDATED';
 const VIEW_FORM = 'VIEW-FORM';
 const SET_FORM_DATA = 'SET-FORM-DATA';
 const TOGGLE_FORM_POST = 'TOGGLE-FORM-POST';
+const SET_FORM_ERROR = 'SET-FORM-ERROR';
 
 export const getGroupsAC = (groups) => {
   return { type: GET_GROUPS, groups };
@@ -22,8 +28,12 @@ export const getCommoditiesAC = (commodities) => {
   return { type: GET_COMMODITIES, commodities };
 };
 
-export const setError = (error) => {
+export const setErrorAC = (error) => {
   return { type: SET_ERROR, error };
+};
+
+export const setFormErrorAC = (error) => {
+  return { type: SET_FORM_ERROR, error };
 };
 
 export const updateCommodityAC = () => {
@@ -59,7 +69,7 @@ let initialState = {
   viewForm: false,
   form: {
     formData: {
-      id: '',
+      id: null,
       name: '',
       code: '',
       measure_name: 'шт',
@@ -67,16 +77,17 @@ let initialState = {
       allow_to_sell: true,
       description: '',
       article_number: '',
-      parent_id: null,
+      // parent_id: null,
       type: 'NORMAL',
       price: 0,
       cost_price: 0,
       quantity: 0,
-      photo: null,
+      photos: [],
       barcodes: [],
     },
     formPost: false,
     resMessage: null,
+    formError: null,
   },
 };
 
@@ -124,6 +135,9 @@ const commodityReduser = (state = initialState, action) => {
         error: action.error,
       });
 
+    case SET_FORM_ERROR:
+      return { ...state, form: { ...state.form, formError: action.error } };
+
     case UPDATE_COMMODITY:
       let lastUpdate = Date.now();
       // if (!state.updateOk) {
@@ -159,7 +173,7 @@ export const getProducts = (pId) => {
 };
 
 export const getProductId = (id) => {
-  if (!id) return dispatch => dispatch(viewFormAC(true));
+  if (!id) return (dispatch) => dispatch(viewFormAC(true));
   return (dispatch) => {
     productsApi
       .getData(`products/${id}`)
@@ -196,10 +210,12 @@ export const setUpdated = (updated) => (dispatch) =>
 
 export const setViewForm = (view) => (dispatch) => dispatch(viewFormAC(view));
 
-export const setFormData = (formData) => (dispatch) =>
+export const setFormData = (formData) => (dispatch) => {
+  formData = formData ? formData : initialState.form.formData;
   dispatch(setFormDataAC(formData));
-
-export const postFormData = (typeData, body) => (dispatch) => {
+};
+export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
+  // debugger
   let path;
   switch (typeData) {
     case 'product':
@@ -212,20 +228,68 @@ export const postFormData = (typeData, body) => (dispatch) => {
       path = 'products';
       break;
   }
-  productsApi
-    .postData(path, body)
+  let callbackApi;
+  switch (typeQuery) {
+    case 'post':
+      callbackApi = productsApi.postData;
+      break;
+    case 'put':
+      path += `/${body.id}`
+      callbackApi = productsApi.putData;
+      break;
+    default:
+      callbackApi = productsApi.postData;
+      break;
+  }
+  console.log('method: ' + typeQuery);
+  callbackApi(path, body)
     .then((res) => {
-      console.log(res.data);
-      if (res.data.errors?.length) {
-        throw new Error(res.data.errors[0].message);
+      // console.log(res);
+      if (res.data.errors) {
+        console.log(res.data);
+        if (res.data.name === 'SequelizeValidationError') {
+          throw new SequelizeValidationError(res.data.errors);
+        } else if (res.data.name === 'SequelizeUniqueConstraintError') {
+          throw new SequelizeUniqueConstraintError(res.data.errors);
+        } else {
+          throw new SequelizeError(res.data.errors[0].message);
+        }
       }
+      // console.log(res.data);
+      return res.data.product.parent_id;
     })
-    .then(() => {
+    .then((pid) => {
       dispatch(toggleFormPostAC(false));
       dispatch(viewFormAC(false));
       dispatch(setFormDataAC(initialState.form.formData));
+      dispatch(setPidAC(pid || 0));
     })
-    .catch((e) => console.error(e.message));
+    .catch((err) => {
+      // console.dir(err);
+      dispatch(setFormErrorAC(err));
+      dispatch(toggleFormPostAC(false));
+    });
+};
+
+export const deleteProduct = (id, pid) => (dispatch) => {
+  productsApi
+    .deleteData(`products/${id}`)
+    .then((res) => {
+      if (res.data.errors) {
+        console.log(res.data);
+        if (res.data.name === 'SequelizeValidationError') {
+          throw new SequelizeValidationError(res.data.errors);
+        } else {
+          throw new SequelizeError(res.data.errors[0].message);
+        }
+      }
+      dispatch(setPidAC(pid));
+      return res.data;
+    })
+    .catch((err) => {
+      console.dir(err);
+      dispatch(setErrorAC(err));
+    });
 };
 
 export default commodityReduser;

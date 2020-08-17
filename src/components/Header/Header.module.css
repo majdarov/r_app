@@ -10,8 +10,8 @@ header h2 {
 header {
   grid-area: h;
   background-color: darkorange;
-  /* position: fixed;
-  width: 88vw; */
+  position: sticky;
+  top: 0;
 }
 
 .needupdate {
@@ -32,6 +32,11 @@ header {
 
 .loginBlock {
   font-weight: 600;
+  font-size: 1em;
   float: right;
   margin-right: 10px;
+}
+
+.loginBlock::before {
+  content: url('/images/icons/people.svg');
 }

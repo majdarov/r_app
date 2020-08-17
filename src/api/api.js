@@ -41,10 +41,16 @@ export const usersApi = {
 };
 
 export const productsApi = {
-  getData(path, query) {
-    return apiProducts.get(path, { params: query }).then((res) => res.data);
+  async getData(path, query) {
+    return await apiProducts.get(path, { params: query }).then((res) => res.data);
   },
-  postData(path, body) {
-    return apiProducts.post(path, body);
+  async postData(path, body) {
+    return await apiProducts.post(path, body);
+  },
+  async putData(path, data) {
+    return await apiProducts.put(path, data);
+  },
+  async deleteData(path) {
+    return await apiProducts.delete(path);
   }
 };

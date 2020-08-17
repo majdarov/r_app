@@ -15,6 +15,7 @@ import ImpExcel from "./components/ImpExcel/ImpExcel";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import Login from './components/Login/login';
+import Wrapper from "./components/Example/Wrapper";
 
 const App = () => {
 
@@ -23,7 +24,8 @@ const App = () => {
       <HeaderContainer />
       <NavbarContainer />
       <div className="app-content">
-        <Route exact path="/" location={'http://localhost:5000'}/>
+        <Route exact path="/" />
+        <Route path="/example" component={Wrapper} />
         <Route path="/dialogs" component={DialogsContainer}/>
         <Route path="/profile/:userId?" component={ProfileContainer}/>
         <Route path="/muzik" component={MuzikContainer} />

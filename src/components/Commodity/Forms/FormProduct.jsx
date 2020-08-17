@@ -2,21 +2,37 @@ import React from 'react';
 import s from './Form.module.css';
 import { useState } from "react";
 import Preloader from '../../common/Preloader/Preloader';
-import schema from '../../common/schemas/products.json';
-import { ComponentsProducts } from '../../common/schemas/ComponentsProducts';
+import { ComponentsProducts } from './schemas/ComponentsProducts';
+import { setNewCode, newBarcode, validateBarcode, validateChanges } from './frmUtilites';
+import FormImg from './FormImg';
+import FormModalWrapper from './FormModalWrapper';
+import noPhoto from '../../../Assets/img/terminal-5.png';
 
 const FormProduct = props => {
 
-  let parentId = props.formData.parent_id === null ? '0' : props.formData.parent_id;
+  let parentId = props.pid; /* props.formData.parent_id === null ? '0' : props.formData.parent_id; */
   let isNewData = !props.formData.id;
   const fileInput = React.createRef();
   const [state, setState] = useState({
     ...props.formData,
     allow_edit: isNewData,
     parent_id: parentId,
-    isNewData
+    photos: [...props.formData.photos],
+    barcodes: [...props.formData.barcodes],
+    isNewData,
+    bigImg: null,
+    currentBarcode: ''
   });
 
+  if (!state.code) {
+    setNewCode().then(code => setState({ ...state, code }));
+  }
+
+  if (props.formError) {
+    let err = props.formError;
+    alert(err.message);
+    props.setFormError(null);
+  }
 
   const disabled = !isNewData && !state.allow_edit;
 
@@ -27,12 +43,21 @@ const FormProduct = props => {
   const handleChange = (ev) => {
 
     let name = ev.target.name;
-    if (name === 'picture') {
-      let photo = fileInput.current.files[0].name;
-      setState({ ...state, photo });
+    let value = ev.target.value;
+
+    if (name === 'barcodes') {
+      setState({ ...state, currentBarcode: value });
       return;
     }
-    let value = ev.target.value;
+
+    if (name === 'picture') {
+      let photos = state.photos;
+      Array.from(fileInput.current.files).forEach(item => {
+        photos.push(item.name);
+      })
+      setState({ ...state, photos });
+      return;
+    }
     if (name === 'price' || name === 'cost_price') {
       value = Number(value);
     }
@@ -47,8 +72,28 @@ const FormProduct = props => {
   }
 
   const handleBlur = ev => {
-    let name = ev.target.name;
-    let value = ev.target.value;
+    let name = ev.target.name || ev.currentTarget.name;
+    let value = ev.target.value || ev.currentTarget.value;
+
+    if (name === 'barcodes') {
+      let newValue;
+      if (!value) {
+        let prefix = window.prompt(`Введите префикс!\r\n
+          Рекомендуется последние 4 цифры ИНН.\r\n
+          По умолчанию -> '0000'`, '2922');
+        if (!prefix || !isFinite(prefix)) prefix = '0000';
+        newValue = newBarcode(state.code, prefix);
+      }
+      let valBc = validateBarcode(value || newValue);
+      if (valBc !== 0) {
+        window.alert(valBc);
+        return;
+      }
+      let barcodes = [...state.barcodes, state.currentBarcode || newValue];
+      setState({ ...state, barcodes });
+      return;
+    }
+
     if (name === 'price' || name === 'cost_price') {
       value = isFinite(value) ? Number(value) : 0;
     }
@@ -58,20 +103,30 @@ const FormProduct = props => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    if (window.confirm('Save changes')) {
+    if (state.allow_edit && window.confirm('Save changes')) {
       let body = { ...state };
-      for (let key in body) {
-        if (body[key] === null || !body[key]) {
-          delete body[key];
-        }
+      if (body.parent_id === '0') {
+        delete body.parent_id;
       }
-      // delete body.id;
       delete body.createdAt;
       delete body.updatedAt;
       delete body.allow_edit;
+      delete body.isNewData;
+      delete body.bigImg;
+      delete body.currentBarcode;
 
+      validateChanges(body, props.formData);
+      if (!state.isNewData) body.id = state.id;
       alert(JSON.stringify(body, null, 2));
-      props.postFormData('product', body);
+
+      let i = 0;
+      Object.keys(body).forEach(item => i++);
+      if (i <= 1) {
+        alert('Данные не изменились!');
+        return;
+      }
+      let typeQuery = !state.isNewData ? 'put' : 'post';
+      props.postFormData('product', typeQuery, body);
       props.toggleFormPost(true);
     } else {
       props.setViewForm(false);
@@ -87,32 +142,59 @@ const FormProduct = props => {
 
   const pictureClick = ev => {
     let p = ev.target;
-    let span = p.closest('span');
-    span.className = s.select;
-    p.className = s['picture-large'];
+    if (p.tagName === 'SPAN') {
+      if (!state.allow_edit) return;
+      let prevElem = p.previousElementSibling;
+      deleteFromArray(prevElem.id, 'photos');
+      return;
+    }
     p.addEventListener('blur', () => {
-      p.className = s['picture-small'];
-      span.className = '';
+      setState({ ...state, bigImg: null })
       p.removeEventListener('blur', this);
     })
+    setState({ ...state, bigImg: p.src })
+  }
+
+  const onPicInputClick = ev => {
+    ev.preventDefault();
+    let picInput = document.getElementById('picInput');
+    picInput.click();
+  }
+
+  const deleteFromArray = (elemId, arrName) => {
+    let i = state[arrName].findIndex(item => item === elemId);
+    let arr = state[arrName];
+    arr.splice(i, 1);
+    setState({ ...state, [arrName]: arr });
   }
 
   const gProps = { groups: props.groups, disabled, handleChange, parent_id: state.parent_id, id: s.group };
 
-  const mnProps = { disabled, handleChange, id: s.measure_name, measure_name: state.measure_name }
+  const mnProps = { disabled, handleChange, id: s.measure_name, measure_name: state.measure_name };
 
+  const bProps = {
+    barcodes: state.barcodes, bc: state.currentBarcode, addBc: s['add-bc'], delBc: s['del-bc'],
+    handleChange, handleBlur, deleteFromArray, allow_edit: state.allow_edit,
+    view_barcode: s['view-barcode']
+  };
+
+  const pProps = { id: s.picture, className: s['picture-small'], divPicture: s['div-picture'], pictureClick };
 
   // let photo = state.photo ? state.photo : 'image3D.png';
-  if (props.postForm) {
+  if (props.formPost) {
     return <Preloader />
   } else {
     return (
       <>
-        <form id={s['form-product']} onSubmit={handleSubmit}>
+        {state.bigImg &&
+          <FormModalWrapper
+            form={<FormImg photo={state.bigImg} />}
+          />}
+        <form id={s['form-product']} onSubmit={handleSubmit} >
           <fieldset name='Product'>
             <legend>Product Info</legend>
             <div>
-              <b>ID: </b><input id={s.uuid} value={state.id} disabled={!isNewData} />
+              <b>ID: </b><input id={s.uuid} value={state.id} disabled={!isNewData} onChange={handleChange} />
               {
                 state.isNewData ? null :
                   <label>
@@ -121,38 +203,40 @@ const FormProduct = props => {
                   </label>
               }
             </div>
-            <span>
-              <img id={s.picture} className={s['picture-small']}
-                src={`/images/Price/${state.photo || 'image3D.png'}`}
-                alt="no" onClick={pictureClick} tabIndex='-1'
-              />
-            </span>
+            <div>
+              {
+                !state.photos.length ?
+                  // <ComponentsProducts.Picture {...pProps} photo='image3D.png' /> :
+                  <div><img src={noPhoto} alt="NoPhotos" className={s['picture-small']} /></div> :
+                  state.photos.map(ph => {
+                    return <ComponentsProducts.Picture {...pProps} photo={ph} key={ph} />
+                  })
+              }
+            </div>
             {
               state.photo || !state.allow_edit ? null :
-                <input type="file" name="picture" id={s.picture} onChange={handleChange} ref={fileInput} />
+                <>
+                  <input type="file" name="picture" id='picInput' multiple={true}
+                    onChange={handleChange} ref={fileInput} style={{ display: 'none' }} />
+                  <label htmlFor="picture" onClick={onPicInputClick}>Input Image</label>
+                </>
             }
-            <fieldset name='img_barcodes'>
-              <legend>Barcodes</legend>
-              <div className={s.barcodes}>
-                <ul>
-                  {state.barcodes.map(b => {
-                    return (<li key={b}>{b}</li>)
-                  })}
-                </ul>
-              </div>
-            </fieldset>
+            <ComponentsProducts.Barcodes {...bProps} />
             <div className={s.code_article}>
               <label>
                 Code:
-              <input type="text" name="code" value={state.code} onChange={handleChange} disabled={disabled} />
+              <input type="text" name="code"
+                  value={state.code}
+                  // defaultValue={state.code}
+                  onChange={handleChange} disabled={disabled} />
               </label>
               <label>
                 Aticle:
-              <input type="text" name='article' value={state.article || ''}
+              <input type="text" name='article_number' value={state.article_number || ''}
                   onChange={handleChange} disabled={disabled} />
               </label>
-                  <ComponentsProducts.Groups {...gProps}/>
-                  <ComponentsProducts.MeasureNames {...mnProps}/>
+              <ComponentsProducts.Groups {...gProps} />
+              <ComponentsProducts.MeasureNames {...mnProps} />
             </div>
             <label>
               Name:
@@ -163,14 +247,14 @@ const FormProduct = props => {
               <input type="text" name="description" value={state.description || ''} onChange={handleChange} disabled={disabled} />
             </label>
             <div className={s.prices}>
-              <label>
-                Price:
-              <input name="price" defaultValue={formatPrice(state.price)} onBlur={handleBlur} disabled={disabled} /> руб.
-            </label>
-              <label>
-                Cost price:
-              <input name="cost_price" defaultValue={formatPrice(state.cost_price)} onBlur={handleBlur} disabled={disabled} /> руб.
-            </label>
+              <label htmlFor='price'>Price:
+              <input name="price" defaultValue={formatPrice(state.price)} className={s.price}
+                  onBlur={handleBlur} disabled={disabled} /><span></span>
+              </label>
+              <label htmlFor='cost_price'>Cost Price:
+              <input name="cost_price" defaultValue={formatPrice(state.cost_price)} className={s.price}
+                  onBlur={handleBlur} disabled={disabled} /><span></span>
+              </label>
               <label>
                 Allow to sell:
               <input type="checkbox" name="allow_to_sell" defaultChecked={state.allow_to_sell} disabled={disabled} />
