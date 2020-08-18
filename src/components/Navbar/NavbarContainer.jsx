@@ -6,6 +6,7 @@ import NavLinkContainer from './NavLinkContainer';
 
 function getNavElements(state) {
 
+  let currentLang = state.navigation.currentLang;
   let navElements = state.navigation.navBar.map((nav, idx) => {
     let ex;
     nav.link === "/" ? ex = true : ex = false;
@@ -15,7 +16,7 @@ function getNavElements(state) {
           exact={ex}
           to={nav.link}
           activeClassName={s.active}>
-          {nav.title}
+          {nav.title[currentLang]}
         </NavLinkContainer>
       </div>
     );

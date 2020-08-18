@@ -1,32 +1,40 @@
-const GET_TITLE = "GET-TITLE";
+const GET_TITLE = 'GET-TITLE';
 
-export const getTitleAC = path => ({ type: GET_TITLE, path: path });
+const CHOOSE_LANG = 'CHOOSE-LANG';
+
+export const getTitleAC = (path) => ({ type: GET_TITLE, path });
+
+export const chooseLangAC = (lng) => ({ type: CHOOSE_LANG, lng });
 
 let initialState = {
-  title: "",
+  langs: { ru: 0, en: 1 },
+  currentLang: 0,
+  title: '',
   navBar: [
-    { link: "/", title: "Начало" },
-    { link: "/profile", title: "Профиль" },
-    { link: "/dialogs", title: "Диалоги" },
-    { link: "/muzik", title: "Музыка" },
-    { link: "/users", title: "Пользователи" },
-    { link: "/commodity", title: "Товары" },
-    { link: "/game", title: "Играть" },
-    { link: "/table", title: "Экспорт Excel" }
-  ]
+    { link: '/', title: ['Начало', 'Start'] },
+    { link: '/profile', title: ['Профиль', 'Profile'] },
+    { link: '/dialogs', title: ['Диалоги', 'Dialogs'] },
+    { link: '/muzik', title: ['Музыка', 'Music'] },
+    { link: '/users', title: ['Пользователи', 'Users'] },
+    { link: '/commodity', title: ['Товары', 'Products'] },
+    { link: '/game', title: ['Играть', 'Game'] },
+    { link: '/table', title: ['Экспорт Excel', 'Export Excel'] },
+  ],
 };
 
 const navReduser = (state = initialState, action) => {
   switch (action.type) {
-
+    
     case GET_TITLE:
-      // debugger;
       let title;
-      let nav = state.navBar.find(item => item.link === action.path);
+      let nav = state.navBar.find((item) => item.link === action.path);
       if (nav !== undefined) {
-        title = nav.title;
+        title = nav.title[state.currentLang];
       }
-      return { ...state, title}
+      return { ...state, title };
+
+    case CHOOSE_LANG:
+      return { ...state, currentLang: state.langs[action.lng] };
 
     default:
       return state;
@@ -34,9 +42,15 @@ const navReduser = (state = initialState, action) => {
 };
 
 export const getTitle = (path) => {
+  return (dispatch) => {
+    dispatch(getTitleAC(path));
+  };
+};
+
+export const chooseLang = lng => {
   return dispatch => {
-    dispatch(getTitleAC(path))
-  }
+    dispatch(chooseLangAC(lng))
+  };
 }
 
 export default navReduser;
