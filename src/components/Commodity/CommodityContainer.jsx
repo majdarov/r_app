@@ -3,6 +3,7 @@ import { setPidAC, getGroups, getProducts,
   setViewForm, getProductId, deleteProduct,setFormData, 
   toggleFormPostAC, postFormData, setFormErrorAC, setErrorAC } from "../../redux/commodityReduser";
 import { connect } from "react-redux";
+import { compose } from "redux";
 
 const mapState = state => {
   state = state.commodityPage;
@@ -39,7 +40,8 @@ const setError = err => {
   return dispatch => dispatch(setErrorAC(err));
 }
 
-const CommodityContainer = connect(mapState, {
+export default compose(
+  connect(mapState, {
   getGroups,
   getProducts,
   setPid,
@@ -51,6 +53,5 @@ const CommodityContainer = connect(mapState, {
   postFormData,
   setFormError,
   setError
-})(Commodity);
-
-export default CommodityContainer;
+})
+)(Commodity);

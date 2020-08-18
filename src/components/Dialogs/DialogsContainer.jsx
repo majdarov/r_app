@@ -5,9 +5,10 @@ import { addNewTextMessageAC, addDialogAC, setCurrentUserAC } from "../../redux/
 import { connect } from "react-redux";
 import MessageContainer from "./Message/MessageContainer";
 import { withAuthRedirect } from "../../Hoc/withAuthRedirect";
+import { compose } from "redux";
 
 function messagesElements(state) {
-  
+
   let messages;
   let userid = state.dialogsPage.user;
   let arrMessage = state.dialogsPage.messages;
@@ -29,18 +30,18 @@ function messagesElements(state) {
 
   messages = messages.map((item, idx) => {
     return <MessageContainer
-      value={item.message} 
-      likes={item.likes} 
-      key={idx} 
+      value={item.message}
+      likes={item.likes}
+      key={idx}
       id={item.id}
-      username={getUserName(item.iduser)}/>;
+      username={getUserName(item.iduser)} />;
   });
   return messages;
 }
 
 function dialogsElements(state) {
   let elements = state.dialogsPage.users.map((item, index) => {
-    return <DialogItemContainer user={item} key={index}/>
+    return <DialogItemContainer user={item} key={index} />
   });
   return elements;
 }
@@ -79,11 +80,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-// const redirectAuthContainer = withAuthRedirect(Dialogs);
-
-const DialogsContainer = withAuthRedirect(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Dialogs));
-
-export default DialogsContainer;
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withAuthRedirect
+)(Dialogs)

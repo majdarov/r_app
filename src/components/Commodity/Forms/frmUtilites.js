@@ -76,7 +76,7 @@ export function validateBarcode(barcode) {
       let newRes = 10 - res;
       message += 'Need add control digit: ' + newRes;
     } else {
-      message += 'Not valit Length barcode: ' + barcode.length;
+      message += 'Not valid Length barcode: ' + barcode.length;
     }
     return message;
   }
@@ -94,6 +94,7 @@ export function validateChanges(curr, prev) {
     }
     let isNotChanged = (
       curr[key] === null ||
+      curr[key] === undefined ||
       curr[key] === prev[key] ||
       arrNotChanged
     )
