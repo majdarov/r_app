@@ -1,11 +1,9 @@
 import React from "react";
 import s from "./Dialogs.module.css";
-import { NavLink, Redirect } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import TextArea from "../TextArea/TextArea";
 
 const Dialogs = props => {
-
-  if(!props.isAuth) return <Redirect to='/login'/>;
 
   return (
     <div className={s.dialogs}>

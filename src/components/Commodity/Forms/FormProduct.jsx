@@ -191,10 +191,11 @@ const FormProduct = props => {
             form={<FormImg photo={state.bigImg} />}
           />}
         <form id={s['form-product']} onSubmit={handleSubmit} >
+          <div className={s['menu-buttons']}><span className='fa fa-window-close' onClick={handleSubmit}></span></div>
           <fieldset name='Product'>
             <legend>Product Info</legend>
             <div>
-              <b>ID: </b><input id={s.uuid} value={state.id} disabled={!isNewData} onChange={handleChange} />
+              <b>ID: </b><input id={s.uuid} value={state.id || ''} disabled={!isNewData} onChange={handleChange} />
               {
                 state.isNewData ? null :
                   <label>
