@@ -255,7 +255,7 @@ export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
           throw new SequelizeError(res.data.errors[0].message);
         }
       }
-      // console.log(res.data);
+      console.log(res.data);
       return res.data.product.parent_id;
     })
     .then((pid) => {

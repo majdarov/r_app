@@ -103,6 +103,7 @@ const FormProduct = props => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
+    ev.stopPropagation();
     if (state.allow_edit && window.confirm('Save changes')) {
       let body = { ...state };
       if (body.parent_id === '0') {
@@ -111,12 +112,13 @@ const FormProduct = props => {
       delete body.createdAt;
       delete body.updatedAt;
       delete body.allow_edit;
-      delete body.isNewData;
       delete body.bigImg;
       delete body.currentBarcode;
 
       validateChanges(body, props.formData);
       if (!state.isNewData) body.id = state.id;
+      delete body.isNewData;
+
       alert(JSON.stringify(body, null, 2));
 
       let i = 0;

@@ -84,21 +84,17 @@ export function validateBarcode(barcode) {
 }
 
 export function validateChanges(curr, prev) {
-  
-  let arrNotChanged = true;
 
   for (let key in curr) {
+    let arrNotChanged = false;
     if (Array.isArray(curr[key])) {
       let compare = arrCompare(curr[key], prev[key]);
       arrNotChanged = !compare.resArrMinus.length && !compare.resArrPlus.length;
     }
-    let isNotChanged = (
-      curr[key] === null ||
-      curr[key] === undefined ||
-      curr[key] === prev[key] ||
-      arrNotChanged
-    )
-    if (isNotChanged) {
+    let isNotData = (curr[key] === null || curr[key] === undefined || !curr[key]);
+    let isNotChanged = (!curr.isNewData && curr[key] === prev[key]);
+    
+    if (arrNotChanged || isNotData || isNotChanged) {
       delete curr[key];
     }
   }
