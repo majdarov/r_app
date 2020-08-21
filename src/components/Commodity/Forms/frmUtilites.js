@@ -8,7 +8,10 @@ export const setNewCode = async () => {
 
 export function newBarcode(code, prefix = '0000') {
   if (!prefix) prefix = '0000';
-  let A1 = '20'.concat(prefix) + '0'.repeat(6 - code.toString().length) + code.toString();
+  let A1 =
+    '20'.concat(prefix) +
+    '0'.repeat(6 - code.toString().length) +
+    code.toString();
   let A2 = 0;
   A1.split('').forEach((item, i) => {
     if (i % 2 !== 0) {
@@ -17,7 +20,7 @@ export function newBarcode(code, prefix = '0000') {
       A2 += Number(item);
     }
   });
-  A2 = (10 - (A2 % 10))%10;
+  A2 = (10 - (A2 % 10)) % 10;
   return A1.concat(A2);
 }
 
@@ -68,7 +71,7 @@ export function validateBarcode(barcode) {
   });
   if (res !== 0) {
     let message = '';
-    if (barcode.length === 13 || barcode.length === 8 ) {
+    if (barcode.length === 13 || barcode.length === 8) {
       let errDig = barcode.slice(-1);
       message += 'Not valid control digit: ' + errDig + '\r\n';
       message += validateBarcode(barcode.slice(0, -1));
@@ -84,21 +87,26 @@ export function validateBarcode(barcode) {
 }
 
 export function validateChanges(curr, prev) {
-
   for (let key in curr) {
     let arrNotChanged = false;
     if (Array.isArray(curr[key])) {
       let compare = arrCompare(curr[key], prev[key]);
       arrNotChanged = !compare.resArrMinus.length && !compare.resArrPlus.length;
     }
-    let isNotData = (curr[key] === null || curr[key] === undefined || !curr[key]);
-    let isNotChanged = (!curr.isNewData && curr[key] === prev[key]);
-    
+
+    let isNotData =
+      curr[key] === null ||
+      curr[key] === undefined ||
+      (curr.isNewData && !curr[key]);
+
+    let isNotChanged = !curr.isNewData && curr[key] === prev[key];
+
     if (arrNotChanged || isNotData || isNotChanged) {
-      delete curr[key];
+      if (key !== 'price' || key !== 'cost_price') {
+        delete curr[key];
+      }
     }
   }
-
 }
 
 export function arrCompare(arr1 = [], arr2 = []) {
@@ -114,5 +122,5 @@ export function arrCompare(arr1 = [], arr2 = []) {
       resArrMinus.push(item);
     }
   });
-  return {resArrPlus, resArrMinus};
-};
+  return { resArrPlus, resArrMinus };
+}

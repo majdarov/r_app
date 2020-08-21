@@ -1,9 +1,4 @@
-export class SequelizeError extends Error {
-  // constructor(message) {
-  //     super(message);
-  //     this.name = 'SequelizeError';
-  // }
-}
+export class SequelizeError extends Error {};
 
 export class SequelizeValidationError extends SequelizeError {
   constructor(errors = []) {

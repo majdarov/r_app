@@ -4,6 +4,8 @@ import {
   SequelizeError,
   SequelizeUniqueConstraintError,
 } from '../components/Erroros/SequelizeErrors';
+import { EvoError } from '../components/Erroros/EvoErrors';
+import { chooseError } from '../components/Erroros/chooseError';
 
 const GET_GROUPS = 'GET-GROUPS';
 const SET_PID = 'SET-PID';
@@ -140,11 +142,11 @@ const commodityReduser = (state = initialState, action) => {
 
     case UPDATE_COMMODITY:
       let lastUpdate = Date.now();
-      // if (!state.updateOk) {
-      //   lastUpdate = state.lastUpdate;
-      // } else {
-      //   lastUpdate = Date.now();
-      // }
+      if (!state.updateOk) {
+        lastUpdate = state.lastUpdate;
+      } else {
+        lastUpdate = Date.now();
+      }
       return { ...state, lastUpdate };
 
     case SET_UPDATED:
@@ -214,6 +216,7 @@ export const setFormData = (formData) => (dispatch) => {
   formData = formData ? formData : initialState.form.formData;
   dispatch(setFormDataAC(formData));
 };
+
 export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
   // debugger
   let path;
@@ -244,18 +247,7 @@ export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
   console.log('method: ' + typeQuery);
   callbackApi(path, body)
     .then((res) => {
-      // console.log(res);
-      if (res.data.errors) {
-        console.log(res.data);
-        if (res.data.name === 'SequelizeValidationError') {
-          throw new SequelizeValidationError(res.data.errors);
-        } else if (res.data.name === 'SequelizeUniqueConstraintError') {
-          throw new SequelizeUniqueConstraintError(res.data.errors);
-        } else {
-          throw new SequelizeError(res.data.errors[0].message);
-        }
-      }
-      console.log(res.data);
+      console.log(res);
       return res.data.product.parent_id;
     })
     .then((pid) => {
@@ -265,8 +257,8 @@ export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
       dispatch(setPidAC(pid || 0));
     })
     .catch((err) => {
-      // console.dir(err);
-      dispatch(setFormErrorAC(err));
+      console.dir(err);
+      dispatch(setFormErrorAC(chooseError(err)));
       dispatch(toggleFormPostAC(false));
     });
 };
@@ -275,20 +267,12 @@ export const deleteProduct = (id, pid) => (dispatch) => {
   productsApi
     .deleteData(`products/${id}`)
     .then((res) => {
-      if (res.data.errors) {
-        console.log(res.data);
-        if (res.data.name === 'SequelizeValidationError') {
-          throw new SequelizeValidationError(res.data.errors);
-        } else {
-          throw new SequelizeError(res.data.errors[0].message);
-        }
-      }
       dispatch(setPidAC(pid));
       return res.data;
     })
     .catch((err) => {
       console.dir(err);
-      dispatch(setErrorAC(err));
+      dispatch(setErrorAC(chooseError(err)));
     });
 };
 
