@@ -10,6 +10,6 @@ export const chooseError = (err) => {
     } else if (res.data.name === 'validation_failed') {
       return new EvoValidationError({ message: res.data.message, errors: res.data.errors});
     } else {
-        return new EvoError(res.data.message);
+        return new Error(res.data.message);
     }
 };

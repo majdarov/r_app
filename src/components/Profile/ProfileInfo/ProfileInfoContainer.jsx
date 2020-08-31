@@ -2,7 +2,8 @@ import React from "react";
 import TextAreaContainer from "./TextAreaContainer";
 import ProfileInfo from "./ProfileInfo";
 import { connect } from "react-redux";
-import { toggleShowTxtAC } from "../../../redux/profileReduser";
+import { toggleShowTxtAC, updateStatus, setUserStatusAC } from "../../../redux/profileReduser";
+import { profileApi } from "../../../api/api";
 
 
 const mapState = (state) => {
@@ -17,7 +18,9 @@ const mapState = (state) => {
   return {
     description: state.profilePage.profileDescription,
     textarea: textarea,
-    userProfile: state.profilePage.userProfile
+    userProfile: state.profilePage.userProfile,
+    status: state.profilePage.status,
+    me: state.auth.id
   }
 }
 
@@ -26,7 +29,12 @@ const mapDispatch = dispatch => {
     onClick: e => {
       e.currentTarget.setAttribute("disabled", true);
       dispatch(toggleShowTxtAC(true));
-    }
+    },
+    updateStatus: status => profileApi.updateStatus(status).then(res => {
+      if (res.data.resultCode === 0) {
+        dispatch(setUserStatusAC(status));
+      }
+    })
   }
 }
 

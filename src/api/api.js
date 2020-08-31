@@ -16,7 +16,6 @@ import apiConfig from './apiConfig.json';
 const apiSamurai = axios.create(apiConfig.apiSamurai);
 const apiProducts = axios.create(apiConfig.apiProducts);
 
-
 export const usersApi = {
   getUsers(pageNumber, pageSize) {
     return apiSamurai
@@ -30,7 +29,8 @@ export const usersApi = {
     return apiSamurai.delete(`follow/${id}`).then((res) => res.data);
   },
   getUserId(id) {
-    return apiSamurai.get(`profile/${id}`).then((res) => res.data);
+    console.warn('Deprecated method. Pliese use profileApi');
+    return profileApi.getProfile(id);
   },
   getAuth() {
     return apiSamurai
@@ -40,9 +40,23 @@ export const usersApi = {
   },
 };
 
+export const profileApi = {
+  getProfile(id) {
+    return apiSamurai.get(`profile/${id}`).then((res) => res.data);
+  },
+  getStatus(id) {
+    return apiSamurai.get(`profile/status/${id}`).then((res) => res.data);
+  },
+  updateStatus(status) {
+    return apiSamurai.put(`profile/status`, { status });
+  },
+};
+
 export const productsApi = {
   async getData(path, query) {
-    return await apiProducts.get(path, { params: query }).then((res) => res.data);
+    return await apiProducts
+      .get(path, { params: query })
+      .then((res) => res.data);
   },
   async postData(path, body) {
     return await apiProducts.post(path, body);
@@ -52,5 +66,5 @@ export const productsApi = {
   },
   async deleteData(path) {
     return await apiProducts.delete(path);
-  }
+  },
 };

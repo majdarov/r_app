@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Profile from "./Profile"
-import { getUser } from '../../redux/profileReduser'
+import { getUserProfile, getUserStatus } from '../../redux/profileReduser';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { withAuthRedirect } from "../../Hoc/withAuthRedirect";
@@ -24,11 +24,14 @@ const ProfileContainer = props => {
   const [id, setId] = useState(props.match.params.userId);
   if (id === undefined) setId(props.authId);
 
-  const getUser = props.getUser;
+  const getUserProfile = props.getUserProfile;
+  const getUserStatus = props.getUserStatus;
+  let status;
 
   useEffect(() => {
-    getUser(id);
-  }, [id, getUser]);
+    getUserProfile(id);
+    getUserStatus(id);
+  }, [id]);
 
   return (
     <Profile />
@@ -38,12 +41,12 @@ const ProfileContainer = props => {
 let mapState = state => {
   return {
     profilePage: state.profilePage,
-    authId: state.auth.id
+    authId: state.auth.id,
   }
 }
 
 export default compose(
-  connect(mapState, { getUser }),
+  connect(mapState, { getUserProfile, getUserStatus }),
   withRouter,
   withAuthRedirect
 )(ProfileContainer)

@@ -26,16 +26,22 @@
 */
 
 function createNode(item) {
-  let node = Object.assign({}, item);
+  let node = {...item};
   node.childs = [];
   return node;
 }
 
-function addNode(subNode, node) {
-  let pNode = findNode(subNode.pid, node);
+function addNode(subNode, parentNode) {
+  let pNode = findNode(subNode.pid, parentNode);
   try {
-    if (pNode === undefined) return;
+    if (pNode === undefined) return subNode;
     pNode.childs.push(subNode);
+    pNode.childs.sort((a, b) => {
+      if (a.label > b.label) return 1;
+      if (a.label < b.label) return -1;
+      return 0;
+    });
+    return false;
   } catch (e) {
     console.error(e.message);
   }
@@ -55,11 +61,20 @@ function findNode(pid, pNode) {
 }
 
 function createTree(data, root) {
+  let notFoundNodes = [];
     // debugger;
   data.forEach(item => {
     let node = createNode(item);
-    addNode(node, root);
+    let notFoundNode = addNode(node, root);
+    if (notFoundNode) {
+      notFoundNodes.push(notFoundNode);
+    }
   });
+  // debugger
+  if (notFoundNodes.length) {
+    createTree(notFoundNodes, root);
+  }
+  notFoundNodes = [];
   return root;
 }
 export default createTree;

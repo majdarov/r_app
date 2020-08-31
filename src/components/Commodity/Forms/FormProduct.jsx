@@ -3,7 +3,7 @@ import s from './Form.module.css';
 import { useState } from "react";
 import Preloader from '../../common/Preloader/Preloader';
 import { ComponentsProducts } from './schemas/ComponentsProducts';
-import { setNewCode, newBarcode, validateBarcode, validateChanges } from './frmUtilites';
+import { setNewCode, newBarcode, validateBarcode, validateZeroData, validateRequiredData } from './frmUtilites';
 import FormImg from './FormImg';
 import FormModalWrapper from './FormModalWrapper';
 import noPhoto from '../../../Assets/img/terminal-5.png';
@@ -42,8 +42,11 @@ const FormProduct = props => {
 
   const handleChange = (ev) => {
 
-    let name = ev.target.name;
-    let value = ev.target.value;
+    let elem = ev.target;
+    let name = elem.name;
+    let value = elem.value;
+
+    elem.classList.remove(s.required);
 
     if (name === 'barcodes') {
       setState({ ...state, currentBarcode: value });
@@ -57,9 +60,6 @@ const FormProduct = props => {
       })
       setState({ ...state, photos });
       return;
-    }
-    if (name === 'price' || name === 'cost_price') {
-      value = Number(value);
     }
     if (name === 'allow_edit') {
       let form = document.getElementById(s['form-product']);
@@ -115,7 +115,21 @@ const FormProduct = props => {
       delete body.bigImg;
       delete body.currentBarcode;
 
-      validateChanges(body, props.formData);
+      let missData = validateRequiredData(body);
+      if (missData.length) {
+        let strMessage = '';
+        missData.forEach(item => {
+          strMessage += ` ${item},`;
+          document.getElementsByName(item).forEach(elem => {
+            elem.classList.add(s.required);
+          })
+        });
+        strMessage.slice(-1);
+        alert(`Отсутствуют необходимые данные:\n\r${strMessage}!`);
+        return;
+      }
+
+      validateZeroData(body, props.formData);
       if (!state.isNewData) body.id = state.id;
       delete body.isNewData;
 
@@ -176,7 +190,7 @@ const FormProduct = props => {
 
   const bProps = {
     barcodes: state.barcodes, bc: state.currentBarcode, addBc: s['add-bc'], delBc: s['del-bc'],
-    handleChange, handleBlur, deleteFromArray, allow_edit: state.allow_edit,
+    handleChange, handleBlur, deleteFromArray, allow_edit: state.allow_edit, disabled,
     view_barcode: s['view-barcode']
   };
 
@@ -226,18 +240,11 @@ const FormProduct = props => {
             }
             <ComponentsProducts.Barcodes {...bProps} />
             <div className={s.code_article}>
-              <label>
-                Code:
-              <input type="text" name="code"
-                  value={state.code}
-                  // defaultValue={state.code}
-                  onChange={handleChange} disabled={disabled} />
-              </label>
-              <label>
-                Aticle:
+              <label>Code:</label>
+              <input type="text" name="code" value={state.code} onChange={handleChange} disabled={disabled} />
+              <label>Aticle:</label>
               <input type="text" name='article_number' value={state.article_number || ''}
                   onChange={handleChange} disabled={disabled} />
-              </label>
               <ComponentsProducts.Groups {...gProps} />
               <ComponentsProducts.MeasureNames {...mnProps} />
             </div>
@@ -245,23 +252,18 @@ const FormProduct = props => {
               Name:
               <textarea type="text" name="name" value={state.name} onChange={handleChange} disabled={disabled} />
             </label>
-            <label>
-              Description:
+            <label>Description:
               <input type="text" name="description" value={state.description || ''} onChange={handleChange} disabled={disabled} />
             </label>
             <div className={s.prices}>
-              <label htmlFor='price'>Price:
+              <label htmlFor='price'>Price:</label>
               <input name="price" defaultValue={formatPrice(state.price)} className={s.price}
-                  onBlur={handleBlur} disabled={disabled} /><span></span>
-              </label>
-              <label htmlFor='cost_price'>Cost Price:
+                  onBlur={handleBlur} onChange={handleChange} disabled={disabled} /><span></span>
+              <label htmlFor='cost_price'>Cost Price:</label>
               <input name="cost_price" defaultValue={formatPrice(state.cost_price)} className={s.price}
                   onBlur={handleBlur} disabled={disabled} /><span></span>
-              </label>
-              <label>
-                Allow to sell:
+              <label>Allow to sell:</label>
               <input type="checkbox" name="allow_to_sell" defaultChecked={state.allow_to_sell} disabled={disabled} />
-              </label>
             </div>
           </fieldset>
           <div className={s.buttons}>

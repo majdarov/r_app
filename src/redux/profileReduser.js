@@ -1,10 +1,11 @@
-import { usersApi } from "../api/api";
+import { profileApi } from "../api/api";
 
 const SET_PROFILE_DESCRIPTION = "SET-PROFILE-DESCRIPTION";
 const ADD_MESSAGE = "ADD-MESSAGE";
 const TOGGLE_SHOW_TXT = "SHOW-TXT";
 const SET_NEW_POST_TEXT = "SET-NEW-POST-TEXT";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
+const SET_USER_STATUS = "SET-USER-STATUS";
 
 export const setProfileDesriptionAC = description => {
   return { type: SET_PROFILE_DESCRIPTION, text: description };
@@ -26,6 +27,10 @@ export const setUserProfileAC = profile => {
   return {type: SET_USER_PROFILE, profile}
 }
 
+export const setUserStatusAC = status => {
+  return {type: SET_USER_STATUS, status}
+}
+
 let initialState = {
   profileDescription: "Profile description...",
   showTxt: false,
@@ -35,7 +40,8 @@ let initialState = {
     { message: "Third Message", likes: "5" }
   ],
   newPostText: "",
-  userProfile: null
+  userProfile: null,
+  status: ""
 };
 
 const profileReduser = (state = initialState, action) => {
@@ -66,15 +72,36 @@ const profileReduser = (state = initialState, action) => {
         });
       case SET_USER_PROFILE:
         return {...state, userProfile: action.profile}
+      
+      case SET_USER_STATUS:
+        return {...state, status: action.status}
     default:
       return state;
   }
 };
 
-export const getUser = (id) => {
+export const getUserProfile = (id) => {
   return (dispatch) => {
-    usersApi.getUserId(id)
+    profileApi.getProfile(id)
       .then(res => dispatch(setUserProfileAC(res)));
+  }
+}
+
+export const getUserStatus = (id) => {
+  return (dispatch) => {
+    profileApi.getStatus(id)
+      .then(res => dispatch(setUserStatusAC(res)));
+  }
+}
+
+export const updateStatus = status => {
+  return dispatch => {
+    profileApi.updateStatus(status)
+    .then(res => {
+      if (res.data.resultCode === 0) {
+        dispatch(setUserStatusAC(status));
+      }
+    })
   }
 }
 

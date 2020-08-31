@@ -50,7 +50,8 @@ input[name='article'],
 #group {
   width: 10em;
   text-align: right;
-  border: none;
+  margin: 2px;
+  /* border: none; */
   background-color: initial;
 }
 
@@ -183,3 +184,6 @@ button
   color: tomato;
 }
 
+.required {
+  border: red 1px solid;
+}

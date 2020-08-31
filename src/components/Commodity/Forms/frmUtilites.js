@@ -86,27 +86,46 @@ export function validateBarcode(barcode) {
   return res;
 }
 
-export function validateChanges(curr, prev) {
+export function validateZeroData(curr, prev) {
   for (let key in curr) {
-    let arrNotChanged = false;
+    /* let arrNotChanged = false;
     if (Array.isArray(curr[key])) {
       let compare = arrCompare(curr[key], prev[key]);
       arrNotChanged = !compare.resArrMinus.length && !compare.resArrPlus.length;
-    }
+    } */
 
     let isNotData =
       curr[key] === null ||
-      curr[key] === undefined ||
-      (curr.isNewData && !curr[key]);
+      curr[key] === undefined
+      // (curr.isNewData && !curr[key]);
 
-    let isNotChanged = !curr.isNewData && curr[key] === prev[key];
+    // let isNotChanged = !curr.isNewData && curr[key] === prev[key];
 
-    if (arrNotChanged || isNotData || isNotChanged) {
-      if (key !== 'price' || key !== 'cost_price') {
+    if (/* arrNotChanged || */ isNotData /* || isNotChanged */) {
         delete curr[key];
-      }
     }
   }
+}
+
+export function validateRequiredData(body) {
+  const reqData = [
+    'type',
+    'name',
+    'price',
+    'measure_name',
+    'tax',
+    'allow_to_sell'
+  ]
+
+  let missData = [];
+
+  Object.keys(body).forEach(key => {
+    if (!body[key] && reqData.includes(key)) {
+      missData.push(key);
+    }
+  })
+
+  return missData;
 }
 
 export function arrCompare(arr1 = [], arr2 = []) {

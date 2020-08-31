@@ -1,10 +1,4 @@
 import { productsApi } from '../api/api';
-import {
-  SequelizeValidationError,
-  SequelizeError,
-  SequelizeUniqueConstraintError,
-} from '../components/Erroros/SequelizeErrors';
-import { EvoError } from '../components/Erroros/EvoErrors';
 import { chooseError } from '../components/Erroros/chooseError';
 
 const GET_GROUPS = 'GET-GROUPS';
@@ -244,10 +238,10 @@ export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
       callbackApi = productsApi.postData;
       break;
   }
-  console.log('method: ' + typeQuery);
+  // console.log('method: ' + typeQuery);
   callbackApi(path, body)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       return res.data.product.parent_id;
     })
     .then((pid) => {
@@ -264,7 +258,7 @@ export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
 };
 
 export const deleteProduct = (id, pid) => (dispatch) => {
-  productsApi
+  return productsApi
     .deleteData(`products/${id}`)
     .then((res) => {
       dispatch(setPidAC(pid));

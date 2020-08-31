@@ -22,6 +22,11 @@ export const ComponentsProducts = {
         )
     },
     Groups: props => {
+        let groups = props.groups.sort((a, b) => {
+            if (a.label > b.label) return 1;
+            if (a.label < b.label) return -1;
+            return 0;
+        })
         return (
             <label>
                 Group:
@@ -61,7 +66,7 @@ export const ComponentsProducts = {
                         })}
                     </ul>
                     <input name='barcodes' type="text" defaultValue={props.bc}
-                        onChange={props.handleChange} onBlur={props.handleBlur} disabled />
+                        onChange={props.handleChange} onBlur={props.handleBlur} disabled={props.disabled} />
                     <span className={props.addBc}></span>
                 </div>
             </fieldset >
