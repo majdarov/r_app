@@ -10,7 +10,6 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
 import MuzikContainer from "./components/Muzik/MuzikContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import CommodityContainer from "./components/Commodity/CommodityContainer";
 import ImpExcel from "./components/ImpExcel/ImpExcel";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
@@ -29,7 +28,6 @@ const App = () => {
         <Route path="/dialogs" component={DialogsContainer}/>
         <Route path="/profile/:userId?" component={ProfileContainer}/>
         <Route path="/muzik" component={MuzikContainer} />
-        <Route path="/commodity" component={CommodityContainer} />
         <Route path="/users" component={UsersContainer} />
         <Route path="/game" component={Game} />
         <Route path="/table" component={ImpExcel} />

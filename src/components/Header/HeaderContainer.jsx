@@ -1,11 +1,9 @@
 import React from 'react';
-import s from './Header.module.css';
 import { connect } from 'react-redux';
 import Header from './Header';
 import { withRouter } from 'react-router-dom';
 import { getTitle, chooseLang } from '../../redux/navReduser';
 import { authMe } from '../../redux/auth_reduser';
-import { updateProducts, setUpdated } from '../../redux/commodityReduser';
 import { useEffect } from 'react';
 
 /* class HeaderContainer extends React.Component {
@@ -25,7 +23,7 @@ const HeaderContainer = props => {
 
     const authMe = props.authMe;
     useEffect(() => authMe(), [authMe]);
-    
+
     const getTitle = props.getTitle;
     useEffect(() => {
         getTitle(path);
@@ -36,21 +34,6 @@ const HeaderContainer = props => {
 
 const mapStateToProps = state => {
 
-    let update;
-    let className;
-    let lastUpdate;
-    if (state.navigation.title === "Товары" || "Products") {
-        lastUpdate = state.commodityPage.lastUpdate;
-        if (!lastUpdate || Date.now() - lastUpdate > 86400000) {
-            update = true;
-            className = s.needupdate;
-        } else {
-            update = false;
-            className = s.updated;
-        }
-    } else {
-        update = null;
-    }
     return {
         user: {
             id: state.auth.id,
@@ -60,12 +43,8 @@ const mapStateToProps = state => {
         isAuth: state.auth.isAuth,
         navBar: state.navigation.navBar,
         title: state.navigation.title,
-        update,
-        className,
-        lastUpdate,
-        isUpdated: state.commodityPage.isUpdated,
         currentLang: state.navigation.currentLang
     }
 }
 
-export default connect(mapStateToProps, { authMe, getTitle, updateProducts, setUpdated, chooseLang })(withRouter(HeaderContainer));
+export default connect(mapStateToProps, { authMe, getTitle, chooseLang })(withRouter(HeaderContainer));

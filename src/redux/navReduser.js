@@ -16,7 +16,6 @@ let initialState = {
     { link: '/dialogs', title: ['Диалоги', 'Dialogs'] },
     { link: '/muzik', title: ['Музыка', 'Music'] },
     { link: '/users', title: ['Пользователи', 'Users'] },
-    { link: '/commodity', title: ['Товары', 'Products'] },
     { link: '/game', title: ['Играть', 'Game'] },
     { link: '/table', title: ['Экспорт Excel', 'Export Excel'] },
   ],
@@ -24,7 +23,7 @@ let initialState = {
 
 const navReduser = (state = initialState, action) => {
   switch (action.type) {
-    
+
     case GET_TITLE:
       let title;
       let nav = state.navBar.find((item) => item.link === action.path);
