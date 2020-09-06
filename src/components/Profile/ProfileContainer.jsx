@@ -26,7 +26,6 @@ const ProfileContainer = props => {
 
   const getUserProfile = props.getUserProfile;
   const getUserStatus = props.getUserStatus;
-  let status;
 
   useEffect(() => {
     getUserProfile(id);

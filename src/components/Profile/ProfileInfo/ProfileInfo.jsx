@@ -32,9 +32,6 @@ const ProfileInfo = props => {
           <h3>{props.userProfile.aboutMe}</h3>
           <span>Job</span><br />
           <span>{props.userProfile.lookingForAJobDescription}</span>
-          {/* <h3 dangerouslySetInnerHTML={{ __html: props.description }}></h3>
-          {props.textarea}
-          <button onClick={props.onClick}>Edit</button> */}
         </div>
       </div>
       <ProfileStatus me={props.me} id={props.userProfile.userId} status={props.status} updateStatus={props.updateStatus} />

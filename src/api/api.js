@@ -25,6 +25,12 @@ export const usersApi = {
       .then((res) => res.data)
       .catch((e) => e.message);
   },
+  login(formData) {
+    return apiSamurai.post('auth/login', { email: formData.login, password: formData.password })
+    .then(({ data }) => {
+      return data;
+    });
+  },
 };
 
 export const profileApi = {

@@ -1,7 +1,6 @@
 import React from "react";
 import s from "./ProfileInfo.module.css";
 import { profileApi } from "../../../api/api";
-import { updateStatus } from "../../../redux/profileReduser";
 
 class ProfileStatus extends React.Component {
 
@@ -25,16 +24,22 @@ class ProfileStatus extends React.Component {
         });
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.status !== this.props.status) {
+            this.setState({ status: this.props.status });
+        }
+    }
+
     componentWillUnmount() {
         this.setState({status: null});
     }
-    
+
 
     activateEditMode = () => {
         if (this.props.me !== this.props.id) return;
         this.setState({editMode: true});
     }
-    
+
     deactivateEditMode = (ev) => {
         let value = ev.target.value;
         this.setState({editMode: false, status: value});
