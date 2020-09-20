@@ -8,7 +8,7 @@ import authReduser from './auth_reduser';
 import thunkMidleware from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
 
-let redusers = combineReducers({
+let reducers = combineReducers({
   profilePage: profileReduser,
   dialogsPage: dialogsReduser,
   navigation: navReduser,
@@ -18,6 +18,6 @@ let redusers = combineReducers({
   form: formReducer
 });
 
-let store = createStore(redusers, applyMiddleware(thunkMidleware));
+let store = createStore(reducers, applyMiddleware(thunkMidleware));
 
 export default store;

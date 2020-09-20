@@ -2,12 +2,12 @@ import React from "react";
 import TextAreaContainer from "./TextAreaContainer";
 import ProfileInfo from "./ProfileInfo";
 import { connect } from "react-redux";
-import { toggleShowTxtAC, updateStatus, setUserStatusAC } from "../../../redux/profileReduser";
+import { toggleShowTxtAC, setUserStatusAC } from "../../../redux/profileReduser";
 import { profileApi } from "../../../api/api";
 
 
 const mapState = (state) => {
-  
+
   let textarea;
   if (state.profilePage.showTxt) {
     textarea = <TextAreaContainer />

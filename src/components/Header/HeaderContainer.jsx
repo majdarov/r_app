@@ -6,7 +6,7 @@ import { getTitle, chooseLang } from '../../redux/navReduser';
 import { authMe } from '../../redux/auth_reduser';
 import { useEffect } from 'react';
 import { compose } from 'redux';
-import { withAuthRedirect } from '../../Hoc/withAuthRedirect';
+// import { withAuthRedirect } from '../../Hoc/withAuthRedirect';
 
 /* class HeaderContainer extends React.Component {
     componentDidMount() {

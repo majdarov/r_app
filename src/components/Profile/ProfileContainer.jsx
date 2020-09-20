@@ -30,7 +30,7 @@ const ProfileContainer = props => {
   useEffect(() => {
     getUserProfile(id);
     getUserStatus(id);
-  }, [id]);
+  }, [id, getUserProfile, getUserStatus]);
 
   return (
     <Profile />

@@ -1,5 +1,4 @@
 import React from "react";
-import s from "./ProfileInfo.module.css";
 import { profileApi } from "../../../api/api";
 
 class ProfileStatus extends React.Component {
