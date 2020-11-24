@@ -16,7 +16,7 @@ const authReduser = (state = initialState, action) => {
       return {
         ...state,
         ...action.data,
-        isAuth: true,
+        // isAuth: true,
       };
     default:
       return state;
@@ -34,10 +34,28 @@ export const authMe = () => {
       .getAuth()
       .then((res) => {
         if (res.resultCode !== 0) return;
-        dispatch(setUserDataAC(res.data));
+        dispatch(setUserDataAC({isAuth: true, ...res.data}));
       })
       .catch((e) => alert(e.message));
   };
 };
+
+export const login = formData => dispatch => {
+  usersApi.login(formData)
+  .then(res => {
+    if(res.resultCode === 0) {
+      dispatch(authMe());
+    }
+  })
+}
+
+export const logout = () => dispatch => {
+  usersApi.logout()
+  .then(res => {
+    if(res.resultCode !== 0) {
+      dispatch(setUserDataAC(initialState));
+    }
+  })
+}
 
 export default authReduser;

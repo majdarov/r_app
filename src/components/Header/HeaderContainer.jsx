@@ -3,21 +3,9 @@ import { connect } from 'react-redux';
 import Header from './Header';
 import { withRouter } from 'react-router-dom';
 import { getTitle, chooseLang } from '../../redux/navReduser';
-import { authMe } from '../../redux/auth_reduser';
+import { authMe, logout } from '../../redux/auth_reduser';
 import { useEffect } from 'react';
 import { compose } from 'redux';
-// import { withAuthRedirect } from '../../Hoc/withAuthRedirect';
-
-/* class HeaderContainer extends React.Component {
-    componentDidMount() {
-        let path = '/' + this.props.location.pathname.split('/')[1];
-        this.props.getTitle(path);
-        this.props.authMe();
-    };
-    render() {
-        return <Header {...this.props} />
-    }
-} */
 
 const HeaderContainer = props => {
 
@@ -52,7 +40,6 @@ const mapStateToProps = state => {
 }
 
 export default compose(
-    connect(mapStateToProps, { authMe, getTitle, chooseLang }),
+    connect(mapStateToProps, { authMe, getTitle, chooseLang, logout }),
     withRouter,
-    // withAuthRedirect
     )(HeaderContainer)

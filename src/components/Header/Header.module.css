@@ -12,22 +12,7 @@ header {
   background-color: darkorange;
   position: sticky;
   top: 0;
-}
-
-.needupdate {
-  display: inline;
-  color: red;
-  font-weight: bold;
-}
-
-.updated {
-  display: inline;
-  color: green;
-  font-weight: bold;
-}
-
-.needupdate:hover {
-  cursor: pointer;
+  z-index: 100;
 }
 
 .loginBlock {
@@ -38,5 +23,5 @@ header {
 }
 
 .loginBlock::before {
-  content: url('/images/icons/people.svg');
+  content: url('/public/icons_svg/people.svg');
 }

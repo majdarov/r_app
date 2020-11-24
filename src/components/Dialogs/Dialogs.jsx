@@ -1,9 +1,13 @@
 import React from "react";
 import s from "./Dialogs.module.css";
 import { NavLink } from "react-router-dom";
-import TextArea from "../TextArea/TextArea";
+import { AddMessageReduxForm } from "../common/FormAddMessage/FormAddMessage";
 
 const Dialogs = props => {
+
+  const handleSubmit = formData => {
+    props.addMessage(formData.message);
+  }
 
   return (
     <div className={s.dialogs}>
@@ -11,7 +15,6 @@ const Dialogs = props => {
       <div className={s.messages}>
         <div>
           <h3>Messages</h3>
-          {/* <button><i className="far fa-hand-point-up"></i></button> */}
         </div>
         {props.messagesElements}
       </div>
@@ -21,15 +24,12 @@ const Dialogs = props => {
         <div>ALL MESSAGES</div>
       </NavLink>
       <div className={s.textarea}>
-        <TextArea
-          onChange={props.onTextChange}
-          refrence={props.newMessEl}
-          value={props.newTextMessage}
+        <AddMessageReduxForm
+          onSubmit={handleSubmit}
           placeholder={props.placeholder}
+          txtClass={props.txtClass}
+          disabled={!!props.txtClass}
         />
-        <button className="button" onClick={props.addNewDialog}>
-          Add Message
-        </button>
       </div>
     </div>
   );

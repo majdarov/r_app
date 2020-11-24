@@ -1,11 +1,12 @@
 import React from "react";
 import DialogItemContainer from "./DialogItem/DialogItemContainer";
 import Dialogs from "./Dialogs";
-import { addNewTextMessageAC, addDialogAC, setCurrentUserAC } from "../../redux/dialogsReduser";
+import { addDialogAC, setCurrentUserAC } from "../../redux/dialogsReduser";
 import { connect } from "react-redux";
 import MessageContainer from "./Message/MessageContainer";
 import { withAuthRedirect } from "../../Hoc/withAuthRedirect";
 import { compose } from "redux";
+import s from "./Dialogs.module.css";
 
 function messagesElements(state) {
 
@@ -46,36 +47,33 @@ function dialogsElements(state) {
   return elements;
 }
 
-let newMessEl = React.createRef();
-
 const mapStateToProps = state => {
   let placeholder;
+  let txtClass;
+
   if (state.dialogsPage.user === -1) {
     placeholder = "Select user...";
+    txtClass = s.warning;
   } else {
     placeholder = null;
+    txtClass = null;
   }
 
   return {
     dialogsElements: dialogsElements(state),
     messagesElements: messagesElements(state),
-    newTextMessage: state.dialogsPage.newTextMessage,
-    newMessEl: newMessEl,
     placeholder,
+    txtClass
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onTextChange: function () {
-      let text = newMessEl.current.value;
-      dispatch(addNewTextMessageAC(text));
-    },
-    addNewDialog: function () {
-      dispatch(addDialogAC());
-    },
     setUser: id => {
       dispatch(setCurrentUserAC(id));
+    },
+    addMessage: text => {
+      dispatch(addDialogAC(text));
     }
   }
 }

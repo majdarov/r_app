@@ -1,0 +1,13 @@
+.wrong::placeholder {
+   color: red;
+}
+
+.formControl.error input
+{
+   border: 1px solid red;
+}
+
+.warning span {
+   color: red;
+   font-size: small;
+}

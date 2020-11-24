@@ -26,10 +26,18 @@ export const usersApi = {
       .catch((e) => e.message);
   },
   login(formData) {
-    return apiSamurai.post('auth/login', { email: formData.login, password: formData.password })
+    return apiSamurai.post('auth/login', {
+      email: formData.login,
+      password: formData.password,
+      rememberMe: formData.rememberMe || false
+    })
     .then(({ data }) => {
+      console.log(data);
       return data;
     });
+  },
+  logout() {
+    return apiSamurai.delete('auth/login');
   },
 };
 

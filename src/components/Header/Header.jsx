@@ -16,6 +16,10 @@ const Header = (props) => {
         }
     }
 
+    const onLogout = () => {
+        props.logout();
+    }
+
     return (
         <header>
             <img src={logo} alt='Logo'></img>
@@ -25,7 +29,14 @@ const Header = (props) => {
                 <input name="lng" type="radio" value='en' checked={props.currentLang} onChange={(ev) => ev.target.checked = props.currentLang} />EN
                 </div>
             <div className={s.loginBlock}>
-                {props.isAuth ? props.user.login : <NavLink to={'/login'}>Log In</NavLink>}
+                {
+                    props.isAuth ?
+                        <div>
+                            {props.user.login} -
+                            <button onClick={onLogout}>LogOut</button>
+                        </div>
+                        : <NavLink to={'/login'}>Log In</NavLink>
+                }
             </div>
         </header>
     );

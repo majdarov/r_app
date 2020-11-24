@@ -1,19 +1,18 @@
 import React from "react";
+import { AddMessageReduxForm } from "../../common/FormAddMessage/FormAddMessage";
 import s from "./MyPosts.module.css";
-import TextArea from "../../TextArea/TextArea";
 
 const MyPosts = props => {
+
+  const handleSubmit = formData => {
+    props.addPostForm(formData.message);
+  }
 
   return (
     <div className={s.myposts}>
       <h3>My Posts</h3>
       <div className={s.textarea}>
-        <TextArea
-          onChange={props.onPostChange}
-          refrence={props.newPostElement}
-          value={props.newPostText}
-        />
-        <div className={"button " + s.btn_posts} onClick={props.addPost}>Add post</div >
+        <AddMessageReduxForm onSubmit={handleSubmit} />
       </div>
       <div className={s.posts}>{props.postElements}</div>
     </div>
