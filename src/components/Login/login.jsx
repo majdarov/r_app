@@ -5,6 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import { login } from "../../redux/auth_reduser";
 import { required } from "../../utils/validators/validators";
 import FormElement from "../common/FormAddMessage/FormElement";
+import s from "./login.module.css";
 
 const Login = props => {
 
@@ -14,16 +15,16 @@ const Login = props => {
 
 
   if (props.isAuth) {
-    return <Redirect to='/profile'/>
+    return <Redirect to={'/profile'} />
   }
 
   return (
-      <>
-        <div>
-          <h1>LOGIN</h1>
-          <LoginReduxForm onSubmit={onSubmit} />
-        </div>
-      </>
+    <>
+      <div>
+        <h1>LOGIN</h1>
+        <LoginReduxForm onSubmit={onSubmit} />
+      </div>
+    </>
   )
 
 }
@@ -43,6 +44,12 @@ const FormLogin = props => {
       <div>
         <Field name='rememberMe' component={FormElement} elType='checkbox' />remember me
       </div>
+      {
+        props.error &&
+        <div className={s.formSummaryError}>
+          {props.error}
+        </div>
+      }
       <div>
         <button type='submit'>Login</button>
       </div>

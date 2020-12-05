@@ -19,6 +19,7 @@ let initialState = {
     { link: '/game', title: ['Играть', 'Game'] },
     { link: '/table', title: ['Экспорт Excel', 'Export Excel'] },
   ],
+  lastPage: '/',
 };
 
 const navReduser = (state = initialState, action) => {

@@ -3,18 +3,13 @@ import { connect } from 'react-redux';
 import Header from './Header';
 import { withRouter } from 'react-router-dom';
 import { getTitle, chooseLang } from '../../redux/navReduser';
-import { authMe, logout } from '../../redux/auth_reduser';
+import { logout } from '../../redux/auth_reduser';
 import { useEffect } from 'react';
 import { compose } from 'redux';
 
 const HeaderContainer = props => {
 
     let path = '/' + props.location.pathname.split('/')[1];
-
-    const authMe = props.authMe;
-    useEffect(() => {
-        if (!props.isAuth) authMe();
-    });
 
     const getTitle = props.getTitle;
     useEffect(() => {
@@ -40,6 +35,6 @@ const mapStateToProps = state => {
 }
 
 export default compose(
-    connect(mapStateToProps, { authMe, getTitle, chooseLang, logout }),
+    connect(mapStateToProps, { getTitle, chooseLang, logout }),
     withRouter,
-    )(HeaderContainer)
+)(HeaderContainer)

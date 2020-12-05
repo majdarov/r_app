@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import "./css/fontawesome.css";
 import "./css/solid.css";
@@ -15,8 +15,25 @@ import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import Login from './components/Login/login';
 import Wrapper from "./components/Example/Wrapper";
+import { initializeApp } from './redux/appReducer';
+import { connect } from "react-redux";
+import Preloader from "./components/common/Preloader/Preloader";
 
-const App = () => {
+const App = props => {
+
+  let i = 0;
+  useEffect(() => {
+    do {
+      i++;
+      if (!props.isAuth) {
+        props.initializeApp();
+      }
+    } while (i === 0);
+  })
+
+  if (!props.initialized) {
+    return <Preloader />
+  }
 
   return (
     <div className="app">
@@ -25,8 +42,8 @@ const App = () => {
       <div className="app-content">
         <Route exact path="/" />
         <Route path="/example" component={Wrapper} />
-        <Route path="/dialogs" component={DialogsContainer}/>
-        <Route path="/profile/:userId?" component={ProfileContainer}/>
+        <Route path="/dialogs" component={DialogsContainer} />
+        <Route path="/profile/:userId?" component={ProfileContainer} />
         <Route path="/muzik" component={MuzikContainer} />
         <Route path="/users" component={UsersContainer} />
         <Route path="/game" component={Game} />
@@ -37,4 +54,11 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = state => {
+
+  return {
+    initialized: state.app.initialized
+  }
+}
+
+export default connect(mapStateToProps, { initializeApp })(App)

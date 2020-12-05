@@ -16,10 +16,12 @@ header {
 }
 
 .loginBlock {
+  display: inline-flex;
   font-weight: 600;
   font-size: 1em;
   float: right;
   margin-right: 10px;
+  margin-bottom: 1rem;
 }
 
 .loginBlock::before {

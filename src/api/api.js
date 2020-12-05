@@ -32,7 +32,7 @@ export const usersApi = {
       rememberMe: formData.rememberMe || false
     })
     .then(({ data }) => {
-      console.log(data);
+      // console.log(data);
       return data;
     });
   },
