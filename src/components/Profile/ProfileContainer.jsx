@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Profile from "./Profile"
 import { getUserProfile, getUserStatus } from '../../redux/profileReduser';
 import { connect } from "react-redux";
@@ -20,10 +20,12 @@ import { compose } from "redux";
 }; */
 const ProfileContainer = props => {
 
-  const [id, setId] = useState(props.match.params.userId);
-  if (id === undefined) {
-    setId(props.authId);
-    if (!id) {
+  let id;
+  if (props.match.params.userId) {
+   id = props.match.params.userId;
+  } else {
+   id = props.authId;
+    if  (!id) {
       props.history.push('/login');
     }
   }
@@ -32,9 +34,10 @@ const ProfileContainer = props => {
   const getUserStatus = props.getUserStatus;
 
   useEffect(() => {
-    getUserProfile(id);
-    getUserStatus(id);
-  }, [id, getUserProfile, getUserStatus]);
+    if  (id === undefined) return;
+    getUserProfile (id);
+    getUserStatus (id);
+  },  [id, getUserProfile, getUserStatus]);
 
   return (
     <Profile />
