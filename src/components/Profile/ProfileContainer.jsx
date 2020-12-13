@@ -25,7 +25,7 @@ const ProfileContainer = props => {
    id = props.match.params.userId;
   } else {
    id = props.authId;
-    if  (!id) {
+    if  (id === undefined || !id) {
       props.history.push('/login');
     }
   }
@@ -34,14 +34,12 @@ const ProfileContainer = props => {
   const getUserStatus = props.getUserStatus;
 
   useEffect(() => {
-    if  (id === undefined) return;
+    if  (id === undefined || !id) return;
     getUserProfile (id);
     getUserStatus (id);
   },  [id, getUserProfile, getUserStatus]);
 
-  return (
-    <Profile />
-  );
+  return ( id && <Profile /> );
 };
 
 let mapState = state => {
