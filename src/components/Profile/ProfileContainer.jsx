@@ -28,9 +28,7 @@ const ProfileContainer = props => {
     }
   }, [id, getUserProfile, getUserStatus]);
 
-  return (
-    <Profile />
-  );
+  return ( id && <Profile /> );
 };
 
 let mapState = state => {
