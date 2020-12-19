@@ -1,7 +1,6 @@
-import React from "react";
-import { profileApi } from "../../../api/api";
+import React, { useState } from "react";
 
-class ProfileStatus extends React.Component {
+/* class ProfileStatus extends React.Component {
 
     state = {
         editMode: false,
@@ -61,6 +60,45 @@ class ProfileStatus extends React.Component {
             </>
         );
     }
+}; */
+
+const ProfileStatus = props => {
+
+    let [editMode, setEditMode] = useState(false);
+
+    let [status, setStatus] = useState(props.status);
+
+    const activateEditMode = () => {
+        if (props.me !== props.id) return;
+        setEditMode(true);
+    }
+
+    const deactivateEditMode = (ev) => {
+        let value = ev.target.value;
+        setEditMode(false);
+        setStatus(value);
+        props.updateStatus(status);
+    }
+
+    const onChangeStatus = (ev) => {
+        let value = ev.target.value;
+        setStatus(value);
+    }
+
+    return (
+        <>
+            {!editMode &&
+                <div>
+                    <span onDoubleClick={activateEditMode}>{props.status || 'Not status...'}</span>
+                </div>
+            }
+            {editMode &&
+                <div>
+                    <input autoFocus={true} onBlur={deactivateEditMode} onChange={onChangeStatus} value={status} />
+                </div>
+            }
+        </>
+    );
 };
 
 export default ProfileStatus;

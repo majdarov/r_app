@@ -5,27 +5,14 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 
-/* class ProfileContainer extends React.Component {
-  componentDidMount() {
-    let id = this.props.match.params.userId;
-    id = (id === undefined || id === null) ? this.props.authId : id;
-    this.props.getUser(id)
-  }
-  render() {
-    if (!this.props.isAuth) return <Redirect to='/login' />;
-    return (
-      <Profile />
-    );
-  }
-}; */
 const ProfileContainer = props => {
 
   let id;
   if (props.match.params.userId) {
-   id = props.match.params.userId;
+    id = props.match.params.userId;
   } else {
-   id = props.authId;
-    if  (!id) {
+    id = props.authId;
+    if (!id) {
       props.history.push('/login');
     }
   }
@@ -34,10 +21,12 @@ const ProfileContainer = props => {
   const getUserStatus = props.getUserStatus;
 
   useEffect(() => {
-    if  (id === undefined) return;
-    getUserProfile (id);
-    getUserStatus (id);
-  },  [id, getUserProfile, getUserStatus]);
+    // console.log("RENDER PROFILE");
+    if (id !== undefined && !!id) {
+      getUserProfile(id);
+      getUserStatus(id);
+    }
+  }, [id, getUserProfile, getUserStatus]);
 
   return (
     <Profile />
@@ -45,8 +34,9 @@ const ProfileContainer = props => {
 };
 
 let mapState = state => {
+  // console.log("MapState PROFILE")
   return {
-    profilePage: state.profilePage,
+    // profilePage: state.profilePage,
     authId: state.auth.id,
   }
 }

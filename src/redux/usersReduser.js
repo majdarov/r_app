@@ -67,6 +67,7 @@ let initialState = {
 
 const usersReduser = (state = initialState, action) => {
   switch (action.type) {
+    case "FAKE": return {...state, fake: "FAKE"}
     case FOLLOW:
       return {
         ...state,
@@ -144,7 +145,7 @@ export const setIsFollowProgress = (isFollowProgress, id) => {
   return { type: TOGGLE_FOLLOW_PROGRESS, isFollowProgress, id };
 };
 
-export const getUsers = (pageNumber, pageSize) => {
+export const requestUsers = (pageNumber, pageSize) => {
   return (dispatch) => {
     dispatch(setIsFetching(true));
     usersApi.getUsers(pageNumber, pageSize).then((res) => {
